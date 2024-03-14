@@ -1,4 +1,3 @@
-# Sehatyaab
 <p align="center">
   <img src="assets/images/sehatyaab-logo.png" alt="Sehatyaab Logo" width="200">
 </p>
