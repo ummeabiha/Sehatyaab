@@ -22,6 +22,28 @@ Sehatyaab is an app that connects people in remote or underserved areas with hea
   
 - **Payment Feature**: Enable secure transactions for doctor fees to ensure seamless payment processing.
 
+## Folder Structure
+
+- **Feature-based Organization:** Each feature of the application has its own folder. Inside this folder, you will find everything related to that feature, including components, services, styles, tests, etc.
+- **Self-contained Features:** Each folder is self-contained and modular, making it easier to manage and understand the code related to that feature. This approach enhances code maintainability and scalability, as each feature can be developed and tested in isolation.
+
+      feature/
+      ┣ domain/
+      ┃ ┣ models/
+      ┃ ┣ repository/
+      ┃ ┣ services/
+      ┃ ┗ index.dart
+      ┣ screens/
+      ┃ ┣ feature_screen.dart
+      ┃ ┗ index.dart
+      ┣ widgets/
+      ┃ ┣ feature_component.dart
+      ┃ ┗ index.dart
+      ┣ providers/
+      ┃ ┣ feature_provider.dart
+      ┃ ┗ index.dart
+      ┗ index.dart
+
 ## Getting Started with Flutter in Android Studio
 
 ### Step 1: Install Required Software
