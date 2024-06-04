@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "640899746109",
+    "project_id": "sehatyaab-ec484",
+    "storage_bucket": "sehatyaab-ec484.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640899746109:android:f879c776abfd5fbe551d54",
+        "android_client_info": {
+          "package_name": "com.example.sehatyaab"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKQEmF7OTnhz1qMTWmsPylZNtp9TDYLQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
