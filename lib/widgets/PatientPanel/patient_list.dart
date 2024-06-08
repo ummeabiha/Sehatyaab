@@ -3,29 +3,57 @@ import '../../models/patient.dart';
 import '../../services/firestore_service.dart';
 
 class PatientList extends StatelessWidget {
-  final List<Patient> patients;
+  final FirestoreService<Patient> firestoreService;
 
-  const PatientList({Key? key, required this.patients}) : super(key: key);
+  const PatientList({Key? key, required this.firestoreService})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final firestoreService = FirestoreService<Patient>('/patients');
+    return StreamBuilder<List<Patient>>(
+      stream: firestoreService.getItemsStream(Patient(
+        id: '',
+        name: '',
+        email: '',
+        age: 0,
+        gender: '',
+        dob: '',
+        height: 0.0,
+        weight: 0.0,
+      )),
+      builder: (context, AsyncSnapshot<List<Patient>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          print('Waiting for data...');
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          print('Error fetching data: ${snapshot.error}');
+          return Center(child: Text('Error fetching data'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          print('No patients found');
+          return Center(child: Text('No patients found'));
+        } else {
+          final patients = snapshot.data!;
+          print('Patients fetched: ${patients.length}');
 
-    return ListView.builder(
-      itemCount: patients.length,
-      itemBuilder: (BuildContext context, int index) {
-        var patient = patients[index];
+          return ListView.builder(
+            itemCount: patients.length,
+            itemBuilder: (BuildContext context, int index) {
+              var patient = patients[index];
+              print('Patient: ${patient.name}, ${patient.email}, ${patient.dob}, ${patient.age}');
 
-        return ListTile(
-          title: Text(patient.name),
-          subtitle: Text(patient.email),
-          trailing: IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              firestoreService.deleteItem(patient.id!);
+              return ListTile(
+                title: Text(patient.name),
+                subtitle: Text(patient.email),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {
+                    firestoreService.deleteItem(patient.id!);
+                  },
+                ),
+              );
             },
-          ),
-        );
+          );
+        }
       },
     );
   }

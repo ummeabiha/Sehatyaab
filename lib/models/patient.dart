@@ -60,24 +60,24 @@ class Patient extends BaseModel {
   }
 
   @override
-  BaseModel fromMap(Map<String, dynamic> map, String id) {
+  Patient fromMap(Map<String, dynamic> map, String id) {
     return Patient(
-      id: map['id'],
-      name: map['name'],
-      email: map['email'],
-      age: map['age'],
-      gender: map['gender'],
-      dob: map['dob'],
-      isBpPatient: map['isBpPatient'] ?? false,
-      isSugarPatient: map['isSugarPatient'] ?? false,
-      height: map['height'],
-      weight: map['weight'],
-      medicalHistoryType: map['medicalHistoryType'],
-      medicalHistoryDesc: map['medicalHistoryDesc'],
-      medicalHistoryYear: map['medicalHistoryYear'],
-      familyHistoryType: map['familyHistoryType'],
-      familyHistoryDesc: map['familyHistoryDesc'],
-      ongoingMedications: map['ongoingMedications'],
+      id: id,
+      name: map['name'] as String,
+      email: map['email'] as String,
+      age: map['age'] as int,
+      gender: map['gender'] as String,
+      dob: map['dob'] as String,
+      isBpPatient: map['isBpPatient'] as bool? ?? false,
+      isSugarPatient: map['isSugarPatient'] as bool? ?? false,
+      height: map['height'] as double,
+      weight: map['weight'] as double,
+      medicalHistoryType: map['medicalHistoryType'] as String?,
+      medicalHistoryDesc: map['medicalHistoryDesc'] as String?,
+      medicalHistoryYear: map['medicalHistoryYear'] as int?,
+      familyHistoryType: map['familyHistoryType'] as String?,
+      familyHistoryDesc: map['familyHistoryDesc'] as String?,
+      ongoingMedications: map['ongoingMedications'] as String?,
     );
   }
 

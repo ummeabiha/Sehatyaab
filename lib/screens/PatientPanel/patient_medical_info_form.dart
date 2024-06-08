@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../../models/patient.dart';
 import '../../services/firestore_service.dart';
 
-
-
 class PatientMedicalInfoForm extends StatefulWidget {
   final Map<String, dynamic> patientData;
 

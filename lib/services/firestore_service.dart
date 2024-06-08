@@ -17,11 +17,16 @@ class FirestoreService<T extends BaseModel> {
   }
 
   Stream<List<T>> getItemsStream(T model) {
-    return _collection.snapshots().map((QuerySnapshot snapshot) {
-      return snapshot.docs.map((DocumentSnapshot doc) {
-        return model.fromMap(doc.data() as Map<String, dynamic>, doc.id) as T;
-      }).toList();
-    });
+    try {
+      return _collection.snapshots().map((QuerySnapshot snapshot) {
+        return snapshot.docs.map((DocumentSnapshot doc) {
+          return model.fromMap(doc.data() as Map<String, dynamic>, doc.id) as T;
+        }).toList();
+      });
+    } catch (e) {
+      print('Error getting items stream: $e');
+      rethrow;
+    }
   }
 
   Future<void> deleteItem(String id) async {
