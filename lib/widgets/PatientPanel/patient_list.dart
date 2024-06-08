@@ -5,8 +5,7 @@ import '../../services/firestore_service.dart';
 class PatientList extends StatelessWidget {
   final FirestoreService<Patient> firestoreService;
 
-  const PatientList({Key? key, required this.firestoreService})
-      : super(key: key);
+  const PatientList({super.key, required this.firestoreService});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +14,6 @@ class PatientList extends StatelessWidget {
         id: '',
         name: '',
         email: '',
-        age: 0,
         gender: '',
         dob: '',
         height: 0.0,
@@ -39,7 +37,8 @@ class PatientList extends StatelessWidget {
             itemCount: patients.length,
             itemBuilder: (BuildContext context, int index) {
               var patient = patients[index];
-              print('Patient: ${patient.name}, ${patient.email}, ${patient.dob}, ${patient.age}');
+              print(
+                  'Patient: ${patient.name}, ${patient.email}, ${patient.dob}');
 
               return ListTile(
                 title: Text(patient.name),
@@ -47,7 +46,7 @@ class PatientList extends StatelessWidget {
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
                   onPressed: () {
-                    firestoreService.deleteItem(patient.id!);
+                    firestoreService.deleteItem(patient.id);
                   },
                 ),
               );

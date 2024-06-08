@@ -9,10 +9,22 @@ class FirestoreService<T extends BaseModel> {
 
   Future<void> addItem(T item) async {
     try {
-      await _collection.add(item.toMap());
-      print('Item added: ${item.toMap()}');
+      DocumentReference docRef = _collection.doc();
+      item.id = docRef.id;
+      await docRef.set(item.toMap());
+      print('Item added with ID: ${item.id}');
     } catch (e) {
       print('Error adding item: $e');
+    }
+  }
+
+  Future<void> addItemWithId(T item, String id) async {
+    try {
+      item.id = id;
+      await _collection.doc(id).set(item.toMap());
+      print('Item added with specified ID: $id');
+    } catch (e) {
+      print('Error adding item with specified ID: $e');
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sehatyaab/screens/PatientPanel/patient_medical_info_form.dart';
+import 'package:sehatyaab/validations/patient_form_validator.dart';
 
 class PatientForm extends StatefulWidget {
   const PatientForm({Key? key}) : super(key: key);
@@ -13,7 +14,6 @@ class _PatientFormState extends State<PatientForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
   String? _gender;
   final _genders = ['Male', 'Female', 'Other'];
@@ -33,39 +33,12 @@ class _PatientFormState extends State<PatientForm> {
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: 'Patient Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter patient name';
-                  }
-                  return null;
-                },
+                validator: PatientFormValidator.validateName,
               ),
               TextFormField(
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: 'Patient Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter patient email';
-                  }
-                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return 'Please enter a valid email address';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _ageController,
-                decoration: const InputDecoration(labelText: 'Patient Age'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter patient age';
-                  }
-                  if (int.tryParse(value) == null) {
-                    return 'Please enter a valid age';
-                  }
-                  return null;
-                },
+                validator: PatientFormValidator.validateEmail,
               ),
               DropdownButtonFormField<String>(
                 value: _gender,
@@ -81,12 +54,7 @@ class _PatientFormState extends State<PatientForm> {
                     _gender = newValue;
                   });
                 },
-                validator: (value) {
-                  if (value == null) {
-                    return 'Please select gender';
-                  }
-                  return null;
-                },
+                validator: PatientFormValidator.validateGender,
               ),
               TextFormField(
                 controller: _dobController,
@@ -106,12 +74,7 @@ class _PatientFormState extends State<PatientForm> {
                     });
                   }
                 },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select date of birth';
-                  }
-                  return null;
-                },
+                validator: PatientFormValidator.validateDob,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -123,7 +86,6 @@ class _PatientFormState extends State<PatientForm> {
                           patientData: {
                             'name': _nameController.text,
                             'email': _emailController.text,
-                            'age': int.parse(_ageController.text),
                             'gender': _gender!,
                             'dob': _dobController.text,
                           },

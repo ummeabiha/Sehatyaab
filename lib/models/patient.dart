@@ -1,10 +1,8 @@
 import 'package:sehatyaab/models/base_model.dart';
 
 class Patient extends BaseModel {
-  String? id;
   String name;
   String email;
-  int age;
   String gender;
   String dob;
   bool isBpPatient;
@@ -19,10 +17,9 @@ class Patient extends BaseModel {
   String? ongoingMedications;
 
   Patient({
-    this.id,
+    required super.id,
     required this.name,
     required this.email,
-    required this.age,
     required this.gender,
     required this.dob,
     this.isBpPatient = false,
@@ -35,15 +32,14 @@ class Patient extends BaseModel {
     this.familyHistoryType,
     this.familyHistoryDesc,
     this.ongoingMedications,
-  });
+  }); 
 
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'id': id, 
       'name': name,
       'email': email,
-      'age': age,
       'gender': gender,
       'dob': dob,
       'isBpPatient': isBpPatient,
@@ -65,13 +61,12 @@ class Patient extends BaseModel {
       id: id,
       name: map['name'] as String,
       email: map['email'] as String,
-      age: map['age'] as int,
       gender: map['gender'] as String,
       dob: map['dob'] as String,
       isBpPatient: map['isBpPatient'] as bool? ?? false,
       isSugarPatient: map['isSugarPatient'] as bool? ?? false,
-      height: map['height'] as double,
-      weight: map['weight'] as double,
+      height: (map['height'] as num).toDouble(),
+      weight: (map['weight'] as num).toDouble(),
       medicalHistoryType: map['medicalHistoryType'] as String?,
       medicalHistoryDesc: map['medicalHistoryDesc'] as String?,
       medicalHistoryYear: map['medicalHistoryYear'] as int?,
@@ -83,6 +78,6 @@ class Patient extends BaseModel {
 
   @override
   String toString() {
-    return 'Patient(id:$id, name: $name, email: $email, age: $age, gender: $gender, dob: $dob, isBpPatient: $isBpPatient, isSugarPatient: $isSugarPatient, height: $height, weight: $weight, medicalHistoryType: $medicalHistoryType, medicalHistoryDesc: $medicalHistoryDesc, medicalHistoryYear: $medicalHistoryYear, familyHistoryType: $familyHistoryType, familyHistoryDesc: $familyHistoryDesc, ongoingMedications: $ongoingMedications)';
+    return 'Patient(id: $id, name: $name, email: $email, gender: $gender, dob: $dob, isBpPatient: $isBpPatient, isSugarPatient: $isSugarPatient, height: $height, weight: $weight, medicalHistoryType: $medicalHistoryType, medicalHistoryDesc: $medicalHistoryDesc, medicalHistoryYear: $medicalHistoryYear, familyHistoryType: $familyHistoryType, familyHistoryDesc: $familyHistoryDesc, ongoingMedications: $ongoingMedications)';
   }
 }

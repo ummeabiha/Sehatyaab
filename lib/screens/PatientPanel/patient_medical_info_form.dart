@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sehatyaab/validations/patient_form_validator.dart';
 import '../../models/patient.dart';
 import '../../services/firestore_service.dart';
 
@@ -10,7 +11,6 @@ class PatientMedicalInfoForm extends StatefulWidget {
   @override
   _PatientMedicalInfoFormState createState() => _PatientMedicalInfoFormState();
 }
-
 
 class _PatientMedicalInfoFormState extends State<PatientMedicalInfoForm> {
   final _formKey = GlobalKey<FormState>();
@@ -37,9 +37,9 @@ class _PatientMedicalInfoFormState extends State<PatientMedicalInfoForm> {
   void _savePatientData() {
     if (_formKey.currentState!.validate()) {
       Patient patient = Patient(
+        id: "",
         name: widget.patientData['name'],
         email: widget.patientData['email'],
-        age: widget.patientData['age'],
         gender: widget.patientData['gender'],
         dob: widget.patientData['dob'],
         isBpPatient: _isBpPatient,
@@ -106,31 +106,17 @@ class _PatientMedicalInfoFormState extends State<PatientMedicalInfoForm> {
               ),
               TextFormField(
                 controller: _heightController,
-                decoration: const InputDecoration(labelText: 'Height (cm)'),
+                decoration: const InputDecoration(labelText: 'Height (inches)'),
                 keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter height';
-                  }
-                  if (double.tryParse(value) == null) {
-                    return 'Please enter a valid height';
-                  }
-                  return null;
-                },
+                validator: (value) =>
+                    PatientFormValidator.validateHeight(value),
               ),
               TextFormField(
                 controller: _weightController,
                 decoration: const InputDecoration(labelText: 'Weight (kg)'),
                 keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter weight';
-                  }
-                  if (double.tryParse(value) == null) {
-                    return 'Please enter a valid weight';
-                  }
-                  return null;
-                },
+                validator: (value) =>
+                    PatientFormValidator.validateWeight(value),
               ),
               SwitchListTile(
                 title: const Text('Do you have any medical history?'),
@@ -148,17 +134,26 @@ class _PatientMedicalInfoFormState extends State<PatientMedicalInfoForm> {
                       controller: _medicalHistoryTypeController,
                       decoration: const InputDecoration(
                           labelText: 'Medical History Type'),
+                      validator: (value) =>
+                          PatientFormValidator.validateMedicalHistoryType(
+                              value, _hasMedicalHistory),
                     ),
                     TextFormField(
                       controller: _medicalHistoryDescController,
                       decoration: const InputDecoration(
                           labelText: 'Medical History Description'),
+                      validator: (value) =>
+                          PatientFormValidator.validateMedicalHistoryDesc(
+                              value, _hasMedicalHistory),
                     ),
                     TextFormField(
                       controller: _medicalHistoryYearController,
                       decoration: const InputDecoration(
                           labelText: 'Medical History Year'),
                       keyboardType: TextInputType.number,
+                      validator: (value) =>
+                          PatientFormValidator.validateMedicalHistoryYear(
+                              value, _hasMedicalHistory),
                     ),
                   ],
                 ),
@@ -178,11 +173,17 @@ class _PatientMedicalInfoFormState extends State<PatientMedicalInfoForm> {
                       controller: _familyHistoryTypeController,
                       decoration: const InputDecoration(
                           labelText: 'Family History Type'),
+                      validator: (value) =>
+                          PatientFormValidator.validateFamilyHistoryType(
+                              value, _hasFamilyHistory),
                     ),
                     TextFormField(
                       controller: _familyHistoryDescController,
                       decoration: const InputDecoration(
                           labelText: 'Family History Description'),
+                      validator: (value) =>
+                          PatientFormValidator.validateFamilyHistoryDesc(
+                              value, _hasFamilyHistory),
                     ),
                   ],
                 ),
@@ -200,6 +201,9 @@ class _PatientMedicalInfoFormState extends State<PatientMedicalInfoForm> {
                   controller: _ongoingMedicationsController,
                   decoration:
                       const InputDecoration(labelText: 'Ongoing Medications'),
+                  validator: (value) =>
+                      PatientFormValidator.validateOngoingMedications(
+                          value, _hasOngoingMedications),
                 ),
               ElevatedButton(
                 onPressed: _savePatientData,
