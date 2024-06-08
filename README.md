@@ -24,25 +24,51 @@ Sehatyaab is an app that connects people in remote or underserved areas with hea
 
 ## Folder Structure
 
-- **Feature-based Organization:** Each feature of the application has its own folder. Inside this folder, you will find everything related to that feature, including components, services, styles, tests, etc.
-- **Self-contained Features:** Each folder is self-contained and modular, making it easier to manage and understand the code related to that feature. This approach enhances code maintainability and scalability, as each feature can be developed and tested in isolation.
+### Folders By Type/Domain: The project files are organized based on their functionality or type.
+- **Screens:** DoctorPanel and PatientPanel screens are in their respective folders under 'screens'.
+- **Services:** CRUD operations and API interactions are handled in 'firestore_service.dart' under 'services'.
+- **Models:** Data models like 'patient.dart' are in the 'models' folder.
+- **Widgets:** Panel-specific widgets are in their folders under 'widgets'.
+- **Theme:** Styling and theme configurations are in 'app_theme.dart' under 'theme'.
+- **Routes:** Navigation routes are managed in 'app_routes.dart' under 'routes'.
 
-      feature/
-      ┣ domain/
-      ┃ ┣ models/
-      ┃ ┣ repository/
-      ┃ ┣ services/
-      ┃ ┗ index.dart
-      ┣ screens/
-      ┃ ┣ feature_screen.dart
-      ┃ ┗ index.dart
-      ┣ widgets/
-      ┃ ┣ feature_component.dart
-      ┃ ┗ index.dart
-      ┣ providers/
-      ┃ ┣ feature_provider.dart
-      ┃ ┗ index.dart
-      ┗ index.dart
+      lib/
+        main.dart
+      
+        services/
+          firestore_service.dart
+      
+        models/
+          patient.dart
+      
+        screens/
+          DoctorPanel/
+            home_screen.dart
+            patient_form.dart
+          PatientPanel/
+            home_screen.dart
+            patient_form.dart
+      
+        widgets/
+          DoctorPanel/
+            doctor_list.dart
+          PatientPanel/
+      
+        theme/
+          app_theme.dart
+      
+        routes/
+          app_routes.dart
+
+
+## Guidelines:
+
+- Use a single FirestoreService class located in services/firestore_service.dart for Firestore CRUD operations.
+- Follow snake_case for file names (e.g., firestore_service.dart).
+- Use camel casing for defining class names (e.g., FirestoreService).
+- Use camel casing for defining folder names (e.g., doctor_panel, patient_panel).
+- Utilize themes defined in app_theme.dart for consistent styling across the app.
+- Name arrays using camel case with the prefix "arr_" (e.g., arr_patientList).
 
 ## Getting Started with Flutter in Android Studio
 
