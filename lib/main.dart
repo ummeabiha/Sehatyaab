@@ -24,7 +24,6 @@ class _MyAppState extends State<MyApp> {
       _isDarkTheme = !_isDarkTheme;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       theme: _isDarkTheme ? AppTheme.darkTheme : AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
       routes: AppRoutes.routes,
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.welcome,
       builder: (context, child) {
         return Scaffold(
           appBar: AppBar(
