@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 
 class FirebaseConnection {
   static Future<void> initializeFirebase() async {
@@ -18,9 +17,17 @@ class FirebaseConnection {
           ),
         );
       } else {
-        await Firebase.initializeApp();
+          await Firebase.initializeApp(
+          // Replace with actual values
+          options: FirebaseOptions(
+            apiKey: "AIzaSyDKQEmF7OTnhz1qMTWmsPylZNtp9TDYLQ4",
+            appId: "1:640899746109:android:f879c776abfd5fbe551d54",
+            messagingSenderId: "640899746109",
+            projectId: "sehatyaab-ec484",
+          ),
+        );
       }
-      print('Firebase connection established successfully.');
+      debugPrint('Firebase connection established successfully.');
     } catch (e) {
       debugPrint('Error initializing Firebase: $e');
     }
