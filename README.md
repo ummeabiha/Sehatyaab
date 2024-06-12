@@ -36,39 +36,38 @@ Sehatyaab is an app that connects people in remote or underserved areas with hea
         main.dart
       
         services/
-          firestore_service.dart
+          FirestoreService.dart
       
         models/
-          patient.dart
+          Patient.dart
       
         screens/
-          DoctorPanel/
-            home_screen.dart
-            patient_form.dart
-          PatientPanel/
-            home_screen.dart
-            patient_form.dart
+          DoctorProfile/
+            DoctorForm.dart
+          PatientProfile/
+            PatientForm.dart
+          HomeScreen.dart
+            
       
         widgets/
-          DoctorPanel/
-            doctor_list.dart
-          PatientPanel/
+            CustomDropDown.dart
+            TextField.dart
       
         theme/
-          app_theme.dart
+          AppTheme.dart
       
         routes/
-          app_routes.dart
+          AppRoutes.dart
 
 
 ## Guidelines:
 
-- Use a single FirestoreService class located in services/firestore_service.dart for Firestore CRUD operations.
-- Follow snake_case for file names (e.g., firestore_service.dart).
+- Use a single FirestoreService class located in services/firestore_service.dart for performing Firestore CRUD operations.
+- Follow CamelCase for file names (e.g., FirestoreService.dart).
 - Use camel casing for defining class names (e.g., FirestoreService).
-- Use camel casing for defining folder names (e.g., doctor_panel, patient_panel).
-- Utilize themes defined in app_theme.dart for consistent styling across the app.
-- Name arrays using camel case with the prefix "arr_" (e.g., arr_patientList).
+- Use camel casing for defining folder names (e.g., DoctorProfile).
+- Utilize themes defined in AppTheme.dart for consistent styling across the app.
+- Name arrays using camel case with the prefix "arr_" (e.g., arrPatientList).
 
 ## Getting Started with Flutter in Android Studio
 
