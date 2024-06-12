@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/base_model.dart';
+import '../models/doctor.dart';
 
 class FirestoreService<T extends BaseModel> {
   final CollectionReference _collection;

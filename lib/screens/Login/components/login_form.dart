@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../Signup/signup_screen.dart';
-import '../../home_screen.dart';
+import '../../PatientPanel/patient_hs.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -48,7 +48,8 @@ class _LoginFormState extends State<LoginForm> {
           password: _passwordController.text,
         );
         Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const HomeScreen()),
+          context,
+          MaterialPageRoute(builder: (context) => const PatientHomeScreen()),
         );
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
