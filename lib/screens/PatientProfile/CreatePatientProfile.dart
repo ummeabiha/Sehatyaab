@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/validations/patient_form_validator.dart';
+import 'package:sehatyaab/validations/PatientFormValidator.dart';
 import 'package:sehatyaab/widgets/ElevatedButton.dart';
 import 'package:sehatyaab/widgets/MainContainer.dart';
 import 'package:sehatyaab/widgets/TextFormField.dart';
@@ -19,6 +19,8 @@ class _PatientFormState extends State<CreatePatientProfile> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _heightController = TextEditingController();
   String? _gender;
   final _genders = ['Male', 'Female', 'Other'];
 
@@ -54,6 +56,32 @@ class _PatientFormState extends State<CreatePatientProfile> {
                 labelText: 'Patient Email',
                 hintText: 'Enter Patient Email',
                 suffixIcon: Icons.email,
+              ),
+              const SizedBox(
+                height: 28.0,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextFormField(
+                      controller: _weightController,
+                      validator: PatientFormValidator.validateWeight,
+                      labelText: 'Weight',
+                      hintText: '2-300 (kgs)',
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20.0,
+                  ),
+                  Expanded(
+                    child: CustomTextFormField(
+                      controller: _heightController,
+                      validator: PatientFormValidator.validateHeight,
+                      labelText: 'Height',
+                      hintText: '20-110 (inches)',
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 28.0,
@@ -101,6 +129,8 @@ class _PatientFormState extends State<CreatePatientProfile> {
                             'email': _emailController.text,
                             'gender': _gender!,
                             'dob': _dobController.text,
+                            'weight': _weightController.text,
+                            'height': _heightController.text,
                           },
                         ),
                       ),

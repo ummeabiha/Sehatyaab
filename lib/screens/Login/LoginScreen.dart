@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'components/login_form.dart';
+import 'LoginForm.dart';
 import '../../../constants.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -31,15 +31,13 @@ class LoginScreen extends StatelessWidget {
 }
 
 class LoginScreenTopImage extends StatelessWidget {
-  const LoginScreenTopImage({
-    super.key,
-  });
+  const LoginScreenTopImage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text(
+        Text(
           "Welcome Back",
           style: TextStyle(
             fontSize: 30,
@@ -48,25 +46,25 @@ class LoginScreenTopImage extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
-        const Text(
+        Text(
           "Login to your account",
           style: TextStyle(
             fontSize: 15,
             color: navyBlue,
           ),
         ),
-        const SizedBox(height: defaultPadding * 2),
+        SizedBox(height: defaultPadding * 2),
         Row(
           children: [
-            const Spacer(),
+            Spacer(),
             Expanded(
               flex: 8,
               child: Image.asset("assets/images/login.png"),
             ),
-            const Spacer(),
+            Spacer(),
           ],
         ),
-        const SizedBox(height: defaultPadding * 2),
+        SizedBox(height: defaultPadding * 2),
       ],
     );
   }

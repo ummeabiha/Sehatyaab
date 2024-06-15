@@ -9,6 +9,8 @@ class CustomTextFormField extends StatelessWidget {
   final IconData? suffixIcon;
   final int? maxLines;
   final bool? enabled;
+  final Color? fillColor;
+  final bool? filled;
 
   const CustomTextFormField({
     super.key,
@@ -16,10 +18,12 @@ class CustomTextFormField extends StatelessWidget {
     required this.validator,
     required this.labelText,
     required this.hintText,
+    this.fillColor,
     this.maxLines,
     this.keyboardType,
     this.suffixIcon,
     this.enabled,
+    this.filled,
   });
 
   @override
@@ -37,7 +41,15 @@ class CustomTextFormField extends StatelessWidget {
         labelText: labelText,
         labelStyle: Theme.of(context).textTheme.bodySmall,
         hintText: hintText,
+        border: Theme.of(context).inputDecorationTheme.border,
+        enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+        focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+        errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
+        focusedErrorBorder:
+            Theme.of(context).inputDecorationTheme.focusedErrorBorder,
       ),
+      keyboardType: keyboardType,
+      maxLines: maxLines ?? 1,
     );
   }
 

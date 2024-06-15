@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/screens/PatientProfile/patient_hs.dart';
+import 'package:sehatyaab/Screens/Welcome/WelcomeScreen.dart';
+import 'package:sehatyaab/models/doctor.dart';
+import 'package:sehatyaab/screens/PatientHome/PatientHome.dart';
 import 'package:sehatyaab/widgets/patient_list.dart';
 import '../screens/PatientProfile/CreatePatientProfile.dart';
 import '../screens/PatientProfile/PatientHistory.dart';
 import '../screens/home_screen.dart';
-import '../../services/firestore_service.dart';
+import '../services/FirestoreService.dart';
 import '../../models/patient.dart';
-import 'package:sehatyaab/Screens/Welcome/welcome_screen.dart';
 
 class AppRoutes {
   static const String welcome = '/welcome';
@@ -18,7 +19,7 @@ class AppRoutes {
 
   static final Map<String, WidgetBuilder> routes = {
     welcome: (context) => const WelcomeScreen(),
-    patienthp: (context) => const PatientHomeScreen(),
+    //patienthp: (context) => const PatientHomeScreen(),
     home: (context) => const HomeScreen(),
     patientForm: (context) => const CreatePatientProfile(),
     patientHistory: (context) => const PatientHistory(
@@ -27,6 +28,10 @@ class AppRoutes {
     patientList: (context) {
       final firestoreService = FirestoreService<Patient>('/patients');
       return PatientList(firestoreService: firestoreService);
+    },
+    patienthp: (context) {
+      final firestoreService = FirestoreService<Doctor>('/doctors');
+      return PatientHomeScreen(firestoreService: firestoreService);
     },
   };
 }

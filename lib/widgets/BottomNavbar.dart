@@ -5,18 +5,35 @@ class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
 
-  const CustomBottomNavBar({super.key, 
+  const CustomBottomNavBar({
+    super.key,
     required this.currentIndex,
     required this.onTap,
   });
+
+  void _onItemTapped(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/');
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/appointments');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/doctors');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/patientForm');
+        break;
+    }
+    onTap(index);
+  }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      onTap: (index) {
-        onTap(index);
-      },
+      onTap: (index) => _onItemTapped(context, index),
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home,

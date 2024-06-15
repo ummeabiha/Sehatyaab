@@ -1,35 +1,35 @@
 class PatientFormValidator {
   static String? validateName(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter patient name';
+      return 'Name is Required';
     }
     return null;
   }
 
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter patient email';
+      return 'Email is Required';
     }
     if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-      return 'Please enter a valid email address';
+      return 'Invalid Email Address';
     }
     return null;
   }
 
   static String? validateGender(String? value) {
     if (value == null) {
-      return 'Please select gender';
+      return 'Gender is Required';
     }
     return null;
   }
 
-static String? validateDob(String? value) {
+  static String? validateDob(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please select date of birth';
+      return 'Date of Birth is Required';
     }
     DateTime? dob = DateTime.tryParse(value);
     if (dob == null) {
-      return 'Invalid date format';
+      return 'Invalid Date Format';
     }
     DateTime now = DateTime.now();
     int age = now.year - dob.year;
@@ -43,24 +43,24 @@ static String? validateDob(String? value) {
     return null;
   }
 
- static String? validateHeight(String? value) {
+  static String? validateHeight(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter height';
+      return 'Required';
     }
     double? height = double.tryParse(value);
-    if (height == null || height <= 20 || height >=110) {
-      return 'Please enter a valid even height in inches';
+    if (height == null || height <= 20 || height >= 110) {
+      return 'Invalid';
     }
     return null;
   }
 
   static String? validateWeight(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter weight';
+      return 'Required';
     }
     double? weight = double.tryParse(value);
-    if (weight == null || weight <= 2 || weight>=300) {
-      return 'Please enter a valid even weight in kilograms';
+    if (weight == null || weight <= 2 || weight >= 300) {
+      return 'Invalid';
     }
     return null;
   }
@@ -68,7 +68,7 @@ static String? validateDob(String? value) {
   static String? validateMedicalHistoryType(
       String? value, bool hasMedicalHistory) {
     if (hasMedicalHistory && (value == null || value.isEmpty)) {
-      return 'Please enter medical history type';
+      return 'Type is Required';
     }
     return null;
   }
@@ -76,7 +76,7 @@ static String? validateDob(String? value) {
   static String? validateMedicalHistoryDesc(
       String? value, bool hasMedicalHistory) {
     if (hasMedicalHistory && (value == null || value.isEmpty)) {
-      return 'Please enter medical history description';
+      return 'Description is Required';
     }
     return null;
   }
@@ -84,10 +84,10 @@ static String? validateDob(String? value) {
   static String? validateMedicalHistoryYear(
       String? value, bool hasMedicalHistory) {
     if (hasMedicalHistory && (value == null || value.isEmpty)) {
-      return 'Please enter medical history year';
+      return 'Year is Required';
     }
     if (hasMedicalHistory && int.tryParse(value!) == null) {
-      return 'Please enter a valid year';
+      return 'Invalid Year';
     }
     return null;
   }
@@ -95,7 +95,7 @@ static String? validateDob(String? value) {
   static String? validateFamilyHistoryType(
       String? value, bool hasFamilyHistory) {
     if (hasFamilyHistory && (value == null || value.isEmpty)) {
-      return 'Please enter family history type';
+      return 'Type is Required';
     }
     return null;
   }
@@ -103,7 +103,7 @@ static String? validateDob(String? value) {
   static String? validateFamilyHistoryDesc(
       String? value, bool hasFamilyHistory) {
     if (hasFamilyHistory && (value == null || value.isEmpty)) {
-      return 'Please enter family history description';
+      return 'Description is Required';
     }
     return null;
   }
@@ -111,7 +111,7 @@ static String? validateDob(String? value) {
   static String? validateOngoingMedications(
       String? value, bool hasOngoingMedications) {
     if (hasOngoingMedications && (value == null || value.isEmpty)) {
-      return 'Please enter ongoing medications';
+      return 'Ongoing Medications is Required';
     }
     return null;
   }

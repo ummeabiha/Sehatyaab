@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sehatyaab/validations/patient_form_validator.dart';
+import 'package:sehatyaab/validations/PatientFormValidator.dart';
 import 'package:sehatyaab/widgets/TextFormField.dart';
 
 class DatePickerField extends StatefulWidget {
@@ -66,15 +66,13 @@ class _DatePickerFieldState extends State<DatePickerField> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => _selectDate(context),
-      child: SizedBox(
-        child: CustomTextFormField(
-          controller: widget.controller,
-          validator: PatientFormValidator.validateDob,
-          labelText: 'Date of Birth',
-          hintText: 'Select Date of Birth',
-          suffixIcon: Icons.calendar_today,
-          enabled: false,
-        ),
+      child: CustomTextFormField(
+        controller: widget.controller,
+        validator: PatientFormValidator.validateDob,
+        labelText: 'Date of Birth',
+        hintText: 'Select Date of Birth',
+        suffixIcon: Icons.calendar_today,
+        enabled: false,
       ),
     );
   }

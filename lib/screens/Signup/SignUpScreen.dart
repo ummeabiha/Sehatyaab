@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'components/signup_form.dart';
+import 'SignUpForm.dart';
 import '../../../constants.dart';
 
 class SignUpScreen extends StatelessWidget {

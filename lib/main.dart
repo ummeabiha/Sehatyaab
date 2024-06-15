@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
-import 'services/firebase_connection.dart';
+import 'services/FirebaseConnection.dart';
 import 'theme/AppTheme.dart';
 
 void main() async {

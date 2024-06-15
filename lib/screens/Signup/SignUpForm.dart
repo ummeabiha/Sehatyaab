@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../components/already_have_an_account_acheck.dart';
-import '../../../constants.dart';
-import '../../home_screen.dart';
-import '../../Login/login_screen.dart';
+import 'package:sehatyaab/screens/home_screen.dart';
+import '../../components/already_have_an_account_acheck.dart';
+import '../../constants.dart';
+import '../Login/LoginScreen.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
