@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../components/background.dart';
 import 'components/signup_form.dart';
 import '../../../constants.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -31,8 +30,8 @@ class SignUpScreen extends StatelessWidget {
                     color: navyBlue,
                   ),
                 ),
-                const SizedBox(height: defaultPadding),
-                const SizedBox(height: defaultPadding),
+                SizedBox(height: defaultPadding),
+                SizedBox(height: defaultPadding),
               ],
             ),
             Row(

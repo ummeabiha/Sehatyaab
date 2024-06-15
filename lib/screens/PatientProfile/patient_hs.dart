@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/constants.dart';
-import 'package:sehatyaab/routes/app_routes.dart';
+import 'package:sehatyaab/routes/AppRoutes.dart';
 import 'package:sehatyaab/widgets/custom_bottom_navbar.dart';
 
 class PatientHomeScreen extends StatefulWidget {

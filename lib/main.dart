@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sehatyaab/routes/AppRoutes.dart';
 import 'services/firebase_connection.dart';
 import 'theme/AppTheme.dart';
-import 'routes/app_routes.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +36,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Sehatyaab'),
+            title: const Text('Sehatyaab'),
             actions: [
               IconButton(
                 icon: Icon(_isDarkTheme ? Icons.light_mode : Icons.dark_mode),

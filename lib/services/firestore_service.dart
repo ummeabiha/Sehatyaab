@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import '../models/base_model.dart';
-import '../models/doctor.dart';
 
 class FirestoreService<T extends BaseModel> {
   final CollectionReference _collection;
@@ -13,9 +13,9 @@ class FirestoreService<T extends BaseModel> {
       DocumentReference docRef = _collection.doc();
       item.id = docRef.id;
       await docRef.set(item.toMap());
-      print('Item added with ID: ${item.id}');
+      debugPrint('Item added with ID: ${item.id}');
     } catch (e) {
-      print('Error adding item: $e');
+      debugPrint('Error adding item: $e');
     }
   }
 
@@ -23,9 +23,9 @@ class FirestoreService<T extends BaseModel> {
     try {
       item.id = id;
       await _collection.doc(id).set(item.toMap());
-      print('Item added with specified ID: $id');
+      debugPrint('Item added with specified ID: $id');
     } catch (e) {
-      print('Error adding item with specified ID: $e');
+      debugPrint('Error adding item with specified ID: $e');
     }
   }
 
@@ -37,7 +37,7 @@ class FirestoreService<T extends BaseModel> {
         }).toList();
       });
     } catch (e) {
-      print('Error getting items stream: $e');
+      debugPrint('Error getting items stream: $e');
       rethrow;
     }
   }
@@ -45,18 +45,18 @@ class FirestoreService<T extends BaseModel> {
   Future<void> deleteItem(String id) async {
     try {
       await _collection.doc(id).delete();
-      print('Item deleted with ID: $id');
+      debugPrint('Item deleted with ID: $id');
     } catch (e) {
-      print('Error deleting item: $e');
+      debugPrint('Error deleting item: $e');
     }
   }
 
   Future<void> updateItem(String id, T item) async {
     try {
       await _collection.doc(id).update(item.toMap());
-      print('Item updated with ID: $id');
+      debugPrint('Item updated with ID: $id');
     } catch (e) {
-      print('Error updating item: $e');
+      debugPrint('Error updating item: $e');
     }
   }
 }

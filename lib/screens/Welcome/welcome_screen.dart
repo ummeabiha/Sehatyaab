@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../components/background.dart';
 import 'components/login_signup_btn.dart';
 import '../../../constants.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -33,8 +32,8 @@ class WelcomeScreen extends StatelessWidget {
 
 class WelcomeImage extends StatelessWidget {
   const WelcomeImage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,7 +44,7 @@ class WelcomeImage extends StatelessWidget {
               fontSize: 30, fontWeight: FontWeight.bold, color: kPrimaryColor),
           textAlign: TextAlign.center,
         ),
-        Text(
+        const Text(
           "Bridging the gap in medical facilities",
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.w100, color: navyBlue),
