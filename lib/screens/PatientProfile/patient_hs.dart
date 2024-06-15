@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/widgets/PatientPanel/custom_bottom_navbar.dart';
 import 'package:sehatyaab/constants.dart';
 import 'package:sehatyaab/routes/app_routes.dart';
+import 'package:sehatyaab/widgets/custom_bottom_navbar.dart';
 
 class PatientHomeScreen extends StatefulWidget {
   const PatientHomeScreen({Key? key}) : super(key: key);
