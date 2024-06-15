@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/patient.dart';
-import '../../services/firestore_service.dart';
+import '../models/patient.dart';
+import '../services/firestore_service.dart';
 
 class PatientList extends StatelessWidget {
   final FirestoreService<Patient> firestoreService;

@@ -8,25 +8,23 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Background(
-      child: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              WelcomeImage(),
-              Row(
-                children: [
-                  Spacer(),
-                  Expanded(
-                    flex: 6,
-                    child: LoginAndSignupBtn(),
-                  ),
-                  Spacer(),
-                ],
-              ),
-            ],
-          ),
+    return SingleChildScrollView(
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            WelcomeImage(),
+            Row(
+              children: [
+                Spacer(),
+                Expanded(
+                  flex: 6,
+                  child: LoginAndSignupBtn(),
+                ),
+                Spacer(),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -34,14 +32,25 @@ class WelcomeScreen extends StatelessWidget {
 }
 
 class WelcomeImage extends StatelessWidget {
-  const WelcomeImage({Key? key,}) : super(key: key);
+  const WelcomeImage({
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text("Sehatyaab", style: TextStyle(fontSize:30,fontWeight: FontWeight.bold, color:kPrimaryColor ), textAlign: TextAlign.center,),
-        Text( "Bridging the gap in medical facilities", style: TextStyle(fontSize:20,fontWeight: FontWeight.w100,
-            color:navyBlue), textAlign: TextAlign.center,),
+        const Text(
+          "Sehatyaab",
+          style: TextStyle(
+              fontSize: 30, fontWeight: FontWeight.bold, color: kPrimaryColor),
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          "Bridging the gap in medical facilities",
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w100, color: navyBlue),
+          textAlign: TextAlign.center,
+        ),
         const SizedBox(height: defaultPadding * 2),
         Row(
           children: [

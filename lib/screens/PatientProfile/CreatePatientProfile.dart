@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:sehatyaab/screens/PatientPanel/patient_medical_info_form.dart';
 import 'package:sehatyaab/validations/patient_form_validator.dart';
+import 'package:sehatyaab/widgets/ElevatedButton.dart';
+import 'package:sehatyaab/widgets/MainContainer.dart';
+import 'package:sehatyaab/widgets/TextFormField.dart';
+import 'package:sehatyaab/widgets/dropdown.dart';
+import '../../widgets/DatePicker.dart';
+import 'PatientHistory.dart';
 
-class PatientForm extends StatefulWidget {
-  const PatientForm({Key? key}) : super(key: key);
+class CreatePatientProfile extends StatefulWidget {
+  const CreatePatientProfile({super.key});
 
   @override
   _PatientFormState createState() => _PatientFormState();
 }
 
-class _PatientFormState extends State<PatientForm> {
+class _PatientFormState extends State<CreatePatientProfile> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -20,29 +24,46 @@ class _PatientFormState extends State<PatientForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Patient Information'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+    return SingleChildScrollView(
+      child: MainContainer(
         child: Form(
           key: _formKey,
-          child: ListView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextFormField(
+              Text(
+                'Create Patient Profile',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(
+                height: 35.0,
+              ),
+              CustomTextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: 'Patient Name'),
                 validator: PatientFormValidator.validateName,
+                labelText: 'Patient Name',
+                hintText: 'Enter Patient Name',
+                suffixIcon: Icons.person,
               ),
-              TextFormField(
+              const SizedBox(
+                height: 28.0,
+              ),
+              CustomTextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Patient Email'),
                 validator: PatientFormValidator.validateEmail,
+                labelText: 'Patient Email',
+                hintText: 'Enter Patient Email',
+                suffixIcon: Icons.email,
               ),
-              DropdownButtonFormField<String>(
+              const SizedBox(
+                height: 28.0,
+              ),
+              CustomDropdown<String>(
                 value: _gender,
-                decoration: const InputDecoration(labelText: 'Patient Gender'),
+                decoration: InputDecoration(
+                  labelText: 'Patient Gender',
+                  labelStyle: Theme.of(context).textTheme.bodySmall,
+                ),
                 items: _genders.map((String gender) {
                   return DropdownMenuItem<String>(
                     value: gender,
@@ -56,33 +77,25 @@ class _PatientFormState extends State<PatientForm> {
                 },
                 validator: PatientFormValidator.validateGender,
               ),
-              TextFormField(
+              const SizedBox(
+                height: 28.0,
+              ),
+              DatePickerField(
                 controller: _dobController,
-                decoration: const InputDecoration(labelText: 'Date of Birth'),
-                readOnly: true,
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime.now(),
-                  );
-                  if (pickedDate != null) {
-                    setState(() {
-                      _dobController.text =
-                          DateFormat('yyyy-MM-dd').format(pickedDate);
-                    });
-                  }
-                },
+                labelText: 'Date of Birth',
+                hintText: 'Select Date of Birth',
                 validator: PatientFormValidator.validateDob,
               ),
-              ElevatedButton(
+              const SizedBox(
+                height: 28.0,
+              ),
+              CustomElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PatientMedicalInfoForm(
+                        builder: (context) => PatientHistory(
                           patientData: {
                             'name': _nameController.text,
                             'email': _emailController.text,
@@ -94,8 +107,8 @@ class _PatientFormState extends State<PatientForm> {
                     );
                   }
                 },
-                child: const Text('Next'),
-              ),
+                label: 'Continue',
+              )
             ],
           ),
         ),

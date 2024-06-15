@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'services/firebase_connection.dart';
-import 'theme/app_theme.dart';
+import 'theme/AppTheme.dart';
 import 'routes/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -25,6 +25,7 @@ class _MyAppState extends State<MyApp> {
       _isDarkTheme = !_isDarkTheme;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

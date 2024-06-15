@@ -3,31 +3,28 @@ import '../../components/background.dart';
 import 'components/login_form.dart';
 import '../../../constants.dart';
 
-
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Background(
-      child: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              LoginScreenTopImage(),
-              Row(
-                children: [
-                  Spacer(),
-                  Expanded(
-                    flex: 8,
-                    child: LoginForm(),
-                  ),
-                  Spacer(),
-                ],
-              ),
-            ],
-          ),
+    return SingleChildScrollView(
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            LoginScreenTopImage(),
+            Row(
+              children: [
+                Spacer(),
+                Expanded(
+                  flex: 8,
+                  child: LoginForm(),
+                ),
+                Spacer(),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -43,8 +40,22 @@ class LoginScreenTopImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("Welcome Back", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: kPrimaryColor,), textAlign: TextAlign.center,),
-        Text("Login to your account", style: TextStyle(fontSize: 15, color: navyBlue,),),
+        Text(
+          "Welcome Back",
+          style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: kPrimaryColor,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          "Login to your account",
+          style: TextStyle(
+            fontSize: 15,
+            color: navyBlue,
+          ),
+        ),
         const SizedBox(height: defaultPadding * 2),
         Row(
           children: [
@@ -61,4 +72,3 @@ class LoginScreenTopImage extends StatelessWidget {
     );
   }
 }
-
