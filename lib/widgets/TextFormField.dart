@@ -41,6 +41,7 @@ class CustomTextFormField extends StatelessWidget {
         labelText: labelText,
         labelStyle: Theme.of(context).textTheme.bodySmall,
         hintText: hintText,
+        hintStyle: Theme.of(context).textTheme.bodySmall,
         border: Theme.of(context).inputDecorationTheme.border,
         enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
         focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,

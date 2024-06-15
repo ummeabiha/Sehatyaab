@@ -19,7 +19,8 @@ class AppTheme {
       bodyLarge: TextStyle(
         color: AppColors.black,
         fontFamily: 'GoogleSans-Bold',
-        fontSize: 26,
+        fontSize: 28,
+        fontWeight: FontWeight.w600,
       ),
       bodyMedium: TextStyle(
         color: AppColors.black,

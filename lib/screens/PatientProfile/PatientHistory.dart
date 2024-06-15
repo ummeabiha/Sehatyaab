@@ -79,7 +79,7 @@ class _PatientHistoryState extends State<PatientHistory> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Information saved successfully')),
         );
-        Navigator.pop(context); // Go back to the home screen or previous screen
+        Navigator.pop(context); 
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to save information: $error')),

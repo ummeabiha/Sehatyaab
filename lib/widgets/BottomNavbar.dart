@@ -20,7 +20,7 @@ class CustomBottomNavBar extends StatelessWidget {
         Navigator.pushNamed(context, '/appointments');
         break;
       case 2:
-        Navigator.pushNamed(context, '/doctors');
+        Navigator.pushNamed(context, '/doctorProfile');
         break;
       case 3:
         Navigator.pushNamed(context, '/patientForm');

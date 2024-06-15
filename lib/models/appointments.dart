@@ -18,7 +18,7 @@ class Appointment extends BaseModel {
     required this.patientId,
     required this.doctorId,
     required this.reasonForVisit,
-    this.status = false, // Default to scheduled
+    this.status = false, 
     this.diagnosis,
     this.prescribedMeds,
     this.prescribedTests,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/Screens/Welcome/WelcomeScreen.dart';
 import 'package:sehatyaab/models/doctor.dart';
+import 'package:sehatyaab/screens/DoctorProfile/CreateDoctorProfile.dart';
 import 'package:sehatyaab/screens/PatientHome/PatientHome.dart';
 import 'package:sehatyaab/widgets/patient_list.dart';
 import '../screens/PatientProfile/CreatePatientProfile.dart';
@@ -16,6 +17,7 @@ class AppRoutes {
   static const String patientForm = '/patientForm';
   static const String patientHistory = '/patientHistory';
   static const String patientList = '/patientList';
+  static const String doctorProfile = '/doctorProfile';
 
   static final Map<String, WidgetBuilder> routes = {
     welcome: (context) => const WelcomeScreen(),
@@ -29,6 +31,15 @@ class AppRoutes {
       final firestoreService = FirestoreService<Patient>('/patients');
       return PatientList(firestoreService: firestoreService);
     },
+
+    doctorProfile: (context) {
+      final firestoreService = FirestoreService<Doctor>('/doctors');
+      return CreateDoctorProfile(
+        doctorData: {},
+        firestoreService: firestoreService,
+      );
+    },
+
     patienthp: (context) {
       final firestoreService = FirestoreService<Doctor>('/doctors');
       return PatientHomeScreen(firestoreService: firestoreService);

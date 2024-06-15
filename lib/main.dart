@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
+import 'package:sehatyaab/widgets/CustomAppBar.dart';
 import 'services/FirebaseConnection.dart';
 import 'theme/AppTheme.dart';
 
@@ -35,14 +36,9 @@ class _MyAppState extends State<MyApp> {
       initialRoute: AppRoutes.welcome,
       builder: (context, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Sehatyaab'),
-            actions: [
-              IconButton(
-                icon: Icon(_isDarkTheme ? Icons.light_mode : Icons.dark_mode),
-                onPressed: _toggleTheme,
-              ),
-            ],
+          appBar: CustomAppBar(
+            isDarkTheme: _isDarkTheme,
+            toggleTheme: _toggleTheme,
           ),
           body: child,
         );
