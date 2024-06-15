@@ -37,6 +37,7 @@ class CustomDropdown<T> extends StatelessWidget {
         Icons.arrow_drop_down,
         color: Theme.of(context).iconTheme.color,
       ),
+       style: theme.textTheme.bodySmall, 
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/models/doctor.dart';
+import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/validations/PatientFormValidator.dart';
 import 'package:sehatyaab/widgets/DatePicker.dart';
 import 'package:sehatyaab/widgets/DropDown.dart';

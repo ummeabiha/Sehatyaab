@@ -1,4 +1,4 @@
-import 'package:sehatyaab/models/base_model.dart';
+import 'package:sehatyaab/models/BaseModel.dart';
 
 class Appointment extends BaseModel {
   String date;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/Screens/Welcome/WelcomeScreen.dart';
-import 'package:sehatyaab/models/doctor.dart';
+import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/screens/DoctorProfile/CreateDoctorProfile.dart';
 import 'package:sehatyaab/screens/PatientHome/PatientHome.dart';
 import 'package:sehatyaab/widgets/patient_list.dart';
@@ -8,7 +8,7 @@ import '../screens/PatientProfile/CreatePatientProfile.dart';
 import '../screens/PatientProfile/PatientHistory.dart';
 import '../screens/home_screen.dart';
 import '../services/FirestoreService.dart';
-import '../../models/patient.dart';
+import '../models/Patient.dart';
 
 class AppRoutes {
   static const String welcome = '/welcome';

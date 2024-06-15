@@ -1,4 +1,4 @@
-import 'package:sehatyaab/models/base_model.dart';
+import 'package:sehatyaab/models/BaseModel.dart';
 
 class UserAccounts extends BaseModel {
   String userName;

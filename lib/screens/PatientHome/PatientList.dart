@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/models/doctor.dart';
+import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/services/FirestoreService.dart';
 
 class PatientList extends StatelessWidget {
@@ -41,7 +41,7 @@ class PatientList extends StatelessWidget {
               print('Doctor: ${doctor.name}, ${doctor.email}, ${doctor.dob}');
 
               return ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   radius: 25,
                   backgroundImage: AssetImage('assets/images/female.png'),
                 ),

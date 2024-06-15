@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../models/base_model.dart';
+import '../models/BaseModel.dart';
 
 class FirestoreService<T extends BaseModel> {
   final CollectionReference _collection;

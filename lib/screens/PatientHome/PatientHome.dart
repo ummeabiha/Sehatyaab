@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/constants.dart';
-import 'package:sehatyaab/models/doctor.dart';
+import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
 import 'package:sehatyaab/widgets/BottomNavbar.dart';
 import '../../services/FirestoreService.dart';

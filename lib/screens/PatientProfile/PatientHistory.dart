@@ -3,7 +3,7 @@ import 'package:sehatyaab/validations/PatientFormValidator.dart';
 import 'package:sehatyaab/widgets/ElevatedButton.dart';
 import 'package:sehatyaab/widgets/MainContainer.dart';
 import 'package:sehatyaab/widgets/TextFormField.dart';
-import '../../models/patient.dart';
+import '../../models/Patient.dart';
 import '../../services/FirestoreService.dart';
 
 class PatientHistory extends StatefulWidget {
@@ -79,7 +79,7 @@ class _PatientHistoryState extends State<PatientHistory> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Information saved successfully')),
         );
-        Navigator.pop(context); 
+        Navigator.pop(context);
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to save information: $error')),
@@ -128,7 +128,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                   });
                 },
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 18),
               SwitchListTile(
                 title: Text(
                   'Any Medical Histories?',
@@ -141,6 +141,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                   });
                 },
               ),
+              SizedBox(height: 17),
               if (_hasMedicalHistory)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 17.0),
@@ -178,7 +179,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                     ],
                   ),
                 ),
-              SizedBox(height: 20),
+              SizedBox(height: 18),
               SwitchListTile(
                 title: Text(
                   'Do you have any Family Medical History?',
@@ -191,6 +192,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                   });
                 },
               ),
+              SizedBox(height: 17),
               if (_hasFamilyHistory)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 17.0),
@@ -217,7 +219,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                     ],
                   ),
                 ),
-              SizedBox(height: 20),
+                SizedBox(height: 18),
               SwitchListTile(
                 title: Text(
                   'Are you on any Ongoing Medications?',
@@ -230,6 +232,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                   });
                 },
               ),
+              SizedBox(height: 17),
               if (_hasOngoingMedications)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 17.0),
@@ -247,7 +250,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                     ],
                   ),
                 ),
-              SizedBox(height: 40),
+              SizedBox(height: 28),
               CustomElevatedButton(
                 onPressed: _savePatientData,
                 label: 'Save',
