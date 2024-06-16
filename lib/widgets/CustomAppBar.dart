@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Theme.of(context).cardColor,
       foregroundColor: Theme.of(context).primaryColor,
-      elevation: 4.0, // Add elevation to the app bar
+      elevation: 8.0, // Add elevation to the app bar
       title: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -44,7 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
             // Trailing action button
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.account_circle,
                 size: 32.0, // Increase the icon size
               ),

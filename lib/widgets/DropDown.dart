@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sehatyaab/theme/AppColors.dart';
 
 class CustomDropdown<T> extends StatelessWidget {
   final T? value;
@@ -20,9 +21,12 @@ class CustomDropdown<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
-    return DropdownButtonFormField<T>(
+    return  DropdownButtonFormField<T>(
       value: value,
       decoration: decoration.copyWith(
+        filled:true,
+        fillColor: Theme.of(context).brightness != Brightness.dark
+        ? Theme.of(context).primaryColor: AppColors.gray2,
         labelStyle: theme.textTheme.bodySmall,
         hintStyle: theme.textTheme.bodySmall,
         border: theme.inputDecorationTheme.border,

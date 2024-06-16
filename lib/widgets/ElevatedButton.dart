@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sehatyaab/theme/AppColors.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -20,7 +21,7 @@ class CustomElevatedButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
-          backgroundColor: Theme.of(context).cardColor,
+          backgroundColor: Theme.of(context).brightness== Brightness.dark ?  Theme.of(context).cardColor : AppColors.pink,
           overlayColor: Theme.of(context).hoverColor,
           elevation: 2,
         ),

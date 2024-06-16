@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:sehatyaab/theme/AppColors.dart';
 
 class AppTheme {
-  static final OutlineInputBorder _defaultInputBorder = OutlineInputBorder(
+  static final OutlineInputBorder _lightInputBorder = OutlineInputBorder(
     borderSide: const BorderSide(color: AppColors.blue5, width: 2.0),
+    borderRadius: BorderRadius.circular(10),
+  );
+
+    static final OutlineInputBorder _darkInputBorder = OutlineInputBorder(
+    borderSide: const BorderSide(color: AppColors.blue2, width: 2.0),
     borderRadius: BorderRadius.circular(10),
   );
 
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     visualDensity: VisualDensity.adaptivePlatformDensity,
+    scaffoldBackgroundColor: AppColors.white,
     primaryColor: AppColors.blue1,
     shadowColor: AppColors.gray,
     hoverColor: AppColors.peach,
@@ -18,9 +24,9 @@ class AppTheme {
     textTheme: const TextTheme(
       bodyLarge: TextStyle(
         color: AppColors.black,
-        fontFamily: 'GoogleSans-Bold',
+        fontFamily: 'GoogleSans-Regular',
         fontSize: 28,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
       ),
       bodyMedium: TextStyle(
         color: AppColors.black,
@@ -45,11 +51,9 @@ class AppTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      // fillColor: AppColors.blue1,
-      // filled: true,
       hintStyle: const TextStyle(color: AppColors.black),
-      border: _defaultInputBorder,
-      enabledBorder: _defaultInputBorder,
+      border: _lightInputBorder,
+      enabledBorder: _lightInputBorder,
       focusedBorder: OutlineInputBorder(
         borderSide: const BorderSide(
           color: AppColors.blue3,
@@ -58,11 +62,11 @@ class AppTheme {
         borderRadius: BorderRadius.circular(10),
       ),
       errorBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: AppColors.red),
+        borderSide: const BorderSide(color: AppColors.peach),
         borderRadius: BorderRadius.circular(10),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: AppColors.blue5),
+        borderSide: const BorderSide(color: AppColors.blue4),
         borderRadius: BorderRadius.circular(10),
       ),
     ),
@@ -73,6 +77,7 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     visualDensity: VisualDensity.adaptivePlatformDensity,
+    scaffoldBackgroundColor: AppColors.black,
     primaryColor: AppColors.blue5,
     shadowColor: AppColors.gray,
     hoverColor: AppColors.peach,
@@ -109,21 +114,21 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       hintStyle: const TextStyle(color: AppColors.black),
-      border: _defaultInputBorder,
-      enabledBorder: _defaultInputBorder,
+      border: _darkInputBorder,
+      enabledBorder: _darkInputBorder,
       focusedBorder: OutlineInputBorder(
         borderSide: const BorderSide(
-          color: AppColors.blue2,
+          color: AppColors.blue3,
           width: 2.0,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       errorBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: AppColors.red),
+        borderSide: const BorderSide(color: AppColors.peach),
         borderRadius: BorderRadius.circular(10),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: AppColors.blue3),
+        borderSide: const BorderSide(color: AppColors.blue1),
         borderRadius: BorderRadius.circular(10),
       ),
     ),
