@@ -10,7 +10,8 @@ class AppColors {
   static const Color peach = Color(0xFFf9bda7); 
   static const Color white = Color.fromARGB(255, 255, 255, 255);
   static const Color black = Color.fromARGB(255, 0, 0, 0);
+  static const Color black2 =Color.fromARGB(255, 19, 17, 17);
   static const Color gray = Color.fromARGB(204, 90, 90, 90);
-  static const Color gray2 = Color.fromARGB(236, 37, 37, 37);
+  static const Color gray2 = Color.fromARGB(235, 49, 49, 49);
   static const Color red = Color.fromARGB(255, 158, 13, 13);
 }
