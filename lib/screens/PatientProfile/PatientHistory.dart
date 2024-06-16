@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:sehatyaab/validations/PatientFormValidator.dart';
 import 'package:sehatyaab/widgets/ElevatedButton.dart';
 import 'package:sehatyaab/widgets/MainContainer.dart';
+import 'package:sehatyaab/widgets/RoundedContainer.dart';
 import 'package:sehatyaab/widgets/TextFormField.dart';
+import 'package:sehatyaab/widgets/TopImage.dart';
 import '../../models/Patient.dart';
 import '../../services/FirestoreService.dart';
 
@@ -92,171 +94,217 @@ class _PatientHistoryState extends State<PatientHistory> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
-    return SingleChildScrollView(
-      child: MainContainer(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Text(
-                'Patient History',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-              SizedBox(height: 20),
-              SwitchListTile(
-                title: Text(
-                  'Do you have Blood Pressure?',
-                  style: theme.textTheme.bodyMedium,
-                ),
-                value: _isBpPatient,
-                onChanged: (bool value) {
-                  setState(() {
-                    _isBpPatient = value;
-                  });
-                },
-              ),
-              SizedBox(height: 20),
-              SwitchListTile(
-                title: Text(
-                  'Do you have Sugar?',
-                  style: theme.textTheme.bodyMedium,
-                ),
-                value: _isSugarPatient,
-                onChanged: (bool value) {
-                  setState(() {
-                    _isSugarPatient = value;
-                  });
-                },
-              ),
-              SizedBox(height: 18),
-              SwitchListTile(
-                title: Text(
-                  'Any Medical Histories?',
-                  style: theme.textTheme.bodyMedium,
-                ),
-                value: _hasMedicalHistory,
-                onChanged: (bool value) {
-                  setState(() {
-                    _hasMedicalHistory = value;
-                  });
-                },
-              ),
-              SizedBox(height: 17),
-              if (_hasMedicalHistory)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 17.0),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TopImage(),
+            RoundedContainer(
+              child: MainContainer(
+                child: Form(
+                  key: _formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CustomTextFormField(
-                        controller: _medicalHistoryTypeController,
-                        validator: (value) =>
-                            PatientFormValidator.validateMedicalHistoryType(
-                                value, _hasMedicalHistory),
-                        labelText: "Type",
-                        hintText: "Fracture",
+                      Text(
+                        'Patient History',
+                        style: Theme.of(context).brightness == Brightness.dark
+                            ? Theme.of(context).textTheme.bodyLarge
+                            : Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color: Theme.of(context).primaryColor),
                       ),
-                      SizedBox(height: 24.0),
-                      CustomTextFormField(
-                        controller: _medicalHistoryYearController,
-                        keyboardType: TextInputType.number,
-                        validator: (value) =>
-                            PatientFormValidator.validateMedicalHistoryYear(
-                                value, _hasMedicalHistory),
-                        labelText: "Year",
-                        hintText: "2023",
+                      const SizedBox(height: 20),
+                      SwitchListTile(
+                        title: Text(
+                          'Do you have Blood Pressure?',
+                          style: Theme.of(context).brightness == Brightness.dark
+                              ? Theme.of(context).textTheme.bodyMedium
+                              : Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                      color: Theme.of(context).primaryColor),
+                        ),
+                        value: _isBpPatient,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _isBpPatient = value;
+                          });
+                        },
                       ),
-                      SizedBox(height: 24.0),
-                      CustomTextFormField(
-                        controller: _medicalHistoryDescController,
-                        validator: (value) =>
-                            PatientFormValidator.validateMedicalHistoryDesc(
-                                value, _hasMedicalHistory),
-                        labelText: "Description",
-                        hintText:
-                            "Medicines/ Duration for Recovery/ Any Severe Impacts?",
-                        maxLines: 3,
+                      const SizedBox(height: 20),
+                      SwitchListTile(
+                        title: Text(
+                          'Do you have Sugar?',
+                          style: Theme.of(context).brightness == Brightness.dark
+                              ? Theme.of(context).textTheme.bodyMedium
+                              : Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                      color: Theme.of(context).primaryColor),
+                        ),
+                        value: _isSugarPatient,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _isSugarPatient = value;
+                          });
+                        },
                       ),
+                      const SizedBox(height: 18),
+                      SwitchListTile(
+                        title: Text(
+                          'Any Medical Histories?',
+                          style: Theme.of(context).brightness == Brightness.dark
+                              ? Theme.of(context).textTheme.bodyMedium
+                              : Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                      color: Theme.of(context).primaryColor),
+                        ),
+                        value: _hasMedicalHistory,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _hasMedicalHistory = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 17),
+                      if (_hasMedicalHistory)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                          child: Column(
+                            children: [
+                              CustomTextFormField(
+                                controller: _medicalHistoryTypeController,
+                                validator: (value) => PatientFormValidator
+                                    .validateMedicalHistoryType(
+                                        value, _hasMedicalHistory),
+                                labelText: "Type",
+                                hintText: "Fracture",
+                              ),
+                              const SizedBox(height: 24.0),
+                              CustomTextFormField(
+                                controller: _medicalHistoryYearController,
+                                keyboardType: TextInputType.number,
+                                validator: (value) => PatientFormValidator
+                                    .validateMedicalHistoryYear(
+                                        value, _hasMedicalHistory),
+                                labelText: "Year",
+                                hintText: "2023",
+                              ),
+                              const SizedBox(height: 24.0),
+                              CustomTextFormField(
+                                controller: _medicalHistoryDescController,
+                                validator: (value) => PatientFormValidator
+                                    .validateMedicalHistoryDesc(
+                                        value, _hasMedicalHistory),
+                                labelText: "Description",
+                                hintText:
+                                    "Medicines/ Duration for Recovery/ Any Severe Impacts?",
+                                maxLines: 3,
+                              ),
+                            ],
+                          ),
+                        ),
+                      const SizedBox(height: 18),
+                      SwitchListTile(
+                        title: Text(
+                          'Do you have any Family Medical History?',
+                          style: Theme.of(context).brightness == Brightness.dark
+                              ? Theme.of(context).textTheme.bodyMedium
+                              : Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                      color: Theme.of(context).primaryColor),
+                        ),
+                        value: _hasFamilyHistory,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _hasFamilyHistory = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 17),
+                      if (_hasFamilyHistory)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                          child: Column(
+                            children: [
+                              CustomTextFormField(
+                                controller: _familyHistoryTypeController,
+                                validator: (value) => PatientFormValidator
+                                    .validateFamilyHistoryType(
+                                        value, _hasFamilyHistory),
+                                labelText: "Type",
+                                hintText: "Heart Disease",
+                              ),
+                              const SizedBox(height: 24.0),
+                              CustomTextFormField(
+                                controller: _familyHistoryDescController,
+                                validator: (value) => PatientFormValidator
+                                    .validateFamilyHistoryDesc(
+                                        value, _hasFamilyHistory),
+                                labelText: "Description",
+                                hintText:
+                                    "Details about family medical history",
+                                maxLines: 3,
+                              ),
+                            ],
+                          ),
+                        ),
+                      const SizedBox(height: 18),
+                      SwitchListTile(
+                        title: Text(
+                          'Are you on any Ongoing Medications?',
+                          style: Theme.of(context).brightness == Brightness.dark
+                              ? Theme.of(context).textTheme.bodyMedium
+                              : Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                      color: Theme.of(context).primaryColor),
+                        ),
+                        value: _hasOngoingMedications,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _hasOngoingMedications = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 17),
+                      if (_hasOngoingMedications)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                          child: Column(
+                            children: [
+                              CustomTextFormField(
+                                controller: _ongoingMedicationsController,
+                                validator: (value) => PatientFormValidator
+                                    .validateOngoingMedications(
+                                        value, _hasOngoingMedications),
+                                labelText: "Ongoing Medications",
+                                hintText: "List ongoing medications",
+                                maxLines: 3,
+                              ),
+                            ],
+                          ),
+                        ),
+                      const SizedBox(height: 32),
+                      CustomElevatedButton(
+                        onPressed: _savePatientData,
+                        label: 'Submit',
+                        //child: const Text('Submit'),
+                      ),
+                      const SizedBox(height: 32),
                     ],
                   ),
                 ),
-              SizedBox(height: 18),
-              SwitchListTile(
-                title: Text(
-                  'Do you have any Family Medical History?',
-                  style: theme.textTheme.bodyMedium,
-                ),
-                value: _hasFamilyHistory,
-                onChanged: (bool value) {
-                  setState(() {
-                    _hasFamilyHistory = value;
-                  });
-                },
               ),
-              SizedBox(height: 17),
-              if (_hasFamilyHistory)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 17.0),
-                  child: Column(
-                    children: [
-                      CustomTextFormField(
-                        controller: _familyHistoryTypeController,
-                        validator: (value) =>
-                            PatientFormValidator.validateFamilyHistoryType(
-                                value, _hasFamilyHistory),
-                        labelText: "Type",
-                        hintText: "Heart Disease",
-                      ),
-                      SizedBox(height: 24.0),
-                      CustomTextFormField(
-                        controller: _familyHistoryDescController,
-                        validator: (value) =>
-                            PatientFormValidator.validateFamilyHistoryDesc(
-                                value, _hasFamilyHistory),
-                        labelText: "Description",
-                        hintText: "Details about family medical history",
-                        maxLines: 3,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 18),
-              SwitchListTile(
-                title: Text(
-                  'Are you on any Ongoing Medications?',
-                  style: theme.textTheme.bodyMedium,
-                ),
-                value: _hasOngoingMedications,
-                onChanged: (bool value) {
-                  setState(() {
-                    _hasOngoingMedications = value;
-                  });
-                },
-              ),
-              SizedBox(height: 17),
-              if (_hasOngoingMedications)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 17.0),
-                  child: Column(
-                    children: [
-                      CustomTextFormField(
-                        controller: _ongoingMedicationsController,
-                        validator: (value) =>
-                            PatientFormValidator.validateOngoingMedications(
-                                value, _hasOngoingMedications),
-                        labelText: "Ongoing Medications",
-                        hintText: "List ongoing medications",
-                        maxLines: 3,
-                      ),
-                    ],
-                  ),
-                ),
-              SizedBox(height: 28),
-              CustomElevatedButton(
-                onPressed: _savePatientData,
-                label: 'Save',
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -86,8 +86,9 @@ class AppTheme {
     textTheme: const TextTheme(
       bodyLarge: TextStyle(
         color: AppColors.white,
-        fontFamily: 'GoogleSans-Bold',
-        fontSize: 26,
+                fontFamily: 'GoogleSans-Regular',
+        fontSize: 28,
+        fontWeight: FontWeight.w500,
       ),
       bodyMedium: TextStyle(
         color: AppColors.white,
