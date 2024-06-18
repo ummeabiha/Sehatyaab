@@ -29,6 +29,20 @@ class FirestoreService<T extends BaseModel> {
     }
   }
 
+  Future<T> getItemById(String id, T model) async {
+    try {
+      DocumentSnapshot doc = await _collection.doc(id).get();
+      if (doc.exists) {
+        return model.fromMap(doc.data() as Map<String, dynamic>, doc.id) as T;
+      } else {
+        throw Exception('Document does not exist');
+      }
+    } catch (e) {
+      debugPrint('Error getting item by ID: $e');
+      throw e;
+    }
+  }
+
   Stream<List<T>> getItemsStream(T model) {
     try {
       return _collection.snapshots().map((QuerySnapshot snapshot) {

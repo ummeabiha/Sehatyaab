@@ -25,7 +25,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
         Navigator.pushReplacementNamed(context, '/appointments');
         break;
       case 2:
-        Navigator.pushReplacementNamed(context, '/doctor');
+        Navigator.pushReplacementNamed(context, '/displayPatient');
         break;
       case 3:
         Navigator.pushReplacementNamed(context, '/profile');
