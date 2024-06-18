@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
-import 'package:sehatyaab/widgets/CustomAppBar.dart';
 import 'services/FirebaseConnection.dart';
 import 'theme/AppTheme.dart';
 
@@ -10,37 +9,25 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  bool _isDarkTheme = false;
-
-  void _toggleTheme() {
-    setState(() {
-      _isDarkTheme = !_isDarkTheme;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sehatyaab',
-      theme: _isDarkTheme ? AppTheme.darkTheme : AppTheme.lightTheme,
-      debugShowCheckedModeBanner: false,
-      routes: AppRoutes.routes,
-      initialRoute: AppRoutes.welcome,
-      builder: (context, child) {
-        return Scaffold(
-          appBar: CustomAppBar(
-            isDarkTheme: _isDarkTheme,
-            toggleTheme: _toggleTheme,
-          ),
-          body: child,
+    return ValueListenableBuilder<ThemeData>(
+      valueListenable: AppTheme.currentTheme,
+      builder: (context, theme, child) {
+        return MaterialApp(
+          title: 'Sehatyaab',
+          theme: theme,
+          debugShowCheckedModeBanner: false,
+          routes: AppRoutes.routes,
+          initialRoute: AppRoutes.welcome,
+          builder: (context, child) {
+            return Scaffold(
+              body: child,
+            );
+          },
         );
       },
     );

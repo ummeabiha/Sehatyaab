@@ -7,7 +7,7 @@ class AppTheme {
     borderRadius: BorderRadius.circular(10),
   );
 
-    static final OutlineInputBorder _darkInputBorder = OutlineInputBorder(
+  static final OutlineInputBorder _darkInputBorder = OutlineInputBorder(
     borderSide: const BorderSide(color: AppColors.blue2, width: 2.0),
     borderRadius: BorderRadius.circular(10),
   );
@@ -73,7 +73,6 @@ class AppTheme {
     iconTheme: const IconThemeData(color: AppColors.blue4),
   );
 
-  // Dark Theme
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -86,7 +85,7 @@ class AppTheme {
     textTheme: const TextTheme(
       bodyLarge: TextStyle(
         color: AppColors.white,
-                fontFamily: 'GoogleSans-Regular',
+        fontFamily: 'GoogleSans-Regular',
         fontSize: 28,
         fontWeight: FontWeight.w500,
       ),
@@ -135,4 +134,15 @@ class AppTheme {
     ),
     iconTheme: const IconThemeData(color: AppColors.blue1),
   );
+
+  static final ValueNotifier<ThemeData> currentTheme =
+      ValueNotifier(lightTheme);
+
+  static void toggleTheme() {
+    if (currentTheme.value == lightTheme) {
+      currentTheme.value = darkTheme;
+    } else {
+      currentTheme.value = lightTheme;
+    }
+  }
 }

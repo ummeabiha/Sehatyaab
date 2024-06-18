@@ -9,6 +9,7 @@ import 'package:sehatyaab/widgets/RoundedContainer.dart';
 import 'package:sehatyaab/widgets/TextFormField.dart';
 import 'package:sehatyaab/widgets/TopImage.dart';
 import '../../services/FirestoreService.dart';
+import '../../widgets/CustomAppBar.dart';
 
 class CreateDoctorProfile extends StatefulWidget {
   final Map<String, dynamic> doctorData;
@@ -65,6 +66,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(),
         body: SingleChildScrollView(
             child: Column(children: [
       TopImage(),

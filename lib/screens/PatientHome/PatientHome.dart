@@ -4,6 +4,7 @@ import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
 import 'package:sehatyaab/widgets/BottomNavbar.dart';
 import '../../services/FirestoreService.dart';
+import '../../widgets/CustomAppBar.dart';
 
 class PatientHomeScreen extends StatefulWidget {
   final FirestoreService<Doctor> firestoreService;
@@ -34,7 +35,9 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Doctor>>(
+    return Scaffold(
+      appBar: const CustomAppBar(),
+      body: StreamBuilder<List<Doctor>>(
       stream: widget.firestoreService.getItemsStream(Doctor(
         id: '',
         name: '',
@@ -180,7 +183,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
           );
         }
       },
-    );
+    ));
   }
 }
 

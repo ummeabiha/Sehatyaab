@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/validations/PatientFormValidator.dart';
+import 'package:sehatyaab/widgets/CustomAppBar.dart';
 import 'package:sehatyaab/widgets/ElevatedButton.dart';
 import 'package:sehatyaab/widgets/MainContainer.dart';
 import 'package:sehatyaab/widgets/RoundedContainer.dart';
@@ -29,6 +30,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [

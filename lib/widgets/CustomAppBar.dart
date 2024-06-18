@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sehatyaab/theme/AppTheme.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isDarkTheme;
-  final VoidCallback toggleTheme;
-
   const CustomAppBar({
     super.key,
-    required this.isDarkTheme,
-    required this.toggleTheme,
   });
 
   @override
@@ -16,24 +12,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Theme.of(context).cardColor,
       foregroundColor: Theme.of(context).primaryColor,
-      elevation: 8.0, // Add elevation to the app bar
+      elevation: 8.0,
       title: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Leading logo
             IconButton(
               icon: Icon(
-                isDarkTheme ? Icons.light_mode : Icons.dark_mode,
-                size: 32.0, // Increase the icon size
+                Theme.of(context).brightness != Brightness.dark
+                    ? Icons.light_mode
+                    : Icons.dark_mode,
+                size: 32.0,
               ),
-              onPressed: toggleTheme,
+              onPressed: AppTheme.toggleTheme,
             ),
-
-            // Center title
             const Text(
               'Sehatyaab',
               style: TextStyle(
@@ -41,12 +37,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
-            // Trailing action button
             IconButton(
               icon: const Icon(
                 Icons.account_circle,
-                size: 32.0, // Increase the icon size
+                size: 32.0,
               ),
               onPressed: () {
                 // Add the desired action for the profile icon button

@@ -7,6 +7,7 @@ import 'package:sehatyaab/widgets/TextFormField.dart';
 import 'package:sehatyaab/widgets/TopImage.dart';
 import '../../models/Patient.dart';
 import '../../services/FirestoreService.dart';
+import '../../widgets/CustomAppBar.dart';
 
 class PatientHistory extends StatefulWidget {
   final Map<String, dynamic> patientData;
@@ -95,6 +96,7 @@ class _PatientHistoryState extends State<PatientHistory> {
     final ThemeData theme = Theme.of(context);
 
     return Scaffold(
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
