@@ -80,4 +80,6 @@ class Patient extends BaseModel {
   String toString() {
     return 'Patient(id: $id, name: $name, email: $email, gender: $gender, dob: $dob, isBpPatient: $isBpPatient, isSugarPatient: $isSugarPatient, height: $height, weight: $weight, medicalHistoryType: $medicalHistoryType, medicalHistoryDesc: $medicalHistoryDesc, medicalHistoryYear: $medicalHistoryYear, familyHistoryType: $familyHistoryType, familyHistoryDesc: $familyHistoryDesc, ongoingMedications: $ongoingMedications)';
   }
+
+  toList() {}
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sehatyaab/validations/PatientFormValidator.dart';
 import 'package:sehatyaab/widgets/CustomAppBar.dart';
 import 'package:sehatyaab/widgets/ElevatedButton.dart';
-import 'package:sehatyaab/widgets/MainContainer.dart';
+import 'package:sehatyaab/widgets/FormContainer.dart';
 import 'package:sehatyaab/widgets/RoundedContainer.dart';
 import 'package:sehatyaab/widgets/TextFormField.dart';
 import 'package:sehatyaab/widgets/TopImage.dart';
@@ -36,7 +36,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
           children: [
             TopImage(),
             RoundedContainer(
-              child: MainContainer(
+              child: FormContainer(
                 child: Form(
                   key: _formKey,
                   child: Column(

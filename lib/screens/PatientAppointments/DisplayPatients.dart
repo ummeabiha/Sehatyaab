@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/models/Appointments.dart';
 import 'package:sehatyaab/models/Patient.dart';
+import 'package:sehatyaab/screens/PatientDetails/PatientDetails.dart';
 import 'package:sehatyaab/widgets/CustomAppBar.dart';
+import 'package:sehatyaab/widgets/CustomContainer.dart';
 import '../../services/FirestoreService.dart';
 
 class DisplayPatients extends StatefulWidget {
@@ -21,64 +25,69 @@ class DisplayPatients extends StatefulWidget {
 }
 
 class _DisplayPatientsState extends State<DisplayPatients> {
-  late Future<List<Patient>> _patientsFuture;
+  late Stream<List<Patient>> _patientsStream;
 
   @override
   void initState() {
     super.initState();
-    _patientsFuture = _loadPatients();
+    _listenToAppointments();
   }
 
-  Future<List<Patient>> _loadPatients() async {
-    final appointments = await widget.appointmentService
+  void _listenToAppointments() {
+    _patientsStream = widget.appointmentService
         .getItemsStream(Appointment(
-          id: '',
-          date: '',
-          time: '',
-          patientId: '',
-          reasonForVisit: '',
-          doctorId: widget.doctorId,
-        ))
-        .first;
+      id: '',
+      date: '',
+      time: '',
+      patientId: '',
+      reasonForVisit: '',
+      doctorId: widget.doctorId,
+    ))
+        .asyncMap((appointments) async {
+      List<String> patientIds =
+          appointments.map((appointment) => appointment.patientId).toList();
 
-    List<String> patientIds =
-        appointments.map((appointment) => appointment.patientId).toList();
+      debugPrint('Patient IDs: $patientIds');
 
-    List<Patient> patients = [];
-    for (String patientId in patientIds) {
-      Patient patient = await widget.patientService.getItemById(
-          patientId,
-          Patient(
-            id: '',
-            name: '',
-            email: '',
-            gender: '',
-            dob: '',
-            height: 0.0,
-            weight: 0.0,
-          ));
-      patients.add(patient);
-    }
+      List<Patient> patients = [];
+      for (String patientId in patientIds) {
+        Patient patient = await widget.patientService.getItemById(
+            patientId,
+            Patient(
+              id: '',
+              name: '',
+              email: '',
+              gender: '',
+              dob: '',
+              height: 0.0,
+              weight: 0.0,
+            ));
+        patients.add(patient);
+      }
 
-    return patients;
+      return patients;
+    });
+
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(), // Assuming CustomAppBar is correctly implemented
-      body: FutureBuilder<List<Patient>>(
-        future: _patientsFuture,
-        builder: (context, AsyncSnapshot<List<Patient>> patientSnapshot) {
-          if (patientSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (patientSnapshot.hasError) {
-            return Center(child: Text('Error fetching patients'));
-          } else if (!patientSnapshot.hasData ||
-              patientSnapshot.data!.isEmpty) {
-            return Center(child: Text('No patients found'));
-          } else {
-            final patients = patientSnapshot.data!;
+      appBar: const CustomAppBar(),
+      body: CustomContainer(
+        child: StreamBuilder<List<Patient>>(
+          stream: _patientsStream,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+
+            List<Patient> patients = snapshot.data ?? [];
 
             return ListView.builder(
               itemCount: patients.length,
@@ -93,30 +102,41 @@ class _DisplayPatientsState extends State<DisplayPatients> {
                     radius: 25,
                     backgroundImage: AssetImage(avatarImagePath),
                   ),
-                  title: Text(patient.name),
-                  subtitle: Text(patient.email),
+                  title: Text(patient.name,
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  subtitle: Text(patient.dob,
+                      style: Theme.of(context).textTheme.bodySmall),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
                         onPressed: () {
-                          // Implement eye icon functionality (view details)
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PatientDetailsPage(patient: patient),
+                            ),
+                          );
                         },
-                        icon: Icon(Icons.remove_red_eye),
+                        icon: Icon(Icons.remove_red_eye,
+                            size: 32.0, color: Theme.of(context).cardColor),
                       ),
+                      SizedBox(width: 8.0),
                       IconButton(
                         onPressed: () {
                           // Implement video call icon functionality
                         },
-                        icon: Icon(Icons.video_camera_front_rounded),
+                        icon: Icon(Icons.video_camera_front_rounded,
+                            size: 32.0, color: Theme.of(context).cardColor),
                       ),
                     ],
                   ),
                 );
               },
             );
-          }
-        },
+          },
+        ),
       ),
     );
   }

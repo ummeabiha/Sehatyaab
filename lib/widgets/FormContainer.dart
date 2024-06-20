@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MainContainer extends StatelessWidget {
-  const MainContainer({super.key, this.child});
+class FormContainer extends StatelessWidget {
+  const FormContainer({super.key, this.child});
   final Widget? child;
 
   @override
