@@ -1,24 +1,27 @@
 import 'package:sehatyaab/models/BaseModel.dart';
 
 class UserAccounts extends BaseModel {
-  String userName;
   String password;
-  bool isDoctor;
+  String? email;
+  String? name;
+  String? option;
 
   UserAccounts({
     required super.id,
-    required this.userName,
+    required this.name,
+    required this.email,
     required this.password,
-    this.isDoctor = false,
+    required this.option,
   });
 
   @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'userName': userName,
+      'name': name,
+      'email': email,
       'password': password,
-      'isDoctor': isDoctor,
+      'option': option,
     };
   }
 
@@ -26,14 +29,16 @@ class UserAccounts extends BaseModel {
   UserAccounts fromMap(Map<String, dynamic> map, String id) {
     return UserAccounts(
       id: id,
-      userName: map['userName'] as String,
+      name: map['userName'] as String,
+      email: map['email'] as String?,
       password: map['password'] as String,
-      isDoctor: map['isDoctor'] as bool? ?? false,
+      option: map['option'] as String,
+
     );
   }
 
   @override
   String toString() {
-    return 'UserAccounts(userId: $id, userName: $userName, password: $password, isDoctor: $isDoctor)';
+    return 'UserAccounts(userId: $id, name: $name, password: $password, email: $email, option: $option )';
   }
 }

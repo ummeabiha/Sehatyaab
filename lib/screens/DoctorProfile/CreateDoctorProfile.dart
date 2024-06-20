@@ -40,7 +40,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
   void _saveDoctorData() {
     if (_formKey.currentState!.validate()) {
       Doctor doctor = Doctor(
-        id: "",
+        id: widget.doctorData['id'],
         name: _nameController.text,
         email: _emailController.text,
         gender: _gender!,
@@ -50,9 +50,13 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
         yearsOfExperience: int.parse(_yearsOfExperienceController.text),
       );
 
-      FirestoreService('doctors').addItem(doctor).then((_) {
+       // FirestoreService('doctors').addItem(doctor).then((_) {
+       // ScaffoldMessenger.of(context).showSnackBar(
+       //    const SnackBar(content: Text('Information saved successfully')),
+       //  );
+      FirestoreService<Doctor>('doctors').updateItem(doctor.id, doctor.toMap()).then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Information saved successfully')),
+          const SnackBar(content: Text('Information updated successfully')),
         );
         Navigator.pop(context); // Go back to the home screen or previous screen
       }).catchError((error) {
