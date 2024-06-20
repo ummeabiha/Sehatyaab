@@ -47,7 +47,7 @@ class _LoginFormState extends State<LoginForm> {
           email: _emailController.text,
           password: _passwordController.text,
         );
-        Navigator.pushNamed(context, AppRoutes.patienthp);
+        Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(e.message ?? 'Login failed')),
