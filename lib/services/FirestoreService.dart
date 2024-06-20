@@ -64,13 +64,20 @@ class FirestoreService<T extends BaseModel> {
       debugPrint('Error deleting item: $e');
     }
   }
-
-  Future<void> updateItem(String id, T item) async {
+  Future<void> updateItem(String id, Map<String, dynamic> item) async {
     try {
-      await _collection.doc(id).update(item.toMap());
+      await _collection.doc(id).update(item);
       debugPrint('Item updated with ID: $id');
     } catch (e) {
       debugPrint('Error updating item: $e');
     }
   }
+
+// Future<void> updateItem(String id, T item) async {
+  //   try {
+  //     await _collection.doc(id).update(item.toMap());
+  //     debugPrint('Item updated with ID: $id');
+  //   } catch (e) {
+  //     debugPrint('Error updating item: $e');
+  //   }
 }

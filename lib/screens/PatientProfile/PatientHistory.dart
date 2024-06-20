@@ -40,6 +40,8 @@ class _PatientHistoryState extends State<PatientHistory> {
 
   final TextEditingController _ongoingMedicationsController =
       TextEditingController();
+  final FirestoreService<Patient> _firestoreService = FirestoreService<Patient>('patients');
+
 
   void _savePatientData() {
     if (_formKey.currentState!.validate()) {
@@ -54,7 +56,7 @@ class _PatientHistoryState extends State<PatientHistory> {
       }
 
       Patient patient = Patient(
-        id: "",
+        id: widget.patientData['id'],
         name: widget.patientData['name'],
         email: widget.patientData['email'],
         gender: widget.patientData['gender'],
@@ -78,7 +80,9 @@ class _PatientHistoryState extends State<PatientHistory> {
         height: height,
       );
 
-      FirestoreService('patients').addItem(patient).then((_) {
+      Map<String, dynamic> patientMap = patient.toMap();
+
+      _firestoreService.updateItem(widget.patientData['id'], patientMap).then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Information saved successfully')),
         );
