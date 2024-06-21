@@ -17,14 +17,12 @@ class ExpandableDetailTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-        dividerColor: Colors.transparent, // Set divider color to transparent
+        dividerColor: Colors.transparent,
       ),
       child: Card(
-        // Wrap ExpansionTile with Card for custom shape
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0), // Set circular radius
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        
         margin: EdgeInsets.zero,
         color: Theme.of(context).brightness != Brightness.dark
             ? Theme.of(context).cardColor

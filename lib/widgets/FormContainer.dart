@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/AppColors.dart';
+
 class FormContainer extends StatelessWidget {
   const FormContainer({super.key, this.child});
   final Widget? child;
@@ -7,8 +9,7 @@ class FormContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
-      margin: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(32.0),
       child: child,
     );
   }

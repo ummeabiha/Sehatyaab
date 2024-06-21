@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../models/Appointments.dart';
 import '../models/BaseModel.dart';
 
 class FirestoreService<T extends BaseModel> {
@@ -73,11 +74,21 @@ class FirestoreService<T extends BaseModel> {
     }
   }
 
-// Future<void> updateItem(String id, T item) async {
-  //   try {
-  //     await _collection.doc(id).update(item.toMap());
-  //     debugPrint('Item updated with ID: $id');
-  //   } catch (e) {
-  //     debugPrint('Error updating item: $e');
-  //   }
+   Stream<List<Appointment>> getItemsByDoctorIdStream(String doctorId, T model) {
+    try {
+      return _collection
+          .where('doctorId', isEqualTo: doctorId)
+          .snapshots()
+          .map((snapshot) {
+        return snapshot.docs.map((doc) {
+          return model.fromMap(
+              doc.data() as Map<String, dynamic>, doc.id) as Appointment;
+        }).toList();
+      });
+    } catch (e) {
+      debugPrint('Error getting items by doctor ID stream: $e');
+      rethrow;
+    }
+  }
+
 }
