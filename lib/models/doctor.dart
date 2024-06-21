@@ -8,6 +8,8 @@ class Doctor extends BaseModel {
   String specialization;
   String qualification;
   int yearsOfExperience;
+  Map<String, List<String>> availableSlots; // Map of day to available slots
+  Map<String, List<String>> bookedSlots;
 
   Doctor({
     required super.id,
@@ -18,6 +20,9 @@ class Doctor extends BaseModel {
     required this.specialization,
     required this.qualification,
     required this.yearsOfExperience,
+    required this.availableSlots,
+    required this.bookedSlots,
+
   });
 
   @override
@@ -31,6 +36,8 @@ class Doctor extends BaseModel {
       'specialization': specialization,
       'qualification': qualification,
       'yearsOfExperience': yearsOfExperience,
+      'availableSlots': availableSlots,
+      'bookedSlots': bookedSlots,
     };
   }
 
@@ -45,11 +52,13 @@ class Doctor extends BaseModel {
       specialization: map['specialization'] as String,
       qualification: map['qualification'] as String,
       yearsOfExperience: map['yearsOfExperience'] as int,
+      availableSlots: Map<String, List<String>>.from(map['availableSlots']),
+      bookedSlots: Map<String, List<String>>.from(map['bookedSlots']),
     );
   }
 
   @override
   String toString() {
-    return 'Doctor(doctorId:$id, name: $name, email: $email, gender: $gender, dob: $dob, specialization: $specialization, qualification: $qualification, yearsOfExperience: $yearsOfExperience)';
+    return 'Doctor(doctorId:$id, name: $name, email: $email, gender: $gender, dob: $dob, specialization: $specialization, qualification: $qualification, yearsOfExperience: $yearsOfExperience, availableSlots: $availableSlots, bookedSlots: $bookedSlots)';
   }
 }

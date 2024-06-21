@@ -1,7 +1,7 @@
 import 'package:sehatyaab/models/base_model.dart';
 
 class Appointment extends BaseModel {
-  String date;
+  DateTime date;
   String time;
   String patientId;
   String doctorId;
@@ -28,7 +28,7 @@ class Appointment extends BaseModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'date': date,
+      'date': date.toIso8601String(),
       'time': time,
       'patientId': patientId,
       'doctorId': doctorId,
@@ -44,7 +44,7 @@ class Appointment extends BaseModel {
   Appointment fromMap(Map<String, dynamic> map, String id) {
     return Appointment(
       id: id,
-      date: map['date'] as String,
+      date: DateTime.parse(map['date']),
       time: map['time'] as String,
       patientId: map['patientId'] as String,
       doctorId: map['doctorId'] as String,

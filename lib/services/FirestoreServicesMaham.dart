@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../models/appointments.dart';
+import '../models/doctor.dart';
 import '../models/base_model.dart';
 
 class FirestoreService<T extends BaseModel> {
@@ -61,4 +63,10 @@ class FirestoreService<T extends BaseModel> {
   }
 }
 
+class AppointmentService extends FirestoreService<Appointment> {
+  AppointmentService() : super('appointments');
+}
 
+class DoctorService extends FirestoreService<Doctor> {
+  DoctorService() : super('doctors');
+}

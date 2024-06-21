@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/routes/AppRoutes.dart';
+import 'package:provider/provider.dart';
+import 'Providers/appointment_provider.dart';
+import 'routes/AppRoutes.dart';
 import 'services/FirebaseConnection.dart';
 import 'theme/AppTheme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseConnection.initializeFirebase();
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AppointmentProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {

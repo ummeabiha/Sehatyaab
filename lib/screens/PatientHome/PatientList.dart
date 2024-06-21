@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/models/doctor.dart';
 import 'package:sehatyaab/services/FirestoreService.dart';
+import '../Doctors/Doctor_description.dart';
+import 'package:sehatyaab/routes/AppRoutes.dart';
 
 class PatientList extends StatelessWidget {
   final FirestoreService<Doctor> firestoreService;
 
-  const PatientList({super.key, required this.firestoreService});
+  const PatientList({Key? key, required this.firestoreService}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,8 @@ class PatientList extends StatelessWidget {
         specialization: '',
         qualification: '',
         yearsOfExperience: 0,
+          availableSlots: {},
+        bookedSlots: {},
       )),
       builder: (context, AsyncSnapshot<List<Doctor>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,9 +53,10 @@ class PatientList extends StatelessWidget {
                 subtitle: Text(doctor.specialization),
                 trailing: TextButton(
                   onPressed: () {
-                    // Implement booking functionality
-                  },
-                  child: Text("Book Now"),
+                      Navigator.pushNamed(context, AppRoutes.doctordesc);
+             },
+
+                 child: Text("Book Now"),
                 ),
               );
             },

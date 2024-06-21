@@ -33,14 +33,23 @@ class AppTheme {
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        foregroundColor: AppColors.white,
-        backgroundColor: AppColors.blue5,
-        overlayColor: AppColors.blue3,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
+      style: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all(AppColors.white),
+        backgroundColor: MaterialStateProperty.all(AppColors.blue5),
+        overlayColor: MaterialStateProperty.resolveWith<Color?>(
+              (Set<MaterialState> states) {
+            if (states.contains(MaterialState.pressed)) {
+              return AppColors.blue3.withOpacity(0.12);
+            }
+            return null;
+          },
         ),
-        fixedSize: const Size(200, 50),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        fixedSize: MaterialStateProperty.all(const Size(200, 50)),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -95,14 +104,23 @@ class AppTheme {
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        foregroundColor: AppColors.blue5,
-        backgroundColor: AppColors.blue1,
-        overlayColor: AppColors.blue2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
+      style: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all(AppColors.blue5),
+        backgroundColor: MaterialStateProperty.all(AppColors.blue1),
+        overlayColor: MaterialStateProperty.resolveWith<Color?>(
+              (Set<MaterialState> states) {
+            if (states.contains(MaterialState.pressed)) {
+              return AppColors.blue2.withOpacity(0.12);
+            }
+            return null;
+          },
         ),
-        fixedSize: const Size(200, 50),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        fixedSize: MaterialStateProperty.all(const Size(200, 50)),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(

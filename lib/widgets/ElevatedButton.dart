@@ -21,16 +21,24 @@ class CustomElevatedButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
           backgroundColor: Theme.of(context).cardColor,
-          overlayColor: Theme.of(context).hoverColor,
           elevation: 2,
+        ).copyWith(
+          overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.pressed)) {
+                return Theme.of(context).hoverColor.withOpacity(0.12);
+              }
+              return null;
+            },
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).primaryColor,
-                ),
+              color: Theme.of(context).primaryColor,
+            ),
           ),
         ),
       ),
