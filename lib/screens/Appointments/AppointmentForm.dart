@@ -2,13 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:sehatyaab/models/appointments.dart';
 import 'package:sehatyaab/theme/AppColors.dart';
+import '../../services/FirestoreService.dart';
+import 'package:sehatyaab/models/doctor.dart';
+
 import '../../Providers/appointment_provider.dart';
 
 class AppointmentForm extends StatelessWidget {
   final String selectedDoctor;
+  final FirestoreService<Doctor> firestoreService;
 
-  AppointmentForm({required this.selectedDoctor});
+  AppointmentForm({required this.selectedDoctor,required this.firestoreService});
 
   @override
   Widget build(BuildContext context) {

@@ -31,7 +31,10 @@ class AppRoutes {
     //patienthp: (context) => const PatientHomeScreen(),
     home: (context) => const HomeScreen(),
     // doctordesc: (context) => DoctorDescriptionScreen(firestoreService: firestoreService),
-    appointmentForm:(context)=>AppointmentForm(selectedDoctor: 'Maham'),
+    appointmentForm: (context) => AppointmentForm(
+      selectedDoctor: '',
+      firestoreService: FirestoreService<Doctor>('/doctors'),
+    ),
     appointmentlist:(context)=>AppointmentList(),
     patientForm: (context) => const CreatePatientProfile(),
     doctordesc: (context) {

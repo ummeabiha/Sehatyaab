@@ -42,6 +42,20 @@ class FirestoreService<T extends BaseModel> {
     }
   }
 
+  //separate
+  Future<T?> getItem(String id,T model) async {
+    try {
+      DocumentSnapshot docSnapshot = await _collection.doc(id).get();
+      if (docSnapshot.exists) {
+        return model.fromMap(docSnapshot.data() as Map<String, dynamic>, docSnapshot.id) as T;
+      }
+      return null;
+    } catch (e) {
+      debugPrint('Error getting item: $e');
+      rethrow;
+    }
+  }
+
   Future<void> deleteItem(String id) async {
     try {
       await _collection.doc(id).delete();
@@ -60,5 +74,29 @@ class FirestoreService<T extends BaseModel> {
     }
   }
 }
+
+// Stream<List<Appointment>> getItemsByDoctorIdStream(String doctorId, T model) {
+//   try {
+//     return _collection
+//         .where('doctorId', isEqualTo: doctorId)
+//         .snapshots()
+//         .map((snapshot) {
+//       return snapshot.docs.map((doc) {
+//         return model.fromMap(
+//             doc.data() as Map<String, dynamic>, doc.id) as Appointment;
+//       }).toList();
+//     });
+//   } catch (e) {
+//     debugPrint('Error getting items by doctor ID stream: $e');
+//     rethrow;
+//   }
+// }
+//
+// }
+
+
+
+
+
 
 

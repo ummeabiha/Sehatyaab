@@ -8,7 +8,7 @@ class Doctor extends BaseModel {
   String specialization;
   String qualification;
   int yearsOfExperience;
-  Map<String, List<String>> availableSlots; // Map of day to available slots
+  Map<String, List<String>> availableSlots;
   Map<String, List<String>> bookedSlots;
 
   Doctor({
@@ -22,7 +22,6 @@ class Doctor extends BaseModel {
     required this.yearsOfExperience,
     required this.availableSlots,
     required this.bookedSlots,
-
   });
 
   @override
@@ -54,6 +53,31 @@ class Doctor extends BaseModel {
       yearsOfExperience: map['yearsOfExperience'] as int,
       availableSlots: Map<String, List<String>>.from(map['availableSlots']),
       bookedSlots: Map<String, List<String>>.from(map['bookedSlots']),
+    );
+  }
+
+  Doctor copyWith({
+    String? name,
+    String? email,
+    String? gender,
+    String? dob,
+    String? specialization,
+    String? qualification,
+    int? yearsOfExperience,
+    Map<String, List<String>>? availableSlots,
+    Map<String, List<String>>? bookedSlots,
+  }) {
+    return Doctor(
+      id: this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      gender: gender ?? this.gender,
+      dob: dob ?? this.dob,
+      specialization: specialization ?? this.specialization,
+      qualification: qualification ?? this.qualification,
+      yearsOfExperience: yearsOfExperience ?? this.yearsOfExperience,
+      availableSlots: availableSlots ?? this.availableSlots,
+      bookedSlots: bookedSlots ?? this.bookedSlots,
     );
   }
 

@@ -3,7 +3,7 @@ import 'package:sehatyaab/services/FirestoreService.dart';
 import 'package:sehatyaab/theme/AppColors.dart';
 import 'package:sehatyaab/models/doctor.dart';
 import 'package:sehatyaab/screens/Appointments/AppointmentForm.dart';
-import 'package:sehatyaab/services/FirestoreServicesMaham.dart';
+import 'package:sehatyaab/services/FirestoreService.dart';
 
 class DoctorDescriptionScreen extends StatefulWidget {
   final FirestoreService<Doctor> firestoreService;
@@ -144,7 +144,7 @@ class DoctorListItem extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AppointmentForm(selectedDoctor: doctor.id, firestoreService: widget.firestoreService),
+                        builder: (context) => AppointmentForm(selectedDoctor: doctor.id, firestoreService: firestoreService),
                       ),
                     );
                   },
