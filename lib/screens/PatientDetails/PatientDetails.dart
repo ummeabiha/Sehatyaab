@@ -351,14 +351,16 @@ import 'package:sehatyaab/models/Appointments.dart';
 import 'package:sehatyaab/models/Patient.dart';
 import 'package:sehatyaab/widgets/FormContainer.dart';
 import '../../widgets/CustomAppBar.dart';
-import '../../widgets/ExpandableDetailTile.dart';
-import '../../widgets/ListTileWithCheckbox.dart';
+import '../../widgets/CustomContainer.dart';
+import 'ExpandableDetailTile.dart';
+import 'ListTileWithCheckbox.dart';
 
 class PatientDetailsPage extends StatelessWidget {
   final Patient patient;
   final List<Appointment> appointments;
 
-  const PatientDetailsPage({super.key, required this.patient, required this.appointments});
+  const PatientDetailsPage(
+      {super.key, required this.patient, required this.appointments});
 
   @override
   Widget build(BuildContext context) {
@@ -370,7 +372,8 @@ class PatientDetailsPage extends StatelessWidget {
     bool hasSugar = patient.isSugarPatient;
 
     List<Appointment> filteredAppointments = appointments
-        .where((appointment) => patient.id.contains(appointment.patientId)).toList();
+        .where((appointment) => patient.id.contains(appointment.patientId))
+        .toList();
     debugPrint(filteredAppointments.toString());
 
     return Scaffold(
@@ -426,11 +429,9 @@ class PatientDetailsPage extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
-                      Container(
-                        child: Text(
-                          patient.name,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
+                      Text(
+                        patient.name,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       Text(
                         patient.email,
@@ -518,45 +519,55 @@ class PatientDetailsPage extends StatelessWidget {
                 ],
               ),
             ),
-            FormContainer(
+            CustomContainer(
               child: Column(
                 children: [
-                  ListTileWithCheckbox(
-                    title: 'Blood Pressure',
-                    value: hasBP,
-                  ),
-                  const SizedBox(height: 12),
-                  ListTileWithCheckbox(
-                    title: 'Sugar',
-                    value: hasSugar,
-                  ),
-                  const SizedBox(height: 12),
+                  // ListTileWithCheckbox(
+                  //   title: 'Blood Pressure',
+                  //   value: hasBP,
+                  // ),
+                  // const SizedBox(height: 12),
+                  // ListTileWithCheckbox(
+                  //   title: 'Sugar',
+                  //   value: hasSugar,
+                  // ),
+                  const SizedBox(height: 14),
                   ExpandableDetailTile(
-                    title: 'Appointment Details',
-                    type: filteredAppointments[0].reasonForVisit,
-                    description: filteredAppointments[0].diagnosis ?? '',
+                    title: 'Anthropometric',
+                    icon: 'assets/images/BMI.png',
+                    weight: patient.weight,
+                    height: patient.height,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
+                  ExpandableDetailTile(
+                    title: 'Appointment',
+                    icon: 'assets/images/details.png',
+                    reasonForVisit: filteredAppointments[0].reasonForVisit,
+                  ),
+                  const SizedBox(height: 14),
                   if (patient.medicalHistoryType != null)
                     ExpandableDetailTile(
                       title: 'Medical History',
                       type: patient.medicalHistoryType!,
-                      description:
-                          patient.medicalHistoryDesc ?? 'No Description',
+                      icon: 'assets/images/history.png',
+                      year: patient.medicalHistoryYear.toString(),
+                      description: patient.medicalHistoryDesc!,
                     ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
                   if (patient.familyHistoryType != null)
                     ExpandableDetailTile(
                       title: 'Family History',
                       type: patient.familyHistoryType!,
+                      icon: 'assets/images/history.png',
                       description:
                           patient.familyHistoryDesc ?? 'No Description',
                     ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
                   if (patient.ongoingMedications != null)
                     ExpandableDetailTile(
-                      title: 'Ongoing Medications',
+                      title: 'Medications',
                       type: 'Medicines',
+                      icon: 'assets/images/meds.png',
                       description: patient.ongoingMedications!,
                     ),
                 ],

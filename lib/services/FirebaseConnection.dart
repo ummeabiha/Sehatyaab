@@ -19,7 +19,7 @@ class FirebaseConnection {
       } else {
           await Firebase.initializeApp(
           // Replace with actual values
-          options: FirebaseOptions(
+          options: const FirebaseOptions(
             apiKey: "AIzaSyDKQEmF7OTnhz1qMTWmsPylZNtp9TDYLQ4",
             appId: "1:640899746109:android:f879c776abfd5fbe551d54",
             messagingSenderId: "640899746109",
