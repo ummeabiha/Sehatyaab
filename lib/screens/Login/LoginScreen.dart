@@ -1,71 +1,50 @@
 import 'package:flutter/material.dart';
+import '../../theme/AppColors.dart';
+import '../../widgets/FormContainer.dart';
 import 'LoginForm.dart';
-import '../../../constants.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            LoginScreenTopImage(),
-            Row(
-              children: [
-                Spacer(),
-                Expanded(
-                  flex: 8,
-                  child: LoginForm(),
+    return Scaffold(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.black2
+            : Theme.of(context).cardColor,
+        body: Center(
+            child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.only(top: 40.0, bottom: 16.0),
+            child: FormContainer(
+              child: Form(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: 280.0,
+                      child: Image.asset('assets/images/login.png'),
+                    ),
+                    const SizedBox(height: 10),
+                    Text("Welcome Back",
+                        style: Theme.of(context).brightness == Brightness.dark
+                            ? Theme.of(context).textTheme.bodyLarge
+                            : Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                )),
+                    const SizedBox(height: 10),
+                    Text("Login To Your Account",
+                        style: Theme.of(context).brightness == Brightness.dark
+                            ? Theme.of(context).textTheme.bodyMedium
+                            : Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                )),
+                    const SizedBox(height: 35),
+                    const LoginForm(),
+                  ],
                 ),
-                Spacer(),
-              ],
+              ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LoginScreenTopImage extends StatelessWidget {
-  const LoginScreenTopImage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "Welcome Back",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: kPrimaryColor,
           ),
-          textAlign: TextAlign.center,
-        ),
-        Text(
-          "Login to your account",
-          style: TextStyle(
-            fontSize: 15,
-            color: navyBlue,
-          ),
-        ),
-        SizedBox(height: defaultPadding * 2),
-        Row(
-          children: [
-            Spacer(),
-            Expanded(
-              flex: 8,
-              child: Image.asset("assets/images/login.png"),
-            ),
-            Spacer(),
-          ],
-        ),
-        SizedBox(height: defaultPadding * 2),
-      ],
-    );
+        )));
   }
 }

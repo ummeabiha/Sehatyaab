@@ -12,6 +12,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? enabled;
   final Color? fillColor;
   final bool? filled;
+  final bool? obscureText;
 
   const CustomTextFormField({
     super.key,
@@ -25,37 +26,40 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.enabled,
     this.filled,
+    this.obscureText,
   });
 
   @override
-Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return TextFormField(
-        controller: controller,
-        validator: validator,
-        style: Theme.of(context).textTheme.bodySmall,
-        enabled: enabled ?? true,
-        decoration: InputDecoration(
-          suffixIcon: Icon(
-            suffixIcon,
-            color: Theme.of(context).iconTheme.color,
-          ),
-          labelText: labelText,
-          labelStyle: Theme.of(context).textTheme.bodySmall,
-          hintText: hintText,
-          filled:true,
-          fillColor: Theme.of(context).brightness != Brightness.dark
-        ? Theme.of(context).primaryColor: AppColors.gray2,
-          hintStyle: Theme.of(context).textTheme.bodySmall,
-          border: Theme.of(context).inputDecorationTheme.border,
-          enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
-          focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
-          errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
-          focusedErrorBorder:
-              Theme.of(context).inputDecorationTheme.focusedErrorBorder,
+      controller: controller,
+      validator: validator,
+      style: Theme.of(context).textTheme.bodySmall,
+      enabled: enabled ?? true,
+      decoration: InputDecoration(
+        suffixIcon: Icon(
+          suffixIcon,
+          color: Theme.of(context).iconTheme.color,
         ),
-        keyboardType: keyboardType,
-        maxLines: maxLines ?? 1,
-      );
+        labelText: labelText,
+        labelStyle: Theme.of(context).textTheme.bodySmall,
+        hintText: hintText,
+        filled: true,
+        fillColor: Theme.of(context).brightness != Brightness.dark
+            ? Theme.of(context).primaryColor
+            : AppColors.gray2,
+        hintStyle: Theme.of(context).textTheme.bodySmall,
+        border: Theme.of(context).inputDecorationTheme.border,
+        enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+        focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+        errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
+        focusedErrorBorder:
+            Theme.of(context).inputDecorationTheme.focusedErrorBorder,
+      ),
+      keyboardType: keyboardType,
+      maxLines: maxLines ?? 1,
+      obscureText: obscureText ?? false,
+    );
   }
 
   static copyWith({

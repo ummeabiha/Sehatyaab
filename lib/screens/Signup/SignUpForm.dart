@@ -1,35 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sehatyaab/screens/home_screen.dart';
-import '../../components/already_have_an_account_acheck.dart';
-import '../../constants.dart';
+import '../../widgets/DropDown.dart';
+import '../../widgets/ElevatedButton.dart';
+import '../../widgets/TextFormField.dart';
+import '../Login/AlreadyHaveAnAccountCheck.dart';
 import '../Login/LoginScreen.dart';
 import '../../services/FirestoreService.dart';
 import '../../models/UserAccounts.dart';
 import '../../models/doctor.dart';
 import '../../models/patient.dart';
 
-class SignUpForm extends StatefulWidget {const SignUpForm({Key? key}) : super(key: key);
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({super.key});
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   String? _selectedOption;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirestoreService<UserAccounts> _firestoreService = FirestoreService<UserAccounts>('users');
-
-
-  String? _validateName(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your name';
-    }
-    return null;
-  }
+  final FirestoreService<UserAccounts> _firestoreService =
+      FirestoreService<UserAccounts>('users');
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -63,7 +57,8 @@ class _SignUpFormState extends State<SignUpForm> {
   Future<void> _signUp() async {
     if (_formKey.currentState!.validate()) {
       try {
-        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        UserCredential userCredential =
+            await _auth.createUserWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
@@ -72,14 +67,13 @@ class _SignUpFormState extends State<SignUpForm> {
           email: _emailController.text,
           password: _passwordController.text,
           option: _selectedOption,
-          name: "",
         );
         await _firestoreService.addItemWithId(user, user.id);
 
         if (_selectedOption == 'Doctor') {
           Doctor doctor = Doctor(
             id: userCredential.user!.uid,
-            name: _nameController.text,
+            name: '',
             email: _emailController.text,
             gender: "",
             dob: "",
@@ -88,12 +82,13 @@ class _SignUpFormState extends State<SignUpForm> {
             yearsOfExperience: 0,
           );
 
-          FirestoreService<Doctor> firestoreService = FirestoreService<Doctor>('doctors');
+          FirestoreService<Doctor> firestoreService =
+              FirestoreService<Doctor>('doctors');
           await firestoreService.addItemWithId(doctor, doctor.id);
         } else {
           Patient patient = Patient(
             id: userCredential.user!.uid,
-            name: _nameController.text,
+            name: '',
             email: _emailController.text,
             gender: "",
             dob: "",
@@ -101,10 +96,10 @@ class _SignUpFormState extends State<SignUpForm> {
             weight: 0,
           );
 
-          FirestoreService<Patient> firestoreService = FirestoreService<Patient>('patients');
+          FirestoreService<Patient> firestoreService =
+              FirestoreService<Patient>('patients');
           await firestoreService.addItemWithId(patient, patient.id);
         }
-
 
         print('User signed up: ${userCredential.user!.uid}');
         Navigator.pushReplacement(
@@ -125,86 +120,52 @@ class _SignUpFormState extends State<SignUpForm> {
       key: _formKey,
       child: Column(
         children: [
-          TextFormField(
-            controller: _nameController,
-            keyboardType: TextInputType.name,
-            textInputAction: TextInputAction.next,
-            cursorColor: kPrimaryColor,
-            validator: _validateName,
-            decoration: const InputDecoration(
-              hintText: "Your name",
-              prefixIcon: Padding(
-                padding: EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person),
-              ),
-            ),
+          CustomTextFormField(
+            controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
+            validator: _validateEmail,
+            labelText: 'Email Address',
+            hintText: 'xyz@gmail.com',
+            suffixIcon: Icons.email,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
-              cursorColor: kPrimaryColor,
-              validator: _validateEmail,
-              decoration: const InputDecoration(
-                hintText: "Your email",
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.email),
-                ),
-              ),
-            ),
+          const SizedBox(height: 30),
+          CustomTextFormField(
+            controller: _passwordController,
+            validator: _validatePassword,
+            obscureText: true,
+            labelText: 'Password',
+            hintText: 'Enter Password',
+            suffixIcon: Icons.lock,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: DropdownButtonFormField<String>(
-              value: _selectedOption,
-              hint: const Text("Select the option"),
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedOption = newValue;
-                });
-              },
-              validator: _validateOption,
-              items: <String>['Doctor', 'Patient']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              decoration: const InputDecoration(
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.arrow_drop_down),
-                ),
-              ),
+          const SizedBox(height: 30),
+          CustomDropdown<String>(
+            value: _selectedOption,
+            decoration: InputDecoration(
+              labelText: 'User Role',
+              labelStyle: Theme.of(context).textTheme.bodySmall,
             ),
+            items: <String>['Doctor', 'Patient']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                _selectedOption = newValue;
+              });
+            },
+            validator: _validateOption,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
-              controller: _passwordController,
-              textInputAction: TextInputAction.done,
-              obscureText: true,
-              cursorColor: kPrimaryColor,
-              validator: _validatePassword,
-              decoration: const InputDecoration(
-                hintText: "Your password",
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
-                ),
-              ),
-            ),
+          const SizedBox(
+            height: 35.0,
           ),
-          const SizedBox(height: defaultPadding / 2),
-          ElevatedButton(
+          CustomElevatedButton(
             onPressed: _signUp,
-            child: Text("Sign Up".toUpperCase()),
+            label: 'Register',
           ),
-          const SizedBox(height: defaultPadding),
+          const SizedBox(height: 30),
           AlreadyHaveAnAccountCheck(
             login: false,
             press: () {

@@ -6,10 +6,16 @@ class ExpandableDetailTile extends StatelessWidget {
   final String? year;
   final String? icon;
   final String? onGoingMeds;
-  final String? description;
+  final String? familyHistory;
+  final String? medicalHistory;
   final String? reasonForVisit;
-  final double? weight;
-  final double? height;
+  final int? age;
+  final String? gender;
+  final String? weight;
+  final String? height;
+  final bool? vitals;
+  final bool? hasBP;
+  final bool? hasSugar;
 
   const ExpandableDetailTile({
     super.key,
@@ -19,9 +25,15 @@ class ExpandableDetailTile extends StatelessWidget {
     this.year,
     this.reasonForVisit,
     this.onGoingMeds,
-    this.description,
+    this.familyHistory,
+    this.medicalHistory,
+    this.age,
+    this.gender,
     this.weight,
     this.height,
+    this.vitals,
+    this.hasBP,
+    this.hasSugar,
   });
 
   @override
@@ -46,217 +58,250 @@ class ExpandableDetailTile extends StatelessWidget {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           iconColor: Theme.of(context).cardColor,
           collapsedIconColor: Theme.of(context).cardColor,
-          title: Row(children: [
-            if (icon != null)
-              SizedBox(
-                width: 50,
-                child: Image.asset(icon!),
-              ),
-            const SizedBox(width: 12.0),
-            Text(title, style: Theme.of(context).textTheme.bodyMedium),
-          ]),
+          title: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6.0),
+              child: Row(
+                children: [
+                  if (icon != null)
+                    SizedBox(
+                      width: 50,
+                      child: Image.asset(icon!),
+                    ),
+                  const SizedBox(width: 12.0),
+                  Expanded(
+                    child: Text(title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(fontSize: 23)),
+                  ),
+                ],
+              )),
           children: [
-            if (reasonForVisit != null) ...[
+            if (reasonForVisit != null)
+              _buildDetailItem(
+                context,
+                'Reason: ',
+                toTitleCase(reasonForVisit!),
+              ),
+            if (medicalHistory != null)
+              _buildExpandableDetail(
+                context,
+                [
+                  _buildDetailRow(context, 'Type: ', toTitleCase(type!)),
+                  _buildDetailRow(context, 'Year: ', toTitleCase(year!)),
+                  _buildDetailColumn(context, 'Description: ', medicalHistory!),
+                ],
+              ),
+            if (familyHistory != null)
+              _buildExpandableDetail(
+                context,
+                [
+                  _buildDetailRow(context, 'Type: ', toTitleCase(type!)),
+                  _buildDetailColumn(context, 'Description: ', familyHistory!),
+                ],
+              ),
+            if (onGoingMeds != null)
+              ..._buildOngoingMeds(context, onGoingMeds!),
+            if (height != null && weight != null)
+              _buildExpandableDetail(
+                context,
+                [
+                  _buildDetailRow(context, 'Height: ', height.toString()),
+                  _buildDetailRow(context, 'Weight: ', weight.toString()),
+                ],
+              ),
+            if (age != null)
+              _buildExpandableDetail(
+                context,
+                [
+                  _buildDetailRow(context, 'Age: ', age.toString()),
+                  _buildDetailRow(context, 'Gender: ', gender.toString()),
+                ],
+              ),
+            if (vitals == true) ...[
               Material(
                   elevation: 4.0,
                   shadowColor: Colors.black45,
                   borderRadius: BorderRadius.circular(8.0),
                   child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6.0, vertical: 16.0),
-                      child: Row(children: [
-                        if (icon != null)
-                          const SizedBox(
-                            width: 75,
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Column(
+                        children: [
+                          _buildListTileWithCheckbox(
+                            context,
+                            'Blood Pressure',
+                            hasBP!,
                           ),
-                        Text('Reason: ',
-                            style: Theme.of(context).textTheme.bodyMedium),
-                        Text(
-                          toTitleCase(reasonForVisit!),
-                          style: Theme.of(context).textTheme.bodySmall,
-                          maxLines: 1,
-                          overflow: TextOverflow.fade,
-                        ),
-                      ]))),
-            ],
-            if (type != null && year != null && description != null) ...[
-              Material(
-                  elevation: 4.0,
-                  shadowColor: Colors.black45,
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Container(
-                      height: 150,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6.0, vertical: 16.0),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Row(children: [
-                              if (icon != null)
-                                const SizedBox(
-                                  width: 75,
-                                ),
-                              Text('Type: ',
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
-                              Text(
-                                toTitleCase(type!),
-                                style: Theme.of(context).textTheme.bodySmall,
-                                maxLines: 1,
-                                overflow: TextOverflow.fade,
-                              ),
-                            ]),
-                            Row(children: [
-                              if (icon != null)
-                                const SizedBox(
-                                  width: 75,
-                                ),
-                              Text('Year: ',
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
-                              Text(
-                                toTitleCase(year!),
-                                style: Theme.of(context).textTheme.bodySmall,
-                                maxLines: 1,
-                                overflow: TextOverflow.fade,
-                              ),
-                            ]),
-                            Row(children: [
-                              if (icon != null)
-                                const SizedBox(
-                                  width: 75,
-                                ),
-                              Text('Description: ',
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
-                              Text(
-                                description!,
-                                style: Theme.of(context).textTheme.bodySmall,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ]),
-                          ]))),
-            ],
-            if (type != null && description != null) ...[
-              Material(
-                  elevation: 4.0,
-                  shadowColor: Colors.black45,
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Container(
-                      height: 150,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6.0, vertical: 16.0),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Row(children: [
-                              if (icon != null)
-                                const SizedBox(
-                                  width: 75,
-                                ),
-                              Text('Type: ',
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
-                              Text(
-                                toTitleCase(type!),
-                                style: Theme.of(context).textTheme.bodySmall,
-                                maxLines: 1,
-                                overflow: TextOverflow.fade,
-                              ),
-                            ]),
-                            Row(children: [
-                              if (icon != null)
-                                const SizedBox(
-                                  width: 75,
-                                ),
-                              Text('Description: ',
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
-                              Text(
-                                description!,
-                                style: Theme.of(context).textTheme.bodySmall,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ]),
-                          ]))),
-            ],
-            if (onGoingMeds != null) ...[
-              Material(
-                  elevation: 4.0,
-                  shadowColor: Colors.black45,
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6.0, vertical: 16.0),
-                      child: Row(children: [
-                        if (icon != null)
-                          const SizedBox(
-                            width: 75,
+                          _buildListTileWithCheckbox(
+                            context,
+                            'Sugar',
+                            hasSugar!,
                           ),
-                        Text('OnGoing Meds: ',
-                            style: Theme.of(context).textTheme.bodyMedium),
-                        Text(
-                          toTitleCase(onGoingMeds!),
-                          style: Theme.of(context).textTheme.bodySmall,
-                          maxLines: 3,
-                          overflow: TextOverflow.fade,
-                        ),
-                      ]))),
-            ],
-
-
-
-
-                       if (height != null && weight!=null) ...[
-              Material(
-                  elevation: 4.0,
-                  shadowColor: Colors.black45,
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Container(
-                      height: 150,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6.0, vertical: 16.0),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Row(children: [
-                              if (icon != null)
-                                const SizedBox(
-                                  width: 75,
-                                ),
-                              Text('Height: ',
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
-                              Text(
-                                height.toString()!,
-                                style: Theme.of(context).textTheme.bodySmall,
-                                maxLines: 1,
-                                overflow: TextOverflow.fade,
-                              ),
-                            ]),
-                            Row(children: [
-                              if (icon != null)
-                                const SizedBox(
-                                  width: 75,
-                                ),
-                              Text('Weight: ',
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
-                              Text(
-                                weight.toString()!,
-                                style: Theme.of(context).textTheme.bodySmall,
-                                maxLines: 1,
-                                overflow: TextOverflow.fade,
-                              ),
-                            ]),
-                            
-                          ]))),
+                        ],
+                      )))
             ],
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildDetailItem(BuildContext context, String label, String value) {
+    return Material(
+      elevation: 4.0,
+      shadowColor: Colors.black45,
+      borderRadius: BorderRadius.circular(8.0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(width: 60.0),
+            Flexible(
+              flex: 2,
+              child: Text(
+                label,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+            Flexible(
+              flex: 4,
+              child: Text(
+                value,
+                style: Theme.of(context).textTheme.bodyMedium,
+                textAlign: TextAlign.justify,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(BuildContext context, String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(width: 60.0),
+        Flexible(
+          flex: 2,
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+        Flexible(
+          flex: 4,
+          child: Text(
+            value,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDetailColumn(BuildContext context, String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(width: 60.0),
+            Flexible(
+              flex: 2,
+              child: Text(
+                label,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 63.0, right: 16.0, top: 8.0),
+          child: Text(
+            value,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildExpandableDetail(BuildContext context, List<Widget> detailRows) {
+    return Material(
+      elevation: 4.0,
+      shadowColor: Colors.black45,
+      borderRadius: BorderRadius.circular(8.0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: _addSpacingBetweenWidgets(detailRows, 12.0),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildListTileWithCheckbox(
+      BuildContext context, String title, bool value) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 65.0, right: 30.0),
+      child: ListTile(
+        trailing: Checkbox(
+          activeColor: Theme.of(context).cardColor,
+          value: value,
+          onChanged: (bool? newValue) {},
+        ),
+        title: Text(title, style: Theme.of(context).textTheme.bodyMedium),
+      ),
+    );
+  }
+
+  List<Widget> _addSpacingBetweenWidgets(List<Widget> widgets, double spacing) {
+    List<Widget> spacedWidgets = [];
+    for (var i = 0; i < widgets.length; i++) {
+      spacedWidgets.add(widgets[i]);
+      if (i < widgets.length - 1) {
+        spacedWidgets.add(SizedBox(height: spacing));
+      }
+    }
+    return spacedWidgets;
+  }
+
+  List<Widget> _buildOngoingMeds(BuildContext context, String meds) {
+    List<String> medsList = meds.split(',');
+    return [
+      Material(
+        elevation: 4.0,
+        shadowColor: Colors.black45,
+        borderRadius: BorderRadius.circular(8.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: _addSpacingBetweenWidgets(
+              medsList
+                  .map((med) => Row(
+                        children: [
+                          const SizedBox(width: 60.0),
+                          const Text('• ', style: TextStyle(fontSize: 16.0)),
+                          Expanded(
+                            child: Text(
+                              med.trim(),
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                        ],
+                      ))
+                  .toList(),
+              12.0,
+            ),
+          ),
+        ),
+      )
+    ];
   }
 }

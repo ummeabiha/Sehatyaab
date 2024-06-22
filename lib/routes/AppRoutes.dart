@@ -4,7 +4,7 @@ import 'package:sehatyaab/models/Appointments.dart';
 import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/screens/DoctorProfile/CreateDoctorProfile.dart';
 import 'package:sehatyaab/screens/Login/LoginScreen.dart';
-import 'package:sehatyaab/screens/PatientAppointments/DisplayPatients.dart';
+import 'package:sehatyaab/screens/PatientAppointments/DisplayAppointments.dart';
 import 'package:sehatyaab/screens/PatientHome/PatientHome.dart';
 import 'package:sehatyaab/screens/Signup/SignUpScreen.dart';
 import 'package:sehatyaab/widgets/patient_list.dart';
@@ -45,7 +45,7 @@ class AppRoutes {
     },
 
     displayPatient: (context) {
-      return DisplayPatients(
+      return DisplayAppointments(
           appointmentService: appointmentFirestore,
           patientService: patientFirestore,
           doctorId: 'app1');

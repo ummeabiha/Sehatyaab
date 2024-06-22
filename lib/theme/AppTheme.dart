@@ -18,7 +18,7 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.white,
     primaryColor: AppColors.blue1,
     shadowColor: AppColors.gray,
-    hoverColor: AppColors.peach,
+    hoverColor: AppColors.pink,
     cardColor: AppColors.blue5,
     fontFamily: 'GoogleSans-Regular',
     textTheme: const TextTheme(

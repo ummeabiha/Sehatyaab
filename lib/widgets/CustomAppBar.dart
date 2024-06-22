@@ -11,44 +11,47 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      automaticallyImplyLeading: false,
-      backgroundColor: Theme.of(context).cardColor,
-      foregroundColor: Theme.of(context).primaryColor,
-      elevation: 8.0,
-      title: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              icon: Icon(
-                Theme.of(context).brightness != Brightness.dark
-                    ? Icons.light_mode
-                    : Icons.dark_mode,
-                size: 32.0,
-              ),
-              onPressed: AppTheme.toggleTheme,
+    return Material(
+        elevation: 3.0,
+        shadowColor: Theme.of(context).cardColor,
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Theme.of(context).cardColor,
+          foregroundColor: Theme.of(context).primaryColor,
+          elevation: 8.0,
+          title: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Theme.of(context).brightness != Brightness.dark
+                        ? Icons.light_mode
+                        : Icons.dark_mode,
+                    size: 32.0,
+                  ),
+                  onPressed: AppTheme.toggleTheme,
+                ),
+                const Text(
+                  'Sehatyaab',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.account_circle,
+                    size: 32.0,
+                  ),
+                  onPressed: () {
+                    // Add the desired action for the profile icon button
+                  },
+                ),
+              ],
             ),
-            const Text(
-              'Sehatyaab',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.account_circle,
-                size: 32.0,
-              ),
-              onPressed: () {
-                // Add the desired action for the profile icon button
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

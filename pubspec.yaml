@@ -47,6 +47,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/DoctorPanel/
     - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -63,6 +64,11 @@ flutter:
           weight: 500
         - asset: assets/fonts/SourceSans3-SemiBold.ttf
           weight: 600
+    - family: GoogleSans
+      fonts:
+        - asset: assets/fonts/GoogleSans-Bold.ttf
+        - asset: assets/fonts/GoogleSans-Medium.ttf
+        - asset: assets/fonts/GoogleSans-Regular.ttf
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a

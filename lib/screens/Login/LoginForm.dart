@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
-import '../../components/already_have_an_account_acheck.dart';
-import '../../constants.dart';
+import '../../widgets/ElevatedButton.dart';
+import '../../widgets/TextFormField.dart';
 import '../Signup/SignUpScreen.dart';
+import 'AlreadyHaveAnAccountCheck.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -62,43 +63,33 @@ class _LoginFormState extends State<LoginForm> {
       key: _formKey,
       child: Column(
         children: [
-          TextFormField(
+          CustomTextFormField(
             controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            cursorColor: kPrimaryColor,
             validator: _validateEmail,
-            decoration: const InputDecoration(
-              hintText: "Your email",
-              prefixIcon: Padding(
-                padding: EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person),
-              ),
-            ),
+            labelText: 'Email Address',
+            hintText: 'xyz@gmail.com',
+            suffixIcon: Icons.email,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
-              controller: _passwordController,
-              textInputAction: TextInputAction.done,
-              obscureText: true,
-              cursorColor: kPrimaryColor,
-              validator: _validatePassword,
-              decoration: const InputDecoration(
-                hintText: "Your password",
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
-                ),
-              ),
-            ),
+          const SizedBox(height: 30),
+
+          CustomTextFormField(
+            controller: _passwordController,
+            validator: _validatePassword,
+            obscureText: true,
+            labelText: 'Password',
+            hintText: 'Enter Password',
+            suffixIcon: Icons.lock,
           ),
-          const SizedBox(height: defaultPadding),
-          ElevatedButton(
+          
+          const SizedBox(height: 35),
+
+          CustomElevatedButton(
             onPressed: _login,
-            child: Text("Login".toUpperCase()),
+            label: 'Login',
           ),
-          const SizedBox(height: defaultPadding),
+
+          const SizedBox(height: 30),
+
           AlreadyHaveAnAccountCheck(
             press: () {
               Navigator.push(
