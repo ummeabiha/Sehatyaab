@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/Screens/Welcome/WelcomeScreen.dart';
+import 'package:sehatyaab/globals.dart';
 import 'package:sehatyaab/models/Appointments.dart';
 import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/screens/DoctorProfile/CreateDoctorProfile.dart';
@@ -45,7 +46,7 @@ class AppRoutes {
       return DisplayAppointments(
           appointmentService: appointmentFirestore,
           patientService: patientFirestore,
-          doctorId: 'app1');
+          doctorId: globalDoctorId!);
     },
 
     doctorProfile: (context) {

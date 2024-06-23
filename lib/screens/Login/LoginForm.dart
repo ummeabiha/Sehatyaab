@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sehatyaab/models/UserAccounts.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
+import '../../globals.dart';
+import '../../services/FirestoreService.dart';
+import '../../theme/AppColors.dart';
 import '../../validations/AuthFormValidator.dart';
 import '../../widgets/ElevatedButton.dart';
 import '../../widgets/TextFormField.dart';
@@ -23,14 +27,48 @@ class _LoginFormState extends State<LoginForm> {
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
       try {
-        await _auth.signInWithEmailAndPassword(
+        final UserCredential userCredential =
+            await _auth.signInWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
-        Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
+
+        final String userId = userCredential.user!.uid;
+        final FirestoreService<UserAccounts> firestoreService =
+            FirestoreService<UserAccounts>('users');
+
+        final UserAccounts? user = await firestoreService.getItemById(
+            userId, UserAccounts(id: '', password: '', email: '', option: ''));
+
+        if (user != null) {
+          if (user.option == 'Doctor') {
+            globalDoctorId = userId;
+            Navigator.pushReplacementNamed(context, AppRoutes.displayPatient);
+          } else {
+            globalPatientId = userId;
+            Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('User Not Found',
+                    style: Theme.of(context).textTheme.bodySmall),
+                backgroundColor: AppColors.blue2),
+          );
+        }
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message ?? 'Login failed')),
+          SnackBar(
+              content: Text('Login failed: ${e.message ?? "Unknown Error"}',
+                  style: Theme.of(context).textTheme.bodySmall),
+              backgroundColor: AppColors.blue2),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('An error occurred: $e',
+                  style: Theme.of(context).textTheme.bodySmall),
+              backgroundColor: AppColors.blue2),
         );
       }
     }
