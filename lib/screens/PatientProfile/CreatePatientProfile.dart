@@ -8,10 +8,11 @@ import 'package:sehatyaab/widgets/TextFormField.dart';
 import 'package:sehatyaab/widgets/dropdown.dart';
 import '../../widgets/DatePicker.dart';
 import 'PatientHistory.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class CreatePatientProfile extends StatefulWidget {
-  const CreatePatientProfile({super.key});
+  final Map<String, dynamic> patientData;
+  
+  const CreatePatientProfile({super.key, required this.patientData});
 
   @override
   _PatientFormState createState() => _PatientFormState();
@@ -26,6 +27,12 @@ class _PatientFormState extends State<CreatePatientProfile> {
   final TextEditingController _heightController = TextEditingController();
   String? _gender;
   final _genders = ['Male', 'Female', 'Other'];
+
+   @override
+  void initState() {
+    super.initState();
+    _emailController.text = widget.patientData['email'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +155,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                           MaterialPageRoute(
                             builder: (context) => PatientHistory(
                               patientData: {
-                                'id': FirebaseAuth.instance.currentUser!.uid,
+                                'id': widget.patientData['id'],
                                 'name': _nameController.text,
                                 'email': _emailController.text,
                                 'gender': _gender!,

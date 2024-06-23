@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../routes/AppRoutes.dart';
 import '../../widgets/ElevatedButton.dart';
-import '../Login/LoginScreen.dart';
-import '../Signup/SignUpScreen.dart';
 
 class LoginAndSignupBtn extends StatelessWidget {
   const LoginAndSignupBtn({
@@ -14,28 +13,14 @@ class LoginAndSignupBtn extends StatelessWidget {
       children: [
         CustomElevatedButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return const LoginScreen();
-                },
-              ),
-            );
+            Navigator.pushReplacementNamed(context, AppRoutes.login);
           },
           label: "Login",
         ),
         const SizedBox(height: 20),
         CustomElevatedButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return const SignUpScreen();
-                },
-              ),
-            );
+            Navigator.pushReplacementNamed(context, AppRoutes.signup);
           },
           label: "Register",
         ),

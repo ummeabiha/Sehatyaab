@@ -91,4 +91,15 @@ class FirestoreService<T extends BaseModel> {
     }
   }
 
+  Future<List> getItemsByQuery(
+      {required String field, required String value, required collection}) async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection(collection)
+        .where(field, isEqualTo: value)
+        .get();
+    return querySnapshot.docs.map((doc) {
+      return (T as dynamic).fromMap(doc.data());
+    }).toList();
+  }
+
 }

@@ -1,0 +1,2 @@
+String? globalDoctorId;
+String? globalPatientId;

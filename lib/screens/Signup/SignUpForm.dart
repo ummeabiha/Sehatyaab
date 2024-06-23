@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../routes/AppRoutes.dart';
+import '../../theme/AppColors.dart';
+import '../../validations/AuthFormValidator.dart';
 import '../../widgets/DropDown.dart';
 import '../../widgets/ElevatedButton.dart';
 import '../../widgets/TextFormField.dart';
+import '../DoctorProfile/CreateDoctorProfile.dart';
 import '../Login/AlreadyHaveAnAccountCheck.dart';
-import '../Login/LoginScreen.dart';
 import '../../services/FirestoreService.dart';
 import '../../models/UserAccounts.dart';
-import '../../models/doctor.dart';
-import '../../models/patient.dart';
+import '../../models/Doctor.dart';
+import '../PatientProfile/CreatePatientProfile.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -25,35 +28,6 @@ class _SignUpFormState extends State<SignUpForm> {
   final FirestoreService<UserAccounts> _firestoreService =
       FirestoreService<UserAccounts>('users');
 
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    }
-    String pattern = r'^[^@]+@[^@]+\.[^@]+';
-    RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(value)) {
-      return 'Enter a valid email';
-    }
-    return null;
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    }
-    if (value.length < 6) {
-      return 'Password must be at least 6 characters';
-    }
-    return null;
-  }
-
-  String? _validateOption(String? value) {
-    if (value == null) {
-      return 'Please select an option';
-    }
-    return null;
-  }
-
   Future<void> _signUp() async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -62,6 +36,7 @@ class _SignUpFormState extends State<SignUpForm> {
           email: _emailController.text,
           password: _passwordController.text,
         );
+
         UserAccounts user = UserAccounts(
           id: userCredential.user!.uid,
           email: _emailController.text,
@@ -70,45 +45,40 @@ class _SignUpFormState extends State<SignUpForm> {
         );
         await _firestoreService.addItemWithId(user, user.id);
 
+        print('Selected Option: $_selectedOption');
+        // Navigate to the appropriate profile creation page
         if (_selectedOption == 'Doctor') {
-          Doctor doctor = Doctor(
-            id: userCredential.user!.uid,
-            name: '',
-            email: _emailController.text,
-            gender: "",
-            dob: "",
-            specialization: "",
-            qualification: "",
-            yearsOfExperience: 0,
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateDoctorProfile(
+                doctorData: {
+                  'id': userCredential.user!.uid,
+                  'email': _emailController.text,
+                },
+                firestoreService: FirestoreService<Doctor>('doctors'),
+              ),
+            ),
           );
-
-          FirestoreService<Doctor> firestoreService =
-              FirestoreService<Doctor>('doctors');
-          await firestoreService.addItemWithId(doctor, doctor.id);
         } else {
-          Patient patient = Patient(
-            id: userCredential.user!.uid,
-            name: '',
-            email: _emailController.text,
-            gender: "",
-            dob: "",
-            height: 0,
-            weight: 0,
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreatePatientProfile(
+                patientData: {
+                  'id': userCredential.user!.uid,
+                  'email': _emailController.text,
+                },
+              ),
+            ),
           );
-
-          FirestoreService<Patient> firestoreService =
-              FirestoreService<Patient>('patients');
-          await firestoreService.addItemWithId(patient, patient.id);
         }
-
-        print('User signed up: ${userCredential.user!.uid}');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-        );
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message ?? 'Sign up failed')),
+          SnackBar(
+              content: Text(e.message ?? 'Sign up failed',
+                  style: Theme.of(context).textTheme.bodySmall),
+              backgroundColor: AppColors.blue2),
         );
       }
     }
@@ -123,7 +93,7 @@ class _SignUpFormState extends State<SignUpForm> {
           CustomTextFormField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
-            validator: _validateEmail,
+            validator: AuthFormValidator.validateEmail,
             labelText: 'Email Address',
             hintText: 'xyz@gmail.com',
             suffixIcon: Icons.email,
@@ -131,7 +101,7 @@ class _SignUpFormState extends State<SignUpForm> {
           const SizedBox(height: 30),
           CustomTextFormField(
             controller: _passwordController,
-            validator: _validatePassword,
+            validator: AuthFormValidator.validatePassword,
             obscureText: true,
             labelText: 'Password',
             hintText: 'Enter Password',
@@ -156,11 +126,9 @@ class _SignUpFormState extends State<SignUpForm> {
                 _selectedOption = newValue;
               });
             },
-            validator: _validateOption,
+            validator: AuthFormValidator.validateOption,
           ),
-          const SizedBox(
-            height: 35.0,
-          ),
+          const SizedBox(height: 35.0),
           CustomElevatedButton(
             onPressed: _signUp,
             label: 'Register',
@@ -169,14 +137,7 @@ class _SignUpFormState extends State<SignUpForm> {
           AlreadyHaveAnAccountCheck(
             login: false,
             press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const LoginScreen();
-                  },
-                ),
-              );
+              Navigator.pushReplacementNamed(context, AppRoutes.login);
             },
           ),
         ],

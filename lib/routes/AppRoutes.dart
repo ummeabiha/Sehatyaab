@@ -8,9 +8,7 @@ import 'package:sehatyaab/screens/PatientAppointments/DisplayAppointments.dart';
 import 'package:sehatyaab/screens/PatientHome/PatientHome.dart';
 import 'package:sehatyaab/screens/Signup/SignUpScreen.dart';
 import 'package:sehatyaab/widgets/patient_list.dart';
-import '../screens/PatientProfile/CreatePatientProfile.dart';
 import '../screens/PatientProfile/PatientHistory.dart';
-import '../screens/home_screen.dart';
 import '../services/FirestoreService.dart';
 import '../models/Patient.dart';
 
@@ -35,8 +33,7 @@ class AppRoutes {
     signup: (context) => const SignUpScreen(),
     login: (context) => const LoginScreen(),
     //patienthp: (context) => const PatientHomeScreen(),
-    home: (context) => const HomeScreen(),
-    patientForm: (context) => const CreatePatientProfile(),
+    //patientForm: (context) => const CreatePatientProfile(),
     patientHistory: (context) => const PatientHistory(
           patientData: {},
         ),

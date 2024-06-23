@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/Doctor.dart';
+import '../../routes/AppRoutes.dart';
 import '../../theme/AppColors.dart';
 import '../../validations/PatientFormValidator.dart';
 import '../../widgets/DatePicker.dart';
@@ -12,11 +13,10 @@ import '../../widgets/CustomAppBar.dart';
 
 class CreateDoctorProfile extends StatefulWidget {
   final Map<String, dynamic> doctorData;
+  final FirestoreService<Doctor> firestoreService;
 
   const CreateDoctorProfile(
-      {super.key,
-      required this.doctorData,
-      required FirestoreService<Doctor> firestoreService});
+      {super.key, required this.doctorData, required this.firestoreService});
 
   @override
   _CreateDoctorProfileState createState() => _CreateDoctorProfileState();
@@ -36,6 +36,12 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
   String? _gender;
   final _genders = ['Male', 'Female', 'Other'];
 
+  @override
+  void initState() {
+    super.initState();
+    _emailController.text = widget.doctorData['email'];
+  }
+
   void _saveDoctorData() {
     if (_formKey.currentState!.validate()) {
       Doctor doctor = Doctor(
@@ -49,20 +55,20 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
         yearsOfExperience: int.parse(_yearsOfExperienceController.text),
       );
 
-      // FirestoreService('doctors').addItem(doctor).then((_) {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //    const SnackBar(content: Text('Information saved successfully')),
-      //  );
-      FirestoreService<Doctor>('doctors')
-          .updateItem(doctor.id, doctor.toMap())
-          .then((_) {
+      widget.firestoreService.addItemWithId(doctor, doctor.id).then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Information updated successfully')),
+          SnackBar(
+              content: Text('Profile Created Successfully',
+                  style: Theme.of(context).textTheme.bodySmall),
+              backgroundColor: AppColors.blue2),
         );
-        Navigator.pop(context); // Go back to the home screen or previous screen
+        Navigator.pushReplacementNamed(context, AppRoutes.login);
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save information: $error')),
+          SnackBar(
+              content: Text('Failed to Create Profile: $error',
+                  style: Theme.of(context).textTheme.bodySmall),
+              backgroundColor: AppColors.blue2),
         );
       });
     }

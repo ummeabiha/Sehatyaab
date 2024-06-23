@@ -10,7 +10,6 @@ import '../../widgets/CustomAppBar.dart';
 
 class PatientHistory extends StatefulWidget {
   final Map<String, dynamic> patientData;
-
   const PatientHistory({super.key, required this.patientData});
 
   @override
@@ -49,7 +48,10 @@ class _PatientHistoryState extends State<PatientHistory> {
 
       if (weight == null || height == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid weight or height')),
+          SnackBar(
+              content: Text('Invalid weight or height',
+                  style: Theme.of(context).textTheme.bodySmall),
+              backgroundColor: AppColors.blue2),
         );
         return;
       }
@@ -79,18 +81,20 @@ class _PatientHistoryState extends State<PatientHistory> {
         height: height,
       );
 
-      Map<String, dynamic> patientMap = patient.toMap();
-
-      _firestoreService
-          .updateItem(widget.patientData['id'], patientMap)
-          .then((_) {
+      _firestoreService.addItemWithId(patient, patient.id).then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Information saved successfully')),
+          SnackBar(
+              content: Text('Profile Created Successfully',
+                  style: Theme.of(context).textTheme.bodySmall),
+              backgroundColor: AppColors.blue2),
         );
-        Navigator.pop(context);
+        Navigator.pop(context); // Go back to the home screen or previous screen
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save information: $error')),
+          SnackBar(
+              content: Text('Failed to Create Profile: $error',
+                  style: Theme.of(context).textTheme.bodySmall),
+              backgroundColor: AppColors.blue2),
         );
       });
     }
