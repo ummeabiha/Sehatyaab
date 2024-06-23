@@ -21,7 +21,9 @@ class CustomElevatedButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
-          backgroundColor: Theme.of(context).brightness== Brightness.dark ?  Theme.of(context).cardColor : AppColors.pink,
+          backgroundColor: Theme.of(context).brightness == Brightness.dark
+              ? Theme.of(context).cardColor
+              : AppColors.pink,
           overlayColor: Theme.of(context).hoverColor,
           elevation: 2,
         ),

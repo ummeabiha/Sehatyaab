@@ -21,7 +21,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
         Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
         break;
       case 1:
-        Navigator.pushReplacementNamed(context, '/appointments');
+        Navigator.pushReplacementNamed(context, '/doctorList');
         break;
       case 2:
         Navigator.pushReplacementNamed(context, '/displayPatient');
@@ -75,21 +75,13 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                         decoration: BoxDecoration(
                           color: kPrimaryColor,
                           borderRadius: BorderRadius.circular(15.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
                         ),
                         child: const ListTile(
                           title: Text(
                             "Your Health is Important to Us",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: 22,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -110,18 +102,18 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                       const Text(
                         'Categories',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                       const SizedBox(height: 10),
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           CategoryCard(
-                            icon: Icons.local_hospital,
+                            icon: Icons.local_hospital_rounded,
                             label: 'General Physician',
                           ),
                           CategoryCard(
-                            icon: Icons.child_care_outlined,
+                            icon: Icons.child_friendly_rounded,
                             label: 'Child Specialist',
                           ),
                         ],
@@ -133,7 +125,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                           const Text(
                             'Popular doctors',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
+                                fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                           TextButton(
                             onPressed: () {
@@ -141,7 +133,9 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                             },
                             child: const Text(
                               'See all',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: kPrimaryColor),
                             ),
                           ),
                         ],
@@ -149,23 +143,60 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                       const SizedBox(height: 10),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: doctors.length,
+                          itemCount: 5,
                           itemBuilder: (BuildContext context, int index) {
                             var doctor = doctors[index];
 
-                            return ListTile(
-                              leading: const CircleAvatar(
-                                radius: 25,
-                                backgroundImage:
-                                    AssetImage('assets/images/female.png'),
-                              ),
-                              title: Text(doctor.name),
-                              subtitle: Text(doctor.specialization),
-                              trailing: TextButton(
-                                onPressed: () {
-                                  // Implement booking functionality
-                                },
-                                child: const Text("Book Now"),
+                            return Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  border: Border.all(
+                                      width: 1.5, color: Colors.grey.shade300)),
+                              child: ListTile(
+                                leading: const CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage:
+                                      AssetImage('assets/images/female.png'),
+                                ),
+                                title: Text(
+                                  doctor.name,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      doctor.specialization,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.star,
+                                            size: 18,
+                                            color: Colors.amberAccent),
+                                        Icon(Icons.star,
+                                            size: 18,
+                                            color: Colors.amberAccent),
+                                        Icon(Icons.star,
+                                            size: 18,
+                                            color: Colors.amberAccent),
+                                        Icon(Icons.star,
+                                            size: 18, color: Colors.amberAccent)
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                trailing: TextButton(
+                                  onPressed: () {
+                                    // Implement booking functionality
+                                  },
+                                  child: const Text("Book Now",
+                                      style: TextStyle(color: kPrimaryColor)),
+                                ),
                               ),
                             );
                           },
@@ -197,35 +228,33 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
-      width: 120,
+      height: 120,
+      width: 180,
       margin: EdgeInsets.all(8.0),
       padding: EdgeInsets.all(12.0),
-      decoration: BoxDecoration(color: lightPink, boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.5),
-          blurRadius: 4.0,
-          spreadRadius: 0.0,
-          offset: Offset(3, 3),
-        ),
-      ]),
+      decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(15.0),
+          border: Border.all(width: 1.5, color: Colors.grey.shade300)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            child: Icon(
-              icon,
-              color: Colors.white,
-              size: 40,
-            ),
-            width: 80,
-            height: 70,
-            color: pink,
-          ),
+              child: Icon(
+                icon,
+                color: pink,
+                size: 30,
+              ),
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: lightPink,
+                borderRadius: BorderRadius.circular(15.0),
+              )),
           SizedBox(height: 15),
           Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.w700),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
           )
         ],
       ),
