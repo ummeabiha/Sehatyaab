@@ -17,10 +17,10 @@ class CustomBottomNavBar extends StatelessWidget {
         Navigator.pushNamed(context, '/');
         break;
       case 1:
-        Navigator.pushNamed(context, '/appointments');
+        Navigator.pushNamed(context, '/doctorList');
         break;
       case 2:
-        Navigator.pushNamed(context, '/doctorProfile');
+        Navigator.pushNamed(context, '/displayPatient');
         break;
       case 3:
         Navigator.pushNamed(context, '/patientForm');
@@ -41,14 +41,14 @@ class CustomBottomNavBar extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_today,
+          icon: Icon(Icons.perm_contact_cal_rounded,
               color: currentIndex == 1 ? navyBlue : Colors.grey),
-          label: 'Appointments',
+          label: 'Doctors',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person,
+          icon: Icon(Icons.calendar_month_rounded,
               color: currentIndex == 2 ? navyBlue : Colors.grey),
-          label: 'Doctors',
+          label: 'Appointments',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person,

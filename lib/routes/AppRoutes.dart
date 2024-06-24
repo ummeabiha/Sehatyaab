@@ -12,6 +12,7 @@ import 'package:sehatyaab/widgets/patient_list.dart';
 import '../screens/PatientProfile/PatientHistory.dart';
 import '../services/FirestoreService.dart';
 import '../models/Patient.dart';
+import 'package:sehatyaab/screens/DoctorList/DoctorList.dart';
 
 final doctorFirestore = FirestoreService<Doctor>('/doctors');
 final patientFirestore = FirestoreService<Patient>('/patients');
@@ -28,6 +29,7 @@ class AppRoutes {
   static const String doctorProfile = '/doctorProfile';
   static const String signup = '/signup';
   static const String login = '/login';
+  static const String doctorlist = '/doctorList';
 
   static final Map<String, WidgetBuilder> routes = {
     welcome: (context) => const WelcomeScreen(),
@@ -59,5 +61,8 @@ class AppRoutes {
     patienthp: (context) {
       return PatientHomeScreen(firestoreService: doctorFirestore);
     },
+    doctorlist: (context) {
+      return DoctorList(firestoreService: doctorFirestore);
+    }
   };
 }
