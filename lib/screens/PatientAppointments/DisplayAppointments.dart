@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:sehatyaab/models/Patient.dart';
-import 'package:sehatyaab/screens/PatientDetails/PatientDetails.dart';
-import 'package:sehatyaab/widgets/CustomAppBar.dart';
+import '../../models/Patient.dart';
+import '../../screens/PatientDetails/PatientDetails.dart';
+import '../../screens/VideoCall/VideoCall.dart';
+import '../../widgets/CustomAppBar.dart';
 import '../../models/Appointments.dart';
 import '../../services/FirestoreService.dart';
 import '../../theme/AppColors.dart';
+
 
 class DisplayAppointments extends StatefulWidget {
   final FirestoreService<Appointment> appointmentService;
@@ -299,7 +301,12 @@ class _DisplayAppointmentsState extends State<DisplayAppointments>
                       const SizedBox(width: 20.0),
                       IconButton(
                         onPressed: () {
-                          // Implement video call icon functionality
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VideoCall(roomID: patient.id, userID: patient.id, userName: patient.name),
+                            ),
+                          );
                         },
                         icon: Icon(
                           Icons.video_camera_front_rounded,
