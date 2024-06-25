@@ -84,6 +84,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                     labelText: 'Patient Email',
                     hintText: 'Enter Patient Email',
                     suffixIcon: Icons.email,
+                    enabled: false,
                   ),
                   const SizedBox(
                     height: 30.0,

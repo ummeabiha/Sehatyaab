@@ -4,6 +4,7 @@ import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
 import 'package:sehatyaab/widgets/BottomNavbar.dart';
 import '../../services/FirestoreService.dart';
+import '../../theme/AppColors.dart';
 import '../../widgets/CustomAppBar.dart';
 
 class PatientHomeScreen extends StatefulWidget {
@@ -35,37 +36,41 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(),
-        body: StreamBuilder<List<Doctor>>(
-          stream: widget.firestoreService.getItemsStream(Doctor(
-            id: '',
-            name: '',
-            email: '',
-            gender: '',
-            dob: '',
-            specialization: '',
-            qualification: '',
-            yearsOfExperience: 0,
-          )),
-          builder: (context, AsyncSnapshot<List<Doctor>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              print('Waiting for data...');
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              print('Error fetching data: ${snapshot.error}');
-              return const Center(child: Text('Error fetching data'));
-            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              print('No doctors found');
-              return const Center(child: Text('No doctors found'));
-            } else {
-              final doctors = snapshot.data!;
-              print('Doctors fetched: ${doctors.length}');
+      appBar: const CustomAppBar(),
+      body: StreamBuilder<List<Doctor>>(
+        stream: widget.firestoreService.getItemsStream(Doctor(
+          id: '',
+          name: '',
+          email: '',
+          gender: '',
+          dob: '',
+          specialization: '',
+          qualification: '',
+          yearsOfExperience: 0,
+        )),
+        builder: (context, AsyncSnapshot<List<Doctor>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            print('Waiting for data...');
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            print('Error fetching data: ${snapshot.error}');
+            return const Center(child: Text('Error fetching data'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            print('No doctors found');
+            return const Center(child: Text('No doctors found'));
+          } else {
+            final doctors = snapshot.data!;
+            print('Doctors fetched: ${doctors.length}');
 
-              return Scaffold(
-                appBar: AppBar(
-                  title: const Text('Hi 👋, how are you doing ?'),
-                ),
-                body: Padding(
+            return SingleChildScrollView(
+                child: Column(
+              children: [
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: AppBar(
+                      title: const Text('Hi 👋, how are you doing ?'),
+                    )),
+                Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +78,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                       Container(
                         padding: const EdgeInsets.all(12.0),
                         decoration: BoxDecoration(
-                          color: kPrimaryColor,
+                          color: AppColors.blue4,
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: const ListTile(
@@ -108,13 +113,17 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          CategoryCard(
-                            icon: Icons.local_hospital_rounded,
-                            label: 'General Physician',
+                          Expanded(
+                            child: CategoryCard(
+                              icon: Icons.local_hospital_rounded,
+                              label: 'General Physician',
+                            ),
                           ),
-                          CategoryCard(
-                            icon: Icons.child_friendly_rounded,
-                            label: 'Child Specialist',
+                          Expanded(
+                            child: CategoryCard(
+                              icon: Icons.child_friendly_rounded,
+                              label: 'Child Specialist',
+                            ),
                           ),
                         ],
                       ),
@@ -141,78 +150,78 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            var doctor = doctors[index];
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 5,
+                        itemBuilder: (BuildContext context, int index) {
+                          var doctor = doctors[index];
 
-                            return Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  border: Border.all(
-                                      width: 1.5, color: Colors.grey.shade300)),
-                              child: ListTile(
-                                leading: const CircleAvatar(
-                                  radius: 25,
-                                  backgroundImage:
-                                      AssetImage('assets/images/female.png'),
-                                ),
-                                title: Text(
-                                  doctor.name,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      doctor.specialization,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.star,
-                                            size: 18,
-                                            color: Colors.amberAccent),
-                                        Icon(Icons.star,
-                                            size: 18,
-                                            color: Colors.amberAccent),
-                                        Icon(Icons.star,
-                                            size: 18,
-                                            color: Colors.amberAccent),
-                                        Icon(Icons.star,
-                                            size: 18, color: Colors.amberAccent)
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                trailing: TextButton(
-                                  onPressed: () {
-                                    // Implement booking functionality
-                                  },
-                                  child: const Text("Book Now",
-                                      style: TextStyle(color: kPrimaryColor)),
-                                ),
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              border: Border.all(
+                                  width: 1.5, color: Colors.grey.shade300),
+                            ),
+                            child: ListTile(
+                              leading: const CircleAvatar(
+                                radius: 25,
+                                backgroundImage:
+                                    AssetImage('assets/images/female.png'),
                               ),
-                            );
-                          },
-                        ),
+                              title: Text(
+                                doctor.name,
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    doctor.specialization,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const Row(
+                                    children: [
+                                      Icon(Icons.star,
+                                          size: 18, color: Colors.amberAccent),
+                                      Icon(Icons.star,
+                                          size: 18, color: Colors.amberAccent),
+                                      Icon(Icons.star,
+                                          size: 18, color: Colors.amberAccent),
+                                      Icon(Icons.star,
+                                          size: 18, color: Colors.amberAccent),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              trailing: TextButton(
+                                onPressed: () {
+                                  // Implement booking functionality
+                                },
+                                child: const Text("Book Now",
+                                    style: TextStyle(color: kPrimaryColor)),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
                 ),
-                bottomNavigationBar: CustomBottomNavBar(
-                  currentIndex: 0, // Highlight the home screen
-                  onTap: _onBottomNavTap,
-                ),
-              );
-            }
-          },
-        ));
+              ],
+            ));
+          }
+        },
+      ),
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: 0,
+        onTap: _onBottomNavTap,
+      ),
+    );
   }
 }
 
@@ -228,34 +237,37 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
-      width: 180,
-      margin: EdgeInsets.all(8.0),
-      padding: EdgeInsets.all(12.0),
+      height: 150,
+      width: 100,
+      margin: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.circular(15.0),
-          border: Border.all(width: 1.5, color: Colors.grey.shade300)),
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(15.0),
+        border: Border.all(width: 1.5, color: Colors.grey.shade300),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-              child: Icon(
-                icon,
-                color: pink,
-                size: 30,
-              ),
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: lightPink,
-                borderRadius: BorderRadius.circular(15.0),
-              )),
-          SizedBox(height: 15),
+            child: Icon(
+              icon,
+              color: pink,
+              size: 30,
+            ),
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: lightPink,
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+          ),
+          const SizedBox(height: 15),
           Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-          )
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+          ),
         ],
       ),
     );

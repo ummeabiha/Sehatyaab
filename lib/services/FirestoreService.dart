@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:sehatyaab/models/Doctor.dart';
 import '../models/Appointments.dart';
 import '../models/BaseModel.dart';
 
@@ -92,7 +93,7 @@ class FirestoreService<T extends BaseModel> {
   }
 
   Future<List> getItemsByQuery(
-      {required String field, required String value, required collection}) async {
+      {required String field, required String value, required collection, required Doctor Function(dynamic data) fromMap}) async {
     final querySnapshot = await FirebaseFirestore.instance
         .collection(collection)
         .where(field, isEqualTo: value)

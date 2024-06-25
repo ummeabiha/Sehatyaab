@@ -46,7 +46,7 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   await dotenv.load();
   await FirebaseConnection.initializeFirebase();
-  ZegoConnection.initializeZego();
+  //ZegoConnection.initializeZego();
   runApp(const MyApp());
 }
 

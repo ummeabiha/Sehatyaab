@@ -34,6 +34,7 @@ class WelcomeScreen extends StatelessWidget {
                       : Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: Theme.of(context).primaryColor,
                           ),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 30),
                 SizedBox(
@@ -42,7 +43,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 const Padding(
-                  padding:EdgeInsets.symmetric(horizontal: 48.0),
+                  padding: EdgeInsets.symmetric(horizontal: 48.0),
                   child: LoginAndSignupBtn(),
                 )
               ],

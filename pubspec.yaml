@@ -18,7 +18,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
-  zego_uikit_prebuilt_call: ^4.11.2
+  zego_uikit_prebuilt_call: ^4.12.9
   firebase_core: ^3.0.0
   firebase_auth: ^5.0.0
   cloud_firestore: ^5.0.0

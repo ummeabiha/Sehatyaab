@@ -118,6 +118,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                     labelText: 'Doctor Email',
                     hintText: 'Enter Doctor Email',
                     suffixIcon: Icons.email,
+                    enabled: false,
                   ),
                   const SizedBox(height: 30.0),
                   CustomDropdown<String>(

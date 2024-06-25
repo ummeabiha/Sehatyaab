@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:sehatyaab/models/Doctor.dart';
 import '../../models/Patient.dart';
 import '../../screens/PatientDetails/PatientDetails.dart';
 import '../../screens/VideoCall/VideoCall.dart';
@@ -8,7 +9,6 @@ import '../../widgets/CustomAppBar.dart';
 import '../../models/Appointments.dart';
 import '../../services/FirestoreService.dart';
 import '../../theme/AppColors.dart';
-
 
 class DisplayAppointments extends StatefulWidget {
   final FirestoreService<Appointment> appointmentService;
@@ -304,7 +304,9 @@ class _DisplayAppointmentsState extends State<DisplayAppointments>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => VideoCall(roomID: patient.id, userID: patient.id, userName: patient.name),
+                              builder: (context) => VideoCall(
+                                  userID: widget.doctorId,
+                                  userName: patient.name), //change
                             ),
                           );
                         },

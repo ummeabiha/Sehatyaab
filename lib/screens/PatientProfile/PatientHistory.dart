@@ -7,6 +7,7 @@ import '../../models/Patient.dart';
 import '../../services/FirestoreService.dart';
 import '../../theme/AppColors.dart';
 import '../../widgets/CustomAppBar.dart';
+import '../Login/LoginScreen.dart';
 
 class PatientHistory extends StatefulWidget {
   final Map<String, dynamic> patientData;
@@ -88,7 +89,8 @@ class _PatientHistoryState extends State<PatientHistory> {
                   style: Theme.of(context).textTheme.bodySmall),
               backgroundColor: AppColors.blue2),
         );
-        Navigator.pop(context); // Go back to the home screen or previous screen
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()));
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

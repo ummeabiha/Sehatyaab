@@ -79,7 +79,7 @@ class ExpandableDetailTile extends StatelessWidget {
               )),
           children: [
             if (reasonForVisit != null)
-              _buildDetailItem(
+              _buildDetailRow(
                 context,
                 'Reason: ',
                 toTitleCase(reasonForVisit!),
