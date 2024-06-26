@@ -44,7 +44,6 @@ class SignUpScreen extends StatelessWidget {
                 Spacer(),
               ],
             ),
-            // SocalSignUp() // Uncomment this line if you want to include SocalSignUp
           ],
         ),
       ),

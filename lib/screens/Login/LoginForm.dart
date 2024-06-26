@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
-import 'package:sehatyaab/screens/PatientHome/PatientHome.dart';
 import '../../components/already_have_an_account_acheck.dart';
 import '../../constants.dart';
 import '../Signup/SignUpScreen.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key}) : super(key: key);
+  const LoginForm({super.key});
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -48,13 +47,7 @@ class _LoginFormState extends State<LoginForm> {
           email: _emailController.text,
           password: _passwordController.text,
         );
-        Navigator.pushNamed(context, AppRoutes.patienthp);
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => AppRoutes.routes['patienthp']!(
-        //         context),
-        //   ),
+        Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(e.message ?? 'Login failed')),

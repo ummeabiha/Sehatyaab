@@ -1,7 +1,7 @@
-import 'package:sehatyaab/models/base_model.dart';
+import 'package:sehatyaab/models/BaseModel.dart';
 
 class Appointment extends BaseModel {
-  DateTime date;
+  String date;
   String time;
   String patientId;
   String doctorId;
@@ -18,7 +18,7 @@ class Appointment extends BaseModel {
     required this.patientId,
     required this.doctorId,
     required this.reasonForVisit,
-    this.status = false, // Default to scheduled
+    this.status = false,
     this.diagnosis,
     this.prescribedMeds,
     this.prescribedTests,
@@ -28,7 +28,7 @@ class Appointment extends BaseModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'date': date.toIso8601String(),
+      'date': date,
       'time': time,
       'patientId': patientId,
       'doctorId': doctorId,
@@ -44,11 +44,11 @@ class Appointment extends BaseModel {
   Appointment fromMap(Map<String, dynamic> map, String id) {
     return Appointment(
       id: id,
-      date: DateTime.parse(map['date']),
-      time: map['time'] as String,
-      patientId: map['patientId'] as String,
-      doctorId: map['doctorId'] as String,
-      reasonForVisit: map['reasonForVisit'] as String,
+      date: map['date'] as String? ?? '',
+      time: map['time'] as String? ?? '',
+      patientId: map['patientId'] as String? ?? '',
+      doctorId: map['doctorId'] as String? ?? '',
+      reasonForVisit: map['reasonForVisit'] as String? ?? '',
       status: map['status'] as bool? ?? false,
       diagnosis: map['diagnosis'] as String?,
       prescribedMeds: map['prescribedMeds'] as String?,

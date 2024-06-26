@@ -66,13 +66,15 @@ class _DatePickerFieldState extends State<DatePickerField> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => _selectDate(context),
-      child: CustomTextFormField(
-        controller: widget.controller,
-        validator: PatientFormValidator.validateDob,
-        labelText: 'Date of Birth',
-        hintText: 'Select Date of Birth',
-        suffixIcon: Icons.calendar_today,
-        enabled: false,
+      child: AbsorbPointer(
+        child: CustomTextFormField(
+          controller: widget.controller,
+          validator: PatientFormValidator.validateDob,
+          labelText: 'Date of Birth',
+          hintText: 'Select Date of Birth',
+          suffixIcon: Icons.calendar_today,
+          enabled: true,
+        ),
       ),
     );
   }

@@ -44,14 +44,8 @@ class LoginAndSignupBtn extends StatelessWidget {
           height: 40,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const SignUpScreen();
-                  },
-                ),
-              );
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const SignUpScreen()));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: kPrimaryLightColor,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/constants.dart';
-import 'package:sehatyaab/models/doctor.dart';
+import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
 import 'package:sehatyaab/widgets/BottomNavbar.dart';
 import '../../services/FirestoreService.dart';
+import '../../widgets/CustomAppBar.dart';
 
 class PatientHomeScreen extends StatefulWidget {
   final FirestoreService<Doctor> firestoreService;
@@ -24,7 +25,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
         Navigator.pushReplacementNamed(context, '/appointments');
         break;
       case 2:
-        Navigator.pushReplacementNamed(context, '/doctor');
+        Navigator.pushReplacementNamed(context, '/displayPatient');
         break;
       case 3:
         Navigator.pushReplacementNamed(context, '/profile');
@@ -34,7 +35,9 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Doctor>>(
+    return Scaffold(
+      appBar: const CustomAppBar(),
+      body: StreamBuilder<List<Doctor>>(
       stream: widget.firestoreService.getItemsStream(Doctor(
         id: '',
         name: '',
@@ -84,7 +87,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                         ),
                       ],
                     ),
-                    child: ListTile(
+                    child: const ListTile(
                       title: Text(
                         "Your Health is Important to Us",
                         style: TextStyle(
@@ -106,12 +109,12 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   const Text(
                     'Categories',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -125,11 +128,11 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Popular doctors',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
@@ -138,24 +141,22 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                         onPressed: () {
                           // Navigate to a screen to view all doctors
                         },
-                        child: Text(
+                        child: const Text(
                           'See all',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Expanded(
                     child: ListView.builder(
                       itemCount: doctors.length,
                       itemBuilder: (BuildContext context, int index) {
                         var doctor = doctors[index];
-                        print(
-                            'Doctor: ${doctor.name}, ${doctor.email}, ${doctor.dob}');
 
                         return ListTile(
-                          leading: CircleAvatar(
+                          leading: const CircleAvatar(
                             radius: 25,
                             backgroundImage:
                                 AssetImage('assets/images/female.png'),
@@ -166,7 +167,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                             onPressed: () {
                               // Implement booking functionality
                             },
-                            child: Text("Book Now"),
+                            child: const Text("Book Now"),
                           ),
                         );
                       },
@@ -182,7 +183,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
           );
         }
       },
-    );
+    ));
   }
 }
 

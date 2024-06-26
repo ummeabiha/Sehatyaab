@@ -16,42 +16,25 @@ void main() async {
   );
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  bool _isDarkTheme = false;
-
-  void _toggleTheme() {
-    setState(() {
-      _isDarkTheme = !_isDarkTheme;
-    });
-  }
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sehatyaab',
-      theme: _isDarkTheme ? AppTheme.darkTheme : AppTheme.lightTheme,
-      debugShowCheckedModeBanner: false,
-      routes: AppRoutes.routes,
-      initialRoute: AppRoutes.welcome,
-      builder: (context, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Sehatyaab'),
-            actions: [
-              IconButton(
-                icon: Icon(_isDarkTheme ? Icons.light_mode : Icons.dark_mode),
-                onPressed: _toggleTheme,
-              ),
-            ],
-          ),
-          body: child,
+    return ValueListenableBuilder<ThemeData>(
+      valueListenable: AppTheme.currentTheme,
+      builder: (context, theme, child) {
+        return MaterialApp(
+          title: 'Sehatyaab',
+          theme: theme,
+          debugShowCheckedModeBanner: false,
+          routes: AppRoutes.routes,
+          initialRoute: AppRoutes.welcome,
+          builder: (context, child) {
+            return Scaffold(
+              body: child,
+            );
+          },
         );
       },
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sehatyaab/theme/AppColors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -27,30 +28,34 @@ class CustomTextFormField extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      validator: validator,
-      style: Theme.of(context).textTheme.bodySmall,
-      enabled: enabled ?? true,
-      decoration: InputDecoration(
-        suffixIcon: Icon(
-          suffixIcon,
-          color: Theme.of(context).iconTheme.color,
+        controller: controller,
+        validator: validator,
+        style: Theme.of(context).textTheme.bodySmall,
+        enabled: enabled ?? true,
+        decoration: InputDecoration(
+          suffixIcon: Icon(
+            suffixIcon,
+            color: Theme.of(context).iconTheme.color,
+          ),
+          labelText: labelText,
+          labelStyle: Theme.of(context).textTheme.bodySmall,
+          hintText: hintText,
+          filled:true,
+          fillColor: Theme.of(context).brightness != Brightness.dark
+        ? Theme.of(context).primaryColor: AppColors.gray2,
+          hintStyle: Theme.of(context).textTheme.bodySmall,
+          border: Theme.of(context).inputDecorationTheme.border,
+          enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+          focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+          errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
+          focusedErrorBorder:
+              Theme.of(context).inputDecorationTheme.focusedErrorBorder,
         ),
-        labelText: labelText,
-        labelStyle: Theme.of(context).textTheme.bodySmall,
-        hintText: hintText,
-        border: Theme.of(context).inputDecorationTheme.border,
-        enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
-        focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
-        errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
-        focusedErrorBorder:
-            Theme.of(context).inputDecorationTheme.focusedErrorBorder,
-      ),
-      keyboardType: keyboardType,
-      maxLines: maxLines ?? 1,
-    );
+        keyboardType: keyboardType,
+        maxLines: maxLines ?? 1,
+      );
   }
 
   static copyWith({

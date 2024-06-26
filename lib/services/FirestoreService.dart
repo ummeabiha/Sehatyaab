@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../models/base_model.dart';
+import '../models/Appointments.dart';
+import '../models/BaseModel.dart';
 
 class FirestoreService<T extends BaseModel> {
   final CollectionReference _collection;
@@ -29,6 +30,20 @@ class FirestoreService<T extends BaseModel> {
     }
   }
 
+  Future<T> getItemById(String id, T model) async {
+    try {
+      DocumentSnapshot doc = await _collection.doc(id).get();
+      if (doc.exists) {
+        return model.fromMap(doc.data() as Map<String, dynamic>, doc.id) as T;
+      } else {
+        throw Exception('Document does not exist');
+      }
+    } catch (e) {
+      debugPrint('Error getting item by ID: $e');
+      throw e;
+    }
+  }
+
   Stream<List<T>> getItemsStream(T model) {
     try {
       return _collection.snapshots().map((QuerySnapshot snapshot) {
@@ -43,11 +58,12 @@ class FirestoreService<T extends BaseModel> {
   }
 
   //separate
-  Future<T?> getItem(String id,T model) async {
+  Future<T?> getItem(String id, T model) async {
     try {
       DocumentSnapshot docSnapshot = await _collection.doc(id).get();
       if (docSnapshot.exists) {
-        return model.fromMap(docSnapshot.data() as Map<String, dynamic>, docSnapshot.id) as T;
+        return model.fromMap(
+            docSnapshot.data() as Map<String, dynamic>, docSnapshot.id) as T;
       }
       return null;
     } catch (e) {
@@ -65,38 +81,29 @@ class FirestoreService<T extends BaseModel> {
     }
   }
 
-  Future<void> updateItem(String id, T item) async {
+  Future<void> updateItem(String id, Map<String, dynamic> item) async {
     try {
-      await _collection.doc(id).update(item.toMap());
+      await _collection.doc(id).update(item);
       debugPrint('Item updated with ID: $id');
     } catch (e) {
       debugPrint('Error updating item: $e');
     }
   }
+
+  Stream<List<Appointment>> getItemsByDoctorIdStream(String doctorId, T model) {
+    try {
+      return _collection
+          .where('doctorId', isEqualTo: doctorId)
+          .snapshots()
+          .map((snapshot) {
+        return snapshot.docs.map((doc) {
+          return model.fromMap(doc.data() as Map<String, dynamic>, doc.id)
+              as Appointment;
+        }).toList();
+      });
+    } catch (e) {
+      debugPrint('Error getting items by doctor ID stream: $e');
+      rethrow;
+    }
+  }
 }
-
-// Stream<List<Appointment>> getItemsByDoctorIdStream(String doctorId, T model) {
-//   try {
-//     return _collection
-//         .where('doctorId', isEqualTo: doctorId)
-//         .snapshots()
-//         .map((snapshot) {
-//       return snapshot.docs.map((doc) {
-//         return model.fromMap(
-//             doc.data() as Map<String, dynamic>, doc.id) as Appointment;
-//       }).toList();
-//     });
-//   } catch (e) {
-//     debugPrint('Error getting items by doctor ID stream: $e');
-//     rethrow;
-//   }
-// }
-//
-// }
-
-
-
-
-
-
-

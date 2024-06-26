@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sehatyaab/theme/AppColors.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -24,7 +25,7 @@ class CustomElevatedButton extends StatelessWidget {
           elevation: 2,
         ).copyWith(
           overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                (Set<MaterialState> states) {
+            (Set<MaterialState> states) {
               if (states.contains(MaterialState.pressed)) {
                 return Theme.of(context).hoverColor.withOpacity(0.12);
               }
@@ -37,8 +38,8 @@ class CustomElevatedButton extends StatelessWidget {
           child: Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).primaryColor,
-            ),
+                  color: Theme.of(context).primaryColor,
+                ),
           ),
         ),
       ),

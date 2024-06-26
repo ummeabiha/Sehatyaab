@@ -115,4 +115,28 @@ class PatientFormValidator {
     }
     return null;
   }
+
+  static String? validateSpecialization(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a specialization';
+    }
+    return null;
+  }
+
+  static String? validateQualification(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a qualification';
+    }
+    return null;
+  }
+
+  static String? validateYearsOfExperience(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter years of experience';
+    }
+    if (int.tryParse(value) == null) {
+      return 'Please enter a valid number';
+    }
+    return null;
+  }
 }

@@ -1,27 +1,27 @@
-import 'package:sehatyaab/models/base_model.dart';
+import 'package:sehatyaab/models/BaseModel.dart';
 
 class Doctor extends BaseModel {
   String name;
   String email;
   String gender;
-  String dob;
+  String? dob;
   String specialization;
   String qualification;
   int yearsOfExperience;
-  Map<String, List<String>> availableSlots;
-  Map<String, List<String>> bookedSlots;
+  Map<String, List<String>>? availableSlots;
+  Map<String, List<String>>? bookedSlots;
 
   Doctor({
     required super.id,
     required this.name,
     required this.email,
     required this.gender,
-    required this.dob,
+    this.dob,
     required this.specialization,
     required this.qualification,
     required this.yearsOfExperience,
-    required this.availableSlots,
-    required this.bookedSlots,
+    this.availableSlots,
+    this.bookedSlots,
   });
 
   @override
@@ -51,8 +51,8 @@ class Doctor extends BaseModel {
       specialization: map['specialization'] as String,
       qualification: map['qualification'] as String,
       yearsOfExperience: map['yearsOfExperience'] as int,
-      availableSlots: Map<String, List<String>>.from(map['availableSlots']),
-      bookedSlots: Map<String, List<String>>.from(map['bookedSlots']),
+      availableSlots: map['availableSlots'] != null ? Map<String, List<String>>.from(map['availableSlots']) : null,
+      bookedSlots: map['bookedSlots'] != null ? Map<String, List<String>>.from(map['bookedSlots']) : null,
     );
   }
 

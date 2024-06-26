@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/patient.dart';
+import '../models/Patient.dart';
 import '../services/FirestoreService.dart';
 
 class PatientList extends StatelessWidget {

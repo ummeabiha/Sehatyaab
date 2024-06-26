@@ -17,7 +17,7 @@ class AppointmentList extends StatelessWidget {
       body: StreamBuilder<List<Appointment>>(
         stream: appointmentService.getItemsStream(Appointment(
           id: '',
-          date: DateTime.now(),
+          date: '',
           time: '',
           patientId: '',
           doctorId: '',

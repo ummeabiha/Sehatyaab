@@ -4,10 +4,13 @@ import 'package:sehatyaab/screens/home_screen.dart';
 import '../../components/already_have_an_account_acheck.dart';
 import '../../constants.dart';
 import '../Login/LoginScreen.dart';
+import '../../services/FirestoreService.dart';
+import '../../models/UserAccounts.dart';
+import '../../models/doctor.dart';
+import '../../models/patient.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
-
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
@@ -19,6 +22,8 @@ class _SignUpFormState extends State<SignUpForm> {
   final _passwordController = TextEditingController();
   String? _selectedOption;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirestoreService<UserAccounts> _firestoreService =
+      FirestoreService<UserAccounts>('users');
 
   String? _validateName(String? value) {
     if (value == null || value.isEmpty) {
@@ -59,15 +64,56 @@ class _SignUpFormState extends State<SignUpForm> {
   Future<void> _signUp() async {
     if (_formKey.currentState!.validate()) {
       try {
-        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        UserCredential userCredential =
+            await _auth.createUserWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
-        // You can store additional user data here if needed
+        UserAccounts user = UserAccounts(
+          id: userCredential.user!.uid,
+          email: _emailController.text,
+          password: _passwordController.text,
+          option: _selectedOption,
+          name: "",
+        );
+        await _firestoreService.addItemWithId(user, user.id);
+
+        if (_selectedOption == 'Doctor') {
+          Doctor doctor = Doctor(
+              id: userCredential.user!.uid,
+              name: _nameController.text,
+              email: _emailController.text,
+              gender: "",
+              dob: "",
+              specialization: "",
+              qualification: "",
+              yearsOfExperience: 0,
+              availableSlots: {},
+              bookedSlots: {});
+
+          FirestoreService<Doctor> firestoreService =
+              FirestoreService<Doctor>('doctors');
+          await firestoreService.addItemWithId(doctor, doctor.id);
+        } else {
+          Patient patient = Patient(
+            id: userCredential.user!.uid,
+            name: _nameController.text,
+            email: _emailController.text,
+            gender: "",
+            dob: "",
+            height: 0,
+            weight: 0,
+          );
+
+          FirestoreService<Patient> firestoreService =
+              FirestoreService<Patient>('patients');
+          await firestoreService.addItemWithId(patient, patient.id);
+        }
+
         print('User signed up: ${userCredential.user!.uid}');
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
