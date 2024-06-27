@@ -21,12 +21,13 @@ class CustomDropdown<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
-    return  DropdownButtonFormField<T>(
+    return DropdownButtonFormField<T>(
       value: value,
       decoration: decoration.copyWith(
-        filled:true,
+        filled: true,
         fillColor: Theme.of(context).brightness != Brightness.dark
-        ? Theme.of(context).primaryColor: AppColors.gray2,
+            ? Theme.of(context).primaryColor
+            : AppColors.gray2,
         labelStyle: theme.textTheme.bodySmall,
         hintStyle: theme.textTheme.bodySmall,
         border: theme.inputDecorationTheme.border,
@@ -41,7 +42,7 @@ class CustomDropdown<T> extends StatelessWidget {
         Icons.arrow_drop_down,
         color: Theme.of(context).iconTheme.color,
       ),
-       style: theme.textTheme.bodySmall, 
+      style: theme.textTheme.bodySmall,
     );
   }
 }

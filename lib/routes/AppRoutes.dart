@@ -1,25 +1,24 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/Screens/Welcome/WelcomeScreen.dart';
+import 'package:sehatyaab/globals.dart';
 import 'package:sehatyaab/models/appointments.dart';
-import 'package:sehatyaab/models/doctor.dart';
+import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/screens/DoctorProfile/CreateDoctorProfile.dart';
 import 'package:sehatyaab/screens/Login/LoginScreen.dart';
-import 'package:sehatyaab/screens/PatientAppointments/DisplayPatients.dart';
+import 'package:sehatyaab/screens/PatientAppointments/DisplayAppointments.dart';
 import 'package:sehatyaab/screens/PatientHome/PatientHome.dart';
 import 'package:sehatyaab/screens/Signup/SignUpScreen.dart';
 import 'package:sehatyaab/widgets/patient_list.dart';
 import '../screens/PatientProfile/CreatePatientProfile.dart';
-import '../screens/PatientProfile/PatientHistory.dart';
-import '../screens/home_screen.dart';
+import '../../screens/PatientProfile/PatientHistory.dart';
 import '../screens/Appointments/AppointmentForm.dart';
 import '../screens/Appointments/appointment_list.dart';
 
 import '../screens/Doctors/Doctor_description.dart';
-// import '../..services/FirestoreService.dart';
-import '../services/FirestoreService.dart';~
+import '../services/FirestoreService.dart';
 import '../models/Patient.dart';
+import 'package:sehatyaab/screens/DoctorList/DoctorList.dart';
+import 'package:sehatyaab/Providers/appointment_provider.dart';
 
 final doctorFirestore = FirestoreService<Doctor>('/doctors');
 final patientFirestore = FirestoreService<Patient>('/patients');
@@ -37,6 +36,7 @@ class AppRoutes {
   static const String doctorProfile = '/doctorProfile';
   static const String signup = '/signup';
   static const String login = '/login';
+  static const String doctorlist = '/doctorList';
   static const String appointmentForm = '/appointmentform';
   static const String appointmentlist = '/appointmentlist';
 
@@ -45,23 +45,18 @@ class AppRoutes {
     signup: (context) => const SignUpScreen(),
     login: (context) => const LoginScreen(),
     //patienthp: (context) => const PatientHomeScreen(),
-    home: (context) => const HomeScreen(),
 
-    // doctordesc: (context) => DoctorDescriptionScreen(firestoreService: firestoreService),
+
     appointmentForm: (context) => AppointmentForm(
-      selectedDoctor: '',
-      selectedDoctorId: '',
-
-    ),
-
+          selectedDoctor: '',
+          selectedDoctorId: '',
+        ),
     appointmentlist: (context) => AppointmentList(),
 
-    patientForm: (context) => const CreatePatientProfile(),
     doctordesc: (context) {
       final firestoreService = FirestoreService<Doctor>('/doctordesc');
-      return DoctorDescriptionScreen(firestoreService: firestoreService);
+      return DoctorDescriptionScreen(firestoreService: doctorFirestore);
     },
-
 
     patientHistory: (context) => const PatientHistory(
           patientData: {},
@@ -71,21 +66,24 @@ class AppRoutes {
     },
 
     // displayPatient: (context) {
-    //   return DisplayPatients(
+    //   return DisplayAppointments(
     //       appointmentService: appointmentFirestore,
     //       patientService: patientFirestore,
-    //       doctorId: 'app1');
+    //       doctorId: globalDoctorId!);
     // },
-    //
-    // doctorProfile: (context) {
-    //   return CreateDoctorProfile(
-    //     doctorData: {},
-    //     firestoreService: doctorFirestore,
-    //   );
-    // },
-    //
-    // patienthp: (context) {
-    //   return PatientHomeScreen(firestoreService: doctorFirestore);
-    // },
+
+    doctorProfile: (context) {
+      return CreateDoctorProfile(
+        doctorData: {},
+        firestoreService: doctorFirestore,
+      );
+    },
+
+    patienthp: (context) {
+      return PatientHomeScreen(firestoreService: doctorFirestore);
+    },
+    doctorlist: (context) {
+      return DoctorList(firestoreService: doctorFirestore);
+    }
   };
 }

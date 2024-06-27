@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/services/FirestoreService.dart';
 import 'package:sehatyaab/theme/AppColors.dart';
-import 'package:sehatyaab/models/doctor.dart';
+import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/screens/Appointments/AppointmentForm.dart';
 
 class DoctorDescriptionScreen extends StatefulWidget {
@@ -177,7 +177,7 @@ class DoctorListItem extends StatelessWidget {
 // import 'package:flutter/material.dart';
 // import 'package:sehatyaab/services/FirestoreService.dart';
 // import 'package:sehatyaab/theme/AppColors.dart';
-// import 'package:sehatyaab/models/doctor.dart';
+// import 'package:sehatyaab/models/Doctor.dart';
 // import 'package:sehatyaab/screens/Appointments/AppointmentForm.dart';
 // import 'package:sehatyaab/services/FirestoreService.dart';
 //

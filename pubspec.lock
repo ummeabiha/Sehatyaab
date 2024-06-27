@@ -334,6 +334,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1+5"
+  flutter_dotenv:
+    dependency: "direct main"
+    description:
+      name: flutter_dotenv
+      sha256: "9357883bdd153ab78cbf9ffa07656e336b8bbb2b5a3ca596b0b27e119f7c7d77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -926,7 +934,7 @@ packages:
     source: hosted
     version: "1.0.0+4"
   zego_express_engine:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: zego_express_engine
       sha256: "6a22fa5f283180fbaa9dfae554fd78ae7c00731728f7bde01292bc74a5b65445"
@@ -945,26 +953,26 @@ packages:
     dependency: transitive
     description:
       name: zego_uikit
-      sha256: e3ef56093889837fb4dfc592487f06362ef0fc452fc33b7564b62ec6c3db0b6b
+      sha256: a5dcdbef47c4e170f821d8d5b305703dac2a4e3c79a67d70ad89690d73736de5
       url: "https://pub.dev"
     source: hosted
-    version: "2.23.0"
+    version: "2.24.1"
   zego_uikit_prebuilt_call:
     dependency: "direct main"
     description:
       name: zego_uikit_prebuilt_call
-      sha256: "380916abac8a2a2499c4ec6d9e6399b6420ae67db9f36fbff00dd4f3fcd42a1a"
+      sha256: "4470eb3ac796d642db33a3602908c0f1dd1e910584a581a59aff711ec0015a2a"
       url: "https://pub.dev"
     source: hosted
-    version: "4.12.2"
+    version: "4.12.9"
   zego_uikit_signaling_plugin:
     dependency: transitive
     description:
       name: zego_uikit_signaling_plugin
-      sha256: "252aab94da335f64bcf09faf2288b9c698f4427ea96b99a9879c116023f6ba4a"
+      sha256: b7e0e3589e8c5bc15bd1a2570d7dc418c1232c60befd967cb61164d82252aca0
       url: "https://pub.dev"
     source: hosted
-    version: "2.7.13"
+    version: "2.7.14"
   zego_zim:
     dependency: transitive
     description:

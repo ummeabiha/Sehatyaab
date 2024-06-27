@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sehatyaab/models/UserAccounts.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
-import '../../components/already_have_an_account_acheck.dart';
-import '../../constants.dart';
+import '../../globals.dart';
+import '../../services/FirestoreService.dart';
+import '../../theme/AppColors.dart';
+import '../../validations/AuthFormValidator.dart';
+import '../../widgets/ElevatedButton.dart';
+import '../../widgets/TextFormField.dart';
 import '../Signup/SignUpScreen.dart';
+import 'AlreadyHaveAnAccountCheck.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -18,39 +24,51 @@ class _LoginFormState extends State<LoginForm> {
   final _passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    }
-    String pattern = r'^[^@]+@[^@]+\.[^@]+';
-    RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(value)) {
-      return 'Enter a valid email';
-    }
-    return null;
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    }
-    if (value.length < 6) {
-      return 'Password must be at least 6 characters';
-    }
-    return null;
-  }
-
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
       try {
-        await _auth.signInWithEmailAndPassword(
+        final UserCredential userCredential =
+            await _auth.signInWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
-        Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
+
+        final String userId = userCredential.user!.uid;
+        final FirestoreService<UserAccounts> firestoreService =
+            FirestoreService<UserAccounts>('users');
+
+        final UserAccounts? user = await firestoreService.getItemById(
+            userId, UserAccounts(id: '', password: '', email: '', option: ''));
+
+        if (user != null) {
+          if (user.option == 'Doctor') {
+            globalDoctorId = userId;
+            Navigator.pushReplacementNamed(context, AppRoutes.displayPatient);
+          } else {
+            globalPatientId = userId;
+            Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('User Not Found',
+                    style: Theme.of(context).textTheme.bodySmall),
+                backgroundColor: AppColors.blue2),
+          );
+        }
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message ?? 'Login failed')),
+          SnackBar(
+              content: Text('Login failed: ${e.message ?? "Unknown Error"}',
+                  style: Theme.of(context).textTheme.bodySmall),
+              backgroundColor: AppColors.blue2),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('An error occurred: $e',
+                  style: Theme.of(context).textTheme.bodySmall),
+              backgroundColor: AppColors.blue2),
         );
       }
     }
@@ -62,43 +80,28 @@ class _LoginFormState extends State<LoginForm> {
       key: _formKey,
       child: Column(
         children: [
-          TextFormField(
+          CustomTextFormField(
             controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            cursorColor: kPrimaryColor,
-            validator: _validateEmail,
-            decoration: const InputDecoration(
-              hintText: "Your email",
-              prefixIcon: Padding(
-                padding: EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person),
-              ),
-            ),
+            validator: AuthFormValidator.validateEmail,
+            labelText: 'Email Address',
+            hintText: 'xyz@gmail.com',
+            suffixIcon: Icons.email,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
-              controller: _passwordController,
-              textInputAction: TextInputAction.done,
-              obscureText: true,
-              cursorColor: kPrimaryColor,
-              validator: _validatePassword,
-              decoration: const InputDecoration(
-                hintText: "Your password",
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
-                ),
-              ),
-            ),
+          const SizedBox(height: 30),
+          CustomTextFormField(
+            controller: _passwordController,
+            validator: AuthFormValidator.validatePassword,
+            obscureText: true,
+            labelText: 'Password',
+            hintText: 'Enter Password',
+            suffixIcon: Icons.lock,
           ),
-          const SizedBox(height: defaultPadding),
-          ElevatedButton(
+          const SizedBox(height: 35),
+          CustomElevatedButton(
             onPressed: _login,
-            child: Text("Login".toUpperCase()),
+            label: 'Login',
           ),
-          const SizedBox(height: defaultPadding),
+          const SizedBox(height: 30),
           AlreadyHaveAnAccountCheck(
             press: () {
               Navigator.push(

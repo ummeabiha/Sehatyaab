@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/models/doctor.dart';
+import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/services/FirestoreService.dart';
 import '../Doctors/Doctor_description.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';

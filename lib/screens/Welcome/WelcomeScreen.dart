@@ -1,72 +1,56 @@
 import 'package:flutter/material.dart';
+import '../../theme/AppColors.dart';
 import 'LoginSignupBtn.dart';
-import '../../../constants.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            WelcomeImage(),
-            Row(
+    return Scaffold(
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? AppColors.black2
+          : Theme.of(context).cardColor,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.only(top: 40.0, bottom: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacer(),
-                Expanded(
-                  flex: 6,
-                  child: LoginAndSignupBtn(),
+                Text(
+                  "Sehatyaab",
+                  style: Theme.of(context).brightness == Brightness.dark
+                      ? Theme.of(context).textTheme.bodyLarge
+                      : Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Theme.of(context).primaryColor,
+                          ),
                 ),
-                Spacer(),
+                const SizedBox(height: 10),
+                Text(
+                  "Bridging the gap in medical facilities",
+                  style: Theme.of(context).brightness == Brightness.dark
+                      ? Theme.of(context).textTheme.bodyMedium
+                      : Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 30),
+                SizedBox(
+                  width: 300.0,
+                  child: Image.asset('assets/images/logo-white.png'),
+                ),
+                const SizedBox(height: 30),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 48.0),
+                  child: LoginAndSignupBtn(),
+                )
               ],
             ),
-          ],
+          ),
         ),
       ),
-    );
-  }
-}
-
-class WelcomeImage extends StatelessWidget {
-  const WelcomeImage({
-    super.key,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text(
-          "Sehatyaab",
-          style: TextStyle(
-              fontSize: 30, fontWeight: FontWeight.bold, color: kPrimaryColor),
-          textAlign: TextAlign.center,
-        ),
-        const Text(
-          "Bridging the gap in medical facilities",
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w100, color: navyBlue),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: defaultPadding * 2),
-        Row(
-          children: [
-            const Spacer(),
-            Expanded(
-              flex: 8,
-              child: Image.asset(
-                "assets/images/sehatyaab-logo.png",
-                width: 400.0,
-                height: 400.0,
-              ),
-            ),
-            const Spacer(),
-          ],
-        ),
-        const SizedBox(height: defaultPadding * 2),
-      ],
     );
   }
 }

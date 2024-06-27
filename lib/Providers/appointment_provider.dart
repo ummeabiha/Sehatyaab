@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../models/appointments.dart';
-import '../models/doctor.dart';
+import '../models/Doctor.dart';
 import 'package:sehatyaab/models/BaseModel.dart';
 import '../services/FirestoreService.dart';
 
 class AppointmentProvider with ChangeNotifier {
   final FirestoreService<Appointment> _appointmentService =
-  FirestoreService<Appointment>('appointments');
+      FirestoreService<Appointment>('/appointments');
   final FirestoreService<Doctor> _doctorService =
-  FirestoreService<Doctor>('doctors');
+      FirestoreService<Doctor>('/doctors');
 
   String? _selectedDate;
   String? _selectedTime;
@@ -44,23 +45,22 @@ class AppointmentProvider with ChangeNotifier {
   Future<void> fetchAvailableTimes(String doctorId, DateTime date) async {
     try {
       final String formattedDate = DateFormat('yyyy-MM-dd').format(date);
-      Doctor? doctor = await _doctorService.getItemById(doctorId, Doctor(
-        id: '',
-        name: '',
-        email: '',
-        gender: '',
-        dob: '',
-        specialization: '',
-        qualification: '',
-        yearsOfExperience: 0,
-        availableSlots: {},
-        bookedSlots: {},
-      ));
+      Doctor? doctor = await _doctorService.getItemById(
+          doctorId,
+          Doctor(
+            id: '',
+            name: '',
+            email: '',
+            gender: '',
+            dob: '',
+            specialization: '',
+            qualification: '',
+            yearsOfExperience: 0,
+            availableSlots: {},
+            bookedSlots: {},
+          ));
 
-
-
-
-    if (doctor != null && doctor.availableSlots!.containsKey(formattedDate)) {
+      if (doctor != null && doctor.availableSlots!.containsKey(formattedDate)) {
         updateAvailableTimes(doctor.availableSlots![formattedDate]!);
       } else {
         updateAvailableTimes([]);
@@ -71,20 +71,23 @@ class AppointmentProvider with ChangeNotifier {
     }
   }
 
-  Future<void> bookAppointment(String doctorId, String patientId, String reasonForVisit) async {
+  Future<void> bookAppointment(
+      String doctorId, String patientId, String reasonForVisit) async {
     try {
-      Doctor? doctor = await _doctorService.getItem(doctorId, Doctor(
-        id: '',
-        name: '',
-        email: '',
-        gender: '',
-        dob: '',
-        specialization: '',
-        qualification: '',
-        yearsOfExperience: 0,
-        availableSlots: {},
-        bookedSlots: {},
-      ));
+      Doctor? doctor = await _doctorService.getItem(
+          doctorId,
+          Doctor(
+            id: '',
+            name: '',
+            email: '',
+            gender: '',
+            dob: '',
+            specialization: '',
+            qualification: '',
+            yearsOfExperience: 0,
+            availableSlots: {},
+            bookedSlots: {},
+          ));
 
       if (doctor != null) {
         final Map<String, List<String>> availableSlots = doctor.availableSlots!;
@@ -95,7 +98,6 @@ class AppointmentProvider with ChangeNotifier {
 
         if (availableSlots.containsKey(formattedDate) &&
             availableSlots[formattedDate]!.contains(formattedTime)) {
-
           availableSlots[formattedDate]!.remove(formattedTime);
           bookedSlots.putIfAbsent(formattedDate, () => []).add(formattedTime);
 
@@ -152,7 +154,7 @@ class AppointmentProvider with ChangeNotifier {
 // import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 // import '../models/appointments.dart';
-// import '../models/doctor.dart';
+// import '../models/Doctor.dart';
 // import 'package:sehatyaab/models/BaseModel.dart';
 // import '../services/FirestoreService.dart';
 //
