@@ -20,6 +20,7 @@ class AppointmentForm extends StatelessWidget {
         backgroundColor: AppColors.blue4,
         elevation: 3,
       ),
+      backgroundColor: AppColors.black,
       body:
       Padding(
         padding: const EdgeInsets.all(16.0),
@@ -30,22 +31,26 @@ class AppointmentForm extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(8.0),
                 color: AppColors.blue4,
-                child: Text(
-                  'Selected Doctor:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                child: Center(
+                  child: Text(
+                    'Book An Appointment For:',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  selectedDoctor,
-                  style: TextStyle(fontSize: 16),
+                child: Center(
+                  child: Text(
+                    "Dr" + selectedDoctor,
+                    style: TextStyle(fontSize: 26,color: AppColors.blue1,fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
               SizedBox(height: 20),
               Text(
                 'Select Date:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
               ),
               Card(
                 color: Colors.grey[200],
@@ -53,7 +58,7 @@ class AppointmentForm extends StatelessWidget {
                   title: Text(
                     provider.selectedDate == null
                         ? 'Choose a date'
-                        : DateFormat.yMMMd().format(DateTime.parse(provider.selectedDate!)),
+                        : DateFormat.yMMMd().format(DateTime.parse(provider.selectedDate!)),style: TextStyle(color: Colors.white),
                   ),
                   trailing: Icon(Icons.calendar_today, color: AppColors.blue4),
                   onTap: () async {
@@ -73,7 +78,7 @@ class AppointmentForm extends StatelessWidget {
               SizedBox(height: 20),
               Text(
                 'Select Time:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
               ),
               Card(
                 color: Colors.grey[200],
@@ -108,14 +113,19 @@ class AppointmentForm extends StatelessWidget {
               SizedBox(height: 20),
               Text(
                 'Your Symptoms:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
               ),
               Card(
                 color: Colors.grey[200],
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Any symptoms or condition that you feel?',
-                    border: OutlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.blue2,
+                        width: 2.0
+                      )
+                    ),
                     filled: true,
                     fillColor: Colors.grey[200],
                   ),
