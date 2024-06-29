@@ -43,7 +43,7 @@ class Doctor extends BaseModel {
   @override
   Doctor fromMap(Map<String, dynamic> map, String id) {
     return Doctor(
-      id: id,
+      id: id ,
       name: map['name'] as String,
       email: map['email'] as String,
       gender: map['gender'] as String,
@@ -68,7 +68,7 @@ class Doctor extends BaseModel {
     Map<String, List<String>>? bookedSlots,
   }) {
     return Doctor(
-      id: this.id,
+      id: id,
       name: name ?? this.name,
       email: email ?? this.email,
       gender: gender ?? this.gender,

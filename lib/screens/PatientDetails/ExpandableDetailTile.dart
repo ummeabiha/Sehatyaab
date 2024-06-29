@@ -79,11 +79,14 @@ class ExpandableDetailTile extends StatelessWidget {
               )),
           children: [
             if (reasonForVisit != null)
+            Padding( padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+              child:
               _buildDetailRow(
                 context,
                 'Reason: ',
                 toTitleCase(reasonForVisit!),
               ),
+            ),
             if (medicalHistory != null)
               _buildExpandableDetail(
                 context,

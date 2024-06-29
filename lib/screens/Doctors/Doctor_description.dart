@@ -7,10 +7,12 @@ import 'package:sehatyaab/screens/Appointments/AppointmentForm.dart';
 class DoctorDescriptionScreen extends StatefulWidget {
   final FirestoreService<Doctor> firestoreService;
 
-  DoctorDescriptionScreen({Key? key, required this.firestoreService}) : super(key: key);
+  DoctorDescriptionScreen({Key? key, required this.firestoreService})
+      : super(key: key);
 
   @override
-  _DoctorDescriptionScreenState createState() => _DoctorDescriptionScreenState();
+  _DoctorDescriptionScreenState createState() =>
+      _DoctorDescriptionScreenState();
 }
 
 class _DoctorDescriptionScreenState extends State<DoctorDescriptionScreen> {
@@ -52,7 +54,9 @@ class _DoctorDescriptionScreenState extends State<DoctorDescriptionScreen> {
                 itemCount: doctors.length,
                 itemBuilder: (BuildContext context, int index) {
                   var doctor = doctors[index];
-                  return DoctorListItem(doctor: doctor, firestoreService: widget.firestoreService);
+                  return DoctorListItem(
+                      doctor: doctor,
+                      firestoreService: widget.firestoreService);
                 },
               );
             }
@@ -134,7 +138,8 @@ class DoctorListItem extends StatelessWidget {
                   endIndent: 16,
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   title: Text(
                     'Description & Services',
                     style: TextStyle(
@@ -161,7 +166,8 @@ class DoctorListItem extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => AppointmentForm(
                             selectedDoctor: doctor.name,
-                            selectedDoctorId: doctor.id, // Pass the doctor's ID here
+                            selectedDoctorId:
+                                doctor.id, // Pass the doctor's ID here
                           ),
                         ),
                       );
@@ -169,7 +175,8 @@ class DoctorListItem extends StatelessWidget {
                     child: Text('Book Now'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.blue4,
-                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                       textStyle: TextStyle(
                         color: Colors.white,
                         fontSize: 18,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../../Providers/appointment_provider.dart';
+import '../../Providers/AppointmentProvider.dart';
 import '../../theme/AppColors.dart';
 
 class AppointmentForm extends StatelessWidget {

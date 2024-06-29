@@ -89,6 +89,8 @@ class _PatientHistoryState extends State<PatientHistory> {
                   style: Theme.of(context).textTheme.bodySmall),
               backgroundColor: AppColors.blue2),
         );
+        Navigator.of(context).pop();
+
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const LoginScreen()));
       }).catchError((error) {

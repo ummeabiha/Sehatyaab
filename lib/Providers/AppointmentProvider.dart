@@ -72,7 +72,7 @@ class AppointmentProvider with ChangeNotifier {
   Future<void> bookAppointment(
       String doctorId, String patientId, String reasonForVisit) async {
     try {
-      Doctor? doctor = await _doctorService.getItem(
+      Doctor? doctor = await _doctorService.getItemById(
           doctorId,
           Doctor(
             id: '',
@@ -87,43 +87,39 @@ class AppointmentProvider with ChangeNotifier {
             bookedSlots: {},
           ));
 
-      if (doctor != null) {
-        final Map<String, List<String>> availableSlots = doctor.availableSlots!;
-        final Map<String, List<String>> bookedSlots = doctor.bookedSlots!;
+      final Map<String, List<String>> availableSlots = doctor.availableSlots!;
+      final Map<String, List<String>> bookedSlots = doctor.bookedSlots!;
 
-        final String formattedDate = _selectedDate!;
-        final String formattedTime = _selectedTime!;
+      final String formattedDate = _selectedDate!;
+      final String formattedTime = _selectedTime!;
 
-        if (availableSlots.containsKey(formattedDate) &&
-            availableSlots[formattedDate]!.contains(formattedTime)) {
-          availableSlots[formattedDate]!.remove(formattedTime);
-          bookedSlots.putIfAbsent(formattedDate, () => []).add(formattedTime);
+      if (availableSlots.containsKey(formattedDate) &&
+          availableSlots[formattedDate]!.contains(formattedTime)) {
+        availableSlots[formattedDate]!.remove(formattedTime);
+        bookedSlots.putIfAbsent(formattedDate, () => []).add(formattedTime);
 
-          // Update doctor object with modified slots
-          Doctor updatedDoctor = doctor.copyWith(
-            availableSlots: availableSlots,
-            bookedSlots: bookedSlots,
-          );
+        // Update doctor object with modified slots
+        Doctor updatedDoctor = doctor.copyWith(
+          availableSlots: availableSlots,
+          bookedSlots: bookedSlots,
+        );
 
-          await _doctorService.updateItem(doctorId, updatedDoctor.toMap());
+        await _doctorService.updateItem(doctorId, updatedDoctor.toMap());
 
-          final Appointment newAppointment = Appointment(
-            id: '',
-            date: formattedDate,
-            time: formattedTime,
-            patientId: patientId,
-            doctorId: doctorId,
-            reasonForVisit: reasonForVisit,
-          );
+        final Appointment newAppointment = Appointment(
+          id: '',
+          date: formattedDate,
+          time: formattedTime,
+          patientId: patientId,
+          doctorId: doctorId,
+          reasonForVisit: reasonForVisit,
+        );
 
-          await _appointmentService.addItem(newAppointment);
-        } else {
-          throw 'Selected time slot is not available';
-        }
+        await _appointmentService.addItem(newAppointment);
       } else {
-        throw 'Doctor not found';
+        throw 'Selected time slot is not available';
       }
-    } catch (e) {
+        } catch (e) {
       debugPrint('Error booking appointment: $e');
       rethrow;
     }

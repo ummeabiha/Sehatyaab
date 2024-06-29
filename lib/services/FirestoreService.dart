@@ -58,21 +58,6 @@ class FirestoreService<T extends BaseModel> {
     }
   }
 
-  //separate
-  Future<T?> getItem(String id, T model) async {
-    try {
-      DocumentSnapshot docSnapshot = await _collection.doc(id).get();
-      if (docSnapshot.exists) {
-        return model.fromMap(
-            docSnapshot.data() as Map<String, dynamic>, docSnapshot.id) as T;
-      }
-      return null;
-    } catch (e) {
-      debugPrint('Error getting item: $e');
-      rethrow;
-    }
-  }
-
   Future<void> deleteItem(String id) async {
     try {
       await _collection.doc(id).delete();

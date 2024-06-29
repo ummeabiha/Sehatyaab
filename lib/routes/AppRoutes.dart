@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/Screens/Welcome/WelcomeScreen.dart';
-import 'package:sehatyaab/globals.dart';
-import 'package:sehatyaab/models/Appointments.dart';
-import 'package:sehatyaab/models/Doctor.dart';
-import 'package:sehatyaab/screens/DoctorProfile/CreateDoctorProfile.dart';
-import 'package:sehatyaab/screens/Login/LoginScreen.dart';
-import 'package:sehatyaab/screens/PatientAppointments/DisplayAppointments.dart';
-import 'package:sehatyaab/screens/PatientHome/PatientHome.dart';
-import 'package:sehatyaab/screens/Signup/SignUpScreen.dart';
-import 'package:sehatyaab/widgets/patient_list.dart';
+import '../globals.dart';
+import '../models/Appointments.dart';
+import '../models/Doctor.dart';
+import '../models/Patient.dart';
+import '../screens/DoctorProfile/CreateDoctorProfile.dart';
+import '../screens/Login/LoginScreen.dart';
+import '../screens/PatientAppointments/DisplayAppointments.dart';
+import '../screens/PatientHome/PatientHome.dart';
+import '../screens/Signup/SignUpScreen.dart';
 import '../../screens/PatientProfile/PatientHistory.dart';
 import '../screens/Appointments/AppointmentForm.dart';
 import '../screens/Appointments/AppointmentList.dart';
 import '../screens/Doctors/Doctor_description.dart';
+import '../screens/Welcome/WelcomeScreen.dart';
 import '../services/FirestoreService.dart';
-import '../models/Patient.dart';
-import 'package:sehatyaab/screens/DoctorList/DoctorList.dart';
+import '../screens/DoctorList/DoctorList.dart';
+import '../widgets/patient_list.dart';
+import '../screens/SplashScreen/SplashScreen.dart';
 
 final doctorFirestore = FirestoreService<Doctor>('/doctors');
 final patientFirestore = FirestoreService<Patient>('/patients');
@@ -36,11 +37,13 @@ class AppRoutes {
   static const String doctorlist = '/doctorList';
   static const String appointmentForm = '/appointmentform';
   static const String appointmentlist = '/appointmentlist';
+  static const String splash = '/splash';
 
   static final Map<String, WidgetBuilder> routes = {
     welcome: (context) => const WelcomeScreen(),
     signup: (context) => const SignUpScreen(),
     login: (context) => const LoginScreen(),
+    splash: (context) => SplashScreen(),
     appointmentForm: (context) => AppointmentForm(
           selectedDoctor: '',
           selectedDoctorId: '',

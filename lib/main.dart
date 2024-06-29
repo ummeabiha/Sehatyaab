@@ -37,7 +37,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:sehatyaab/Providers/appointment_provider.dart';
+import 'package:sehatyaab/Providers/AppointmentProvider.dart';
 import 'routes/AppRoutes.dart';
 import 'services/FirebaseConnection.dart';
 import 'theme/AppTheme.dart';
@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
           theme: theme,
           debugShowCheckedModeBanner: false,
           routes: AppRoutes.routes,
-          initialRoute: AppRoutes.welcome,
+          initialRoute: AppRoutes.splash,
           builder: (context, child) {
             return Scaffold(
               body: child,

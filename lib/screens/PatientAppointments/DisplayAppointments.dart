@@ -288,7 +288,7 @@ class _DisplayAppointmentsState extends State<DisplayAppointments>
                             MaterialPageRoute(
                               builder: (context) => VideoCall(
                                   userID: widget.doctorId,
-                                  userName: patient.name), 
+                                  userName: patient.name),
                             ),
                           );
                         },
