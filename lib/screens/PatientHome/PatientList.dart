@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/services/FirestoreService.dart';
-import '../Doctors/Doctor_description.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
 
 class PatientList extends StatelessWidget {
   final FirestoreService<Doctor> firestoreService;
 
-  const PatientList({Key? key, required this.firestoreService}) : super(key: key);
+  const PatientList({super.key, required this.firestoreService});
 
   @override
   Widget build(BuildContext context) {
@@ -21,31 +20,32 @@ class PatientList extends StatelessWidget {
         specialization: '',
         qualification: '',
         yearsOfExperience: 0,
-          availableSlots: {},
+        availableSlots: {},
         bookedSlots: {},
       )),
       builder: (context, AsyncSnapshot<List<Doctor>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          print('Waiting for data...');
-          return Center(child: CircularProgressIndicator());
+          debugPrint('Waiting for data...');
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          print('Error fetching data: ${snapshot.error}');
-          return Center(child: Text('Error fetching data'));
+          debugPrint('Error fetching data: ${snapshot.error}');
+          return const Center(child: Text('Error fetching data'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          print('No doctors found');
-          return Center(child: Text('No doctors found'));
+          debugPrint('No doctors found');
+          return const Center(child: Text('No doctors found'));
         } else {
           final doctors = snapshot.data!;
-          print('Doctors fetched: ${doctors.length}');
+          debugPrint('Doctors fetched: ${doctors.length}');
 
           return ListView.builder(
             itemCount: doctors.length,
             itemBuilder: (BuildContext context, int index) {
               var doctor = doctors[index];
-              print('Doctor: ${doctor.name}, ${doctor.email}, ${doctor.dob}');
+              debugPrint(
+                  'Doctor: ${doctor.name}, ${doctor.email}, ${doctor.dob}');
 
               return ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   radius: 25,
                   backgroundImage: AssetImage('assets/images/female.png'),
                 ),
@@ -53,10 +53,9 @@ class PatientList extends StatelessWidget {
                 subtitle: Text(doctor.specialization),
                 trailing: TextButton(
                   onPressed: () {
-                      Navigator.pushNamed(context, AppRoutes.doctordesc);
-             },
-
-                 child: Text("Book Now"),
+                    Navigator.pushNamed(context, AppRoutes.doctordesc);
+                  },
+                  child: const Text("Book Now"),
                 ),
               );
             },

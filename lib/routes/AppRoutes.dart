@@ -11,7 +11,7 @@ import 'package:sehatyaab/screens/Signup/SignUpScreen.dart';
 import 'package:sehatyaab/widgets/patient_list.dart';
 import '../../screens/PatientProfile/PatientHistory.dart';
 import '../screens/Appointments/AppointmentForm.dart';
-import '../screens/Appointments/appointment_list.dart';
+import '../screens/Appointments/AppointmentList.dart';
 import '../screens/Doctors/Doctor_description.dart';
 import '../services/FirestoreService.dart';
 import '../models/Patient.dart';

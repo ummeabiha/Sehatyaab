@@ -13,7 +13,6 @@ import '../../models/UserAccounts.dart';
 import '../../models/Doctor.dart';
 import '../../models/patient.dart';
 import '../../screens/Login/LoginScreen.dart';
-import '../PatientProfile/CreatePatientProfile.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -24,7 +23,7 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _nameController=TextEditingController();
+  final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   String? _selectedOption;
   final FirebaseAuth _auth = FirebaseAuth.instance;
