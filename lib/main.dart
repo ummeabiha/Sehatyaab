@@ -36,17 +36,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:sehatyaab/routes/AppRoutes.dart';
+import 'package:provider/provider.dart';
+import 'package:sehatyaab/Providers/appointment_provider.dart';
+import 'routes/AppRoutes.dart';
 import 'services/FirebaseConnection.dart';
 import 'theme/AppTheme.dart';
 //import 'services/ZegoConnection.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   //await dotenv.load();
   await FirebaseConnection.initializeFirebase();
-  //ZegoConnection.initializeZego();
   runApp(const MyApp());
 }
 
@@ -55,7 +57,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<ThemeData>(
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => AppointmentProvider()),
+
+        ],
+    child:  ValueListenableBuilder<ThemeData>(
       valueListenable: AppTheme.currentTheme,
       builder: (context, theme, child) {
         return MaterialApp(
@@ -71,6 +78,7 @@ class MyApp extends StatelessWidget {
           },
         );
       },
+    ),
     );
   }
 }

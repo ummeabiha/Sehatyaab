@@ -45,15 +45,16 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
   void _saveDoctorData() {
     if (_formKey.currentState!.validate()) {
       Doctor doctor = Doctor(
-        id: widget.doctorData['id'],
-        name: _nameController.text,
-        email: _emailController.text,
-        gender: _gender!,
-        dob: _dobController.text,
-        specialization: _specializationController.text,
-        qualification: _qualificationController.text,
-        yearsOfExperience: int.parse(_yearsOfExperienceController.text),
-      );
+          id: widget.doctorData['id'],
+          name: _nameController.text,
+          email: _emailController.text,
+          gender: _gender!,
+          dob: _dobController.text,
+          specialization: _specializationController.text,
+          qualification: _qualificationController.text,
+          yearsOfExperience: int.parse(_yearsOfExperienceController.text),
+          availableSlots: {},
+          bookedSlots: {});
 
       widget.firestoreService.addItemWithId(doctor, doctor.id).then((_) {
         ScaffoldMessenger.of(context).showSnackBar(

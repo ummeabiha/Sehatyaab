@@ -11,6 +11,8 @@ import '../Login/AlreadyHaveAnAccountCheck.dart';
 import '../../services/FirestoreService.dart';
 import '../../models/UserAccounts.dart';
 import '../../models/Doctor.dart';
+import '../../models/patient.dart';
+import '../../screens/Login/LoginScreen.dart';
 import '../PatientProfile/CreatePatientProfile.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -22,6 +24,7 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _nameController=TextEditingController();
   final _passwordController = TextEditingController();
   String? _selectedOption;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -61,18 +64,26 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
           );
         } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CreatePatientProfile(
-                patientData: {
-                  'id': userCredential.user!.uid,
-                  'email': _emailController.text,
-                },
-              ),
-            ),
+          Patient patient = Patient(
+            id: userCredential.user!.uid,
+            name: _nameController.text,
+            email: _emailController.text,
+            gender: "",
+            dob: "",
+            height: 0,
+            weight: 0,
           );
+
+          FirestoreService<Patient> firestoreService =
+              FirestoreService<Patient>('patients');
+          await firestoreService.addItemWithId(patient, patient.id);
         }
+
+        print('User signed up: ${userCredential.user!.uid}');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
