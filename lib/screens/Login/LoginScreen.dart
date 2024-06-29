@@ -21,24 +21,24 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      width: 280.0,
+                      width: 260.0,
                       child: Image.asset('assets/images/login.png'),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     Text("Welcome Back",
                         style: Theme.of(context).brightness == Brightness.dark
                             ? Theme.of(context).textTheme.bodyLarge
                             : Theme.of(context).textTheme.bodyLarge?.copyWith(
                                   color: Theme.of(context).primaryColor,
                                 )),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Text("Login To Your Account",
                         style: Theme.of(context).brightness == Brightness.dark
                             ? Theme.of(context).textTheme.bodyMedium
                             : Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: Theme.of(context).primaryColor,
                                 )),
-                    const SizedBox(height: 35),
+                    const SizedBox(height: 26),
                     const LoginForm(),
                   ],
                 ),

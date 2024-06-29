@@ -102,7 +102,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                           : Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Theme.of(context).primaryColor,
                               )),
-                  const SizedBox(height: 40.0),
+                  const SizedBox(height: 25.0),
                   CustomTextFormField(
                     controller: _nameController,
                     validator: PatientFormValidator.validateName,
@@ -110,7 +110,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                     hintText: 'Enter Doctor Name',
                     suffixIcon: Icons.person,
                   ),
-                  const SizedBox(height: 30.0),
+                  const SizedBox(height: 20.0),
                   CustomTextFormField(
                     controller: _emailController,
                     validator: PatientFormValidator.validateEmail,
@@ -120,7 +120,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                     suffixIcon: Icons.email,
                     enabled: false,
                   ),
-                  const SizedBox(height: 30.0),
+                  const SizedBox(height: 20.0),
                   CustomDropdown<String>(
                     value: _gender,
                     decoration: InputDecoration(
@@ -140,14 +140,14 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                     },
                     validator: PatientFormValidator.validateGender,
                   ),
-                  const SizedBox(height: 30.0),
+                  const SizedBox(height: 20.0),
                   DatePickerField(
                     controller: _dobController,
                     labelText: 'Date of Birth',
                     hintText: 'Select Date of Birth',
                     validator: PatientFormValidator.validateDob,
                   ),
-                  const SizedBox(height: 30.0),
+                  const SizedBox(height: 20.0),
                   CustomTextFormField(
                     controller: _specializationController,
                     validator: PatientFormValidator.validateSpecialization,
@@ -155,7 +155,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                     hintText: 'Enter Specialization',
                     suffixIcon: Icons.work,
                   ),
-                  const SizedBox(height: 30.0),
+                  const SizedBox(height: 20.0),
                   CustomTextFormField(
                     controller: _qualificationController,
                     validator: PatientFormValidator.validateQualification,
@@ -163,7 +163,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                     hintText: 'Enter Qualification',
                     suffixIcon: Icons.school,
                   ),
-                  const SizedBox(height: 30.0),
+                  const SizedBox(height: 20.0),
                   CustomTextFormField(
                     controller: _yearsOfExperienceController,
                     validator: PatientFormValidator.validateYearsOfExperience,
@@ -172,7 +172,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                     suffixIcon: Icons.calendar_today,
                     keyboardType: TextInputType.number,
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 25),
                   CustomElevatedButton(
                     onPressed: _saveDoctorData,
                     label: 'Save',

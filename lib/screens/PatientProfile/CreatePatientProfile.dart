@@ -65,7 +65,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                             ),
                   ),
                   const SizedBox(
-                    height: 40.0,
+                    height: 25.0,
                   ),
                   CustomTextFormField(
                     controller: _nameController,
@@ -75,7 +75,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                     suffixIcon: Icons.person,
                   ),
                   const SizedBox(
-                    height: 30.0,
+                    height: 20.0,
                   ),
                   CustomTextFormField(
                     controller: _emailController,
@@ -87,7 +87,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                     enabled: false,
                   ),
                   const SizedBox(
-                    height: 30.0,
+                    height: 20.0,
                   ),
                   Row(
                     children: [
@@ -115,7 +115,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                     ],
                   ),
                   const SizedBox(
-                    height: 30.0,
+                    height: 20.0,
                   ),
                   CustomDropdown<String>(
                     value: _gender,
@@ -137,7 +137,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                     validator: PatientFormValidator.validateGender,
                   ),
                   const SizedBox(
-                    height: 30.0,
+                    height: 20.0,
                   ),
                   DatePickerField(
                     controller: _dobController,
@@ -146,7 +146,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                     validator: PatientFormValidator.validateDob,
                   ),
                   const SizedBox(
-                    height: 40.0,
+                    height: 25.0,
                   ),
                   CustomElevatedButton(
                     onPressed: () {

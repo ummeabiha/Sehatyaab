@@ -87,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
             hintText: 'xyz@gmail.com',
             suffixIcon: Icons.email,
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           CustomTextFormField(
             controller: _passwordController,
             validator: AuthFormValidator.validatePassword,
@@ -96,12 +96,12 @@ class _LoginFormState extends State<LoginForm> {
             hintText: 'Enter Password',
             suffixIcon: Icons.lock,
           ),
-          const SizedBox(height: 35),
+          const SizedBox(height: 25),
           CustomElevatedButton(
             onPressed: _login,
             label: 'Login',
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 25),
           AlreadyHaveAnAccountCheck(
             press: () {
               Navigator.push(

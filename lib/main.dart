@@ -39,12 +39,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
 import 'services/FirebaseConnection.dart';
 import 'theme/AppTheme.dart';
-import 'services/ZegoConnection.dart';
+//import 'services/ZegoConnection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  await dotenv.load();
+  //await dotenv.load();
   await FirebaseConnection.initializeFirebase();
   //ZegoConnection.initializeZego();
   runApp(const MyApp());

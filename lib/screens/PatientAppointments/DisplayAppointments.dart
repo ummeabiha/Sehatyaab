@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:sehatyaab/models/Doctor.dart';
 import '../../models/Patient.dart';
 import '../../screens/PatientDetails/PatientDetails.dart';
 import '../../screens/VideoCall/VideoCall.dart';
@@ -9,6 +8,7 @@ import '../../widgets/CustomAppBar.dart';
 import '../../models/Appointments.dart';
 import '../../services/FirestoreService.dart';
 import '../../theme/AppColors.dart';
+import 'DoctorPanelHeader.dart';
 
 class DisplayAppointments extends StatefulWidget {
   final FirestoreService<Appointment> appointmentService;
@@ -141,30 +141,12 @@ class _DisplayAppointmentsState extends State<DisplayAppointments>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const DoctorPanelHeader(
+              imagePath: 'assets/images/DoctorPanel/appointment.png',
+              text: 'Appointments'),
           Container(
             color: Theme.of(context).cardColor,
-            padding: const EdgeInsets.all(26.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 250.0, // Set the desired width
-                  child:
-                      Image.asset('assets/images/DoctorPanel/appointment.png'),
-                ),
-                const SizedBox(height: 10.0),
-                Text(
-                  'Appointments',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(color: Theme.of(context).primaryColor),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: Theme.of(context).cardColor,
-            padding: const EdgeInsets.only(top: 16.0),
+            padding: const EdgeInsets.only(top: 10.0),
             child: TabBar(
               dividerColor: Theme.of(context).primaryColor,
               indicatorColor: Theme.of(context).hoverColor,
@@ -306,7 +288,7 @@ class _DisplayAppointmentsState extends State<DisplayAppointments>
                             MaterialPageRoute(
                               builder: (context) => VideoCall(
                                   userID: widget.doctorId,
-                                  userName: patient.name), //change
+                                  userName: patient.name), 
                             ),
                           );
                         },

@@ -11,39 +11,38 @@ class SignUpScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).brightness == Brightness.dark
             ? AppColors.black2
             : Theme.of(context).cardColor,
-        body: Center(
-            child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.only(top: 40.0, bottom: 16.0),
+        body: SingleChildScrollView(
+            child: Container(
+          padding: const EdgeInsets.only(top: 34.0),
             child: FormContainer(
               child: Form(
                 child: Column(
                   children: [
                     SizedBox(
-                      width: 280.0,
+                      width: 260.0,
                       child: Image.asset('assets/images/login.png'),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 12),
                     Text("Register",
                         style: Theme.of(context).brightness == Brightness.dark
                             ? Theme.of(context).textTheme.bodyLarge
                             : Theme.of(context).textTheme.bodyLarge?.copyWith(
                                   color: Theme.of(context).primaryColor,
                                 )),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Text("Create Your Account",
                         style: Theme.of(context).brightness == Brightness.dark
                             ? Theme.of(context).textTheme.bodyMedium
                             : Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: Theme.of(context).primaryColor,
                                 )),
-                    const SizedBox(height: 35),
+                    const SizedBox(height: 26),
                     const SignUpForm(),
                   ],
                 ),
               ),
             ),
           ),
-        )));
+        ));
   }
 }

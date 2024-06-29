@@ -98,7 +98,7 @@ class _SignUpFormState extends State<SignUpForm> {
             hintText: 'xyz@gmail.com',
             suffixIcon: Icons.email,
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           CustomTextFormField(
             controller: _passwordController,
             validator: AuthFormValidator.validatePassword,
@@ -107,7 +107,7 @@ class _SignUpFormState extends State<SignUpForm> {
             hintText: 'Enter Password',
             suffixIcon: Icons.lock,
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           CustomDropdown<String>(
             value: _selectedOption,
             decoration: InputDecoration(
@@ -128,12 +128,12 @@ class _SignUpFormState extends State<SignUpForm> {
             },
             validator: AuthFormValidator.validateOption,
           ),
-          const SizedBox(height: 35.0),
+          const SizedBox(height: 25.0),
           CustomElevatedButton(
             onPressed: _signUp,
             label: 'Register',
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 25),
           AlreadyHaveAnAccountCheck(
             login: false,
             press: () {

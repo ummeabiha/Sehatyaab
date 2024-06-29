@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/constants.dart';
 import 'package:sehatyaab/models/Doctor.dart';
-import 'package:sehatyaab/routes/AppRoutes.dart';
-import 'package:sehatyaab/widgets/BottomNavbar.dart';
 import '../../services/FirestoreService.dart';
 import '../../widgets/CustomAppBar.dart';
 
@@ -46,7 +44,7 @@ class _DoctorListState extends State<DoctorList> {
 
               return Scaffold(
                   appBar: AppBar(
-                    title: Center(child: Text("Doctors")),
+                    title: const Center(child: Text("Doctors")),
                     backgroundColor: kPrimaryLightColor,
                   ),
                   body: Padding(
@@ -59,8 +57,8 @@ class _DoctorListState extends State<DoctorList> {
                             var doctor = doctors[index];
 
                             return Container(
-                              margin: EdgeInsets.all(4.0),
-                              padding: EdgeInsets.all(4.0),
+                              margin: const EdgeInsets.all(4.0),
+                              padding: const EdgeInsets.all(4.0),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.0),
                                   border: Border.all(
@@ -73,7 +71,7 @@ class _DoctorListState extends State<DoctorList> {
                                 ),
                                 title: Text(
                                   doctor.name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -82,11 +80,11 @@ class _DoctorListState extends State<DoctorList> {
                                   children: [
                                     Text(
                                       doctor.specialization,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 16,
                                       ),
                                     ),
-                                    Row(
+                                    const Row(
                                       children: [
                                         Icon(Icons.star,
                                             size: 18,

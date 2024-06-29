@@ -35,8 +35,7 @@ class AppRoutes {
     welcome: (context) => const WelcomeScreen(),
     signup: (context) => const SignUpScreen(),
     login: (context) => const LoginScreen(),
-    //patienthp: (context) => const PatientHomeScreen(),
-    //patientForm: (context) => const CreatePatientProfile(),
+
     patientHistory: (context) => const PatientHistory(
           patientData: {},
         ),
@@ -61,6 +60,7 @@ class AppRoutes {
     patienthp: (context) {
       return PatientHomeScreen(firestoreService: doctorFirestore);
     },
+
     doctorlist: (context) {
       return DoctorList(firestoreService: doctorFirestore);
     }

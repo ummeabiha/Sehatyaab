@@ -13,14 +13,14 @@ class LoginAndSignupBtn extends StatelessWidget {
       children: [
         CustomElevatedButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, AppRoutes.login);
+            Navigator.pushNamed(context, AppRoutes.login);
           },
           label: "Login",
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 25),
         CustomElevatedButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, AppRoutes.signup);
+            Navigator.pushNamed(context, AppRoutes.signup);
           },
           label: "Register",
         ),

@@ -20,22 +20,22 @@ class AppTheme {
     shadowColor: AppColors.gray,
     hoverColor: AppColors.pink,
     cardColor: AppColors.blue5,
-    fontFamily: 'GoogleSans-Regular',
+    fontFamily: 'GoogleSans',
     textTheme: const TextTheme(
       bodyLarge: TextStyle(
         color: AppColors.black,
-        fontFamily: 'GoogleSans-Regular',
+        fontFamily: 'GoogleSans',
         fontSize: 28,
         fontWeight: FontWeight.w500,
       ),
       bodyMedium: TextStyle(
         color: AppColors.black,
-        fontFamily: 'GoogleSans-Medium',
+        fontFamily: 'GoogleSans',
         fontSize: 22,
       ),
       bodySmall: TextStyle(
         color: AppColors.black,
-        fontFamily: 'GoogleSans-Regular',
+        fontFamily: 'GoogleSans',
         fontSize: 20,
       ),
     ),
@@ -81,22 +81,22 @@ class AppTheme {
     shadowColor: AppColors.gray,
     hoverColor: AppColors.peach,
     cardColor: AppColors.blue2,
-    fontFamily: 'GoogleSans-Medium',
+    fontFamily: 'GoogleSans',
     textTheme: const TextTheme(
       bodyLarge: TextStyle(
         color: AppColors.white,
-        fontFamily: 'GoogleSans-Regular',
+        fontFamily: 'GoogleSans',
         fontSize: 28,
         fontWeight: FontWeight.w500,
       ),
       bodyMedium: TextStyle(
         color: AppColors.white,
-        fontFamily: 'GoogleSans-Medium',
+        fontFamily: 'GoogleSans',
         fontSize: 22,
       ),
       bodySmall: TextStyle(
         color: AppColors.white,
-        fontFamily: 'GoogleSans-Regular',
+        fontFamily: 'GoogleSans',
         fontSize: 20,
       ),
     ),
