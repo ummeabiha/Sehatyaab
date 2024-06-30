@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../models/Doctor.dart';
 import '../../routes/AppRoutes.dart';
 import '../../theme/AppColors.dart';
-import '../../validations/PatientFormValidator.dart';
+import '../../validations/ProfileFormValidator.dart';
 import '../../widgets/DatePicker.dart';
 import '../../widgets/DropDown.dart';
 import '../../widgets/ElevatedButton.dart';
@@ -106,7 +106,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                   const SizedBox(height: 25.0),
                   CustomTextFormField(
                     controller: _nameController,
-                    validator: PatientFormValidator.validateName,
+                    validator: ProfileFormValidator.validateName,
                     labelText: 'Doctor Name',
                     hintText: 'Enter Doctor Name',
                     suffixIcon: Icons.person,
@@ -114,7 +114,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                   const SizedBox(height: 20.0),
                   CustomTextFormField(
                     controller: _emailController,
-                    validator: PatientFormValidator.validateEmail,
+                    validator: ProfileFormValidator.validateEmail,
                     keyboardType: TextInputType.emailAddress,
                     labelText: 'Doctor Email',
                     hintText: 'Enter Doctor Email',
@@ -139,19 +139,19 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                         _gender = newValue;
                       });
                     },
-                    validator: PatientFormValidator.validateGender,
+                    validator: ProfileFormValidator.validateGender,
                   ),
                   const SizedBox(height: 20.0),
                   DatePickerField(
                     controller: _dobController,
                     labelText: 'Date of Birth',
                     hintText: 'Select Date of Birth',
-                    validator: PatientFormValidator.validateDocDob,
+                    validator: ProfileFormValidator.validateDocDob,
                   ),
                   const SizedBox(height: 20.0),
                   CustomTextFormField(
                     controller: _specializationController,
-                    validator: PatientFormValidator.validateSpecialization,
+                    validator: ProfileFormValidator.validateSpecialization,
                     labelText: 'Specialization',
                     hintText: 'Enter Specialization',
                     suffixIcon: Icons.work,
@@ -159,7 +159,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                   const SizedBox(height: 20.0),
                   CustomTextFormField(
                     controller: _qualificationController,
-                    validator: PatientFormValidator.validateQualification,
+                    validator: ProfileFormValidator.validateQualification,
                     labelText: 'Qualification',
                     hintText: 'Enter Qualification',
                     suffixIcon: Icons.school,
@@ -168,7 +168,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                   CustomTextFormField(
                     controller: _yearsOfExperienceController,
                     validator: (value) =>
-                        PatientFormValidator.validateYearsOfExperience(
+                        ProfileFormValidator.validateYearsOfExperience(
                             value, _dobController.text),
                     labelText: 'Years of Experience',
                     hintText: 'Enter Years of Experience',

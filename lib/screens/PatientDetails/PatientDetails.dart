@@ -18,11 +18,9 @@ class PatientDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     List<Appointment> filteredAppointments = appointments
         .where((appointment) => patient.id.contains(appointment.patientId))
         .toList();
-    debugPrint(filteredAppointments.toString());
 
     return Scaffold(
       appBar: const CustomAppBar(),
@@ -60,37 +58,33 @@ class PatientDetailsPage extends StatelessWidget {
                     hasSugar: patient.isSugarPatient,
                   ),
                   const SizedBox(height: 16),
+                  if (filteredAppointments.isNotEmpty)
+                    ExpandableDetailTile(
+                      title: 'Appointment',
+                      icon: 'assets/images/DoctorPanel/details.png',
+                      reasonForVisit: filteredAppointments[0].reasonForVisit,
+                    ),
+                  const SizedBox(height: 16),
                   ExpandableDetailTile(
-                    title: 'Appointment',
-                    icon: 'assets/images/DoctorPanel/details.png',
-                    reasonForVisit: filteredAppointments[0].reasonForVisit,
+                    title: 'Medical History',
+                    type: patient.medicalHistoryType,
+                    icon: 'assets/images/DoctorPanel/history.png',
+                    year: patient.medicalHistoryYear?.toString(),
+                    medicalHistory: patient.medicalHistoryDesc,
                   ),
                   const SizedBox(height: 16),
-                  if (patient.medicalHistoryType != null)
-                    ExpandableDetailTile(
-                      title: 'Medical History',
-                      type: patient.medicalHistoryType!,
-                      icon: 'assets/images/DoctorPanel/history.png',
-                      year: patient.medicalHistoryYear.toString(),
-                      medicalHistory: patient.medicalHistoryDesc!,
-                    ),
-                  const SizedBox(height: 16),
-                  if (patient.familyHistoryType != null)
-                    ExpandableDetailTile(
+                  ExpandableDetailTile(
                       title: 'Family History',
-                      type: patient.familyHistoryType!,
+                      type: patient.familyHistoryType,
                       icon: 'assets/images/DoctorPanel/family.png',
-                      familyHistory:
-                          patient.familyHistoryDesc ?? 'No Description',
-                    ),
+                      familyHistory: patient.familyHistoryDesc),
                   const SizedBox(height: 16),
-                  if (patient.ongoingMedications != null)
-                    ExpandableDetailTile(
-                      title: 'Medications',
-                      type: 'Medicines',
-                      icon: 'assets/images/DoctorPanel/meds.png',
-                      onGoingMeds: patient.ongoingMedications!,
-                    ),
+                  ExpandableDetailTile(
+                    title: 'Medications',
+                    type: 'Medicines',
+                    icon: 'assets/images/DoctorPanel/meds.png',
+                    onGoingMeds: patient.ongoingMedications,
+                  ),
                 ],
               ),
             ),
@@ -101,7 +95,9 @@ class PatientDetailsPage extends StatelessWidget {
   }
 }
 
-int calculateAge(DateTime birthDate) {
+int calculateAge(DateTime? birthDate) {
+  if (birthDate == null) return 0;
+
   DateTime today = DateTime.now();
   int age = today.year - birthDate.year;
   if (today.month < birthDate.month ||

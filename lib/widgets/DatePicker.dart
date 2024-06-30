@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sehatyaab/validations/PatientFormValidator.dart';
+import 'package:sehatyaab/validations/ProfileFormValidator.dart';
 import 'package:sehatyaab/widgets/TextFormField.dart';
 
 class DatePickerField extends StatefulWidget {
@@ -69,7 +69,7 @@ class _DatePickerFieldState extends State<DatePickerField> {
       child: AbsorbPointer(
         child: CustomTextFormField(
           controller: widget.controller,
-          validator: PatientFormValidator.validateDob,
+          validator: ProfileFormValidator.validateDob,
           labelText: 'Date of Birth',
           hintText: 'Select Date of Birth',
           suffixIcon: Icons.calendar_today,

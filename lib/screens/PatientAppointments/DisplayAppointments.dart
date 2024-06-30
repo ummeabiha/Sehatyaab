@@ -329,12 +329,17 @@ class _DisplayAppointmentsState extends State<DisplayAppointments>
                       const SizedBox(width: 20.0),
                       IconButton(
                         onPressed: () {
+                          List<Appointment> filteredAppointments = appointments
+                              .where((appointment) =>
+                                  patient.id.contains(appointment.patientId))
+                              .toList();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => VideoCall(
                                   userID: widget.doctorId,
-                                  userName: patient.name),
+                                  userName: patient.name,
+                                  appointmentID: filteredAppointments[0].id),
                             ),
                           );
                         },

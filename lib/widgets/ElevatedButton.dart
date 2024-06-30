@@ -4,11 +4,15 @@ import 'package:sehatyaab/theme/AppColors.dart';
 class CustomElevatedButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String label;
+  final bool removeUpperBorders;
+  final bool blueColor;
 
   const CustomElevatedButton({
     super.key,
     required this.onPressed,
     required this.label,
+    this.blueColor = false,
+    this.removeUpperBorders = false,
   });
 
   @override
@@ -18,12 +22,23 @@ class CustomElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          backgroundColor: Theme.of(context).brightness == Brightness.dark
-              ? Theme.of(context).cardColor
-              : AppColors.pink,
+          shape: removeUpperBorders
+              ? const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10.0),
+                    bottomRight: Radius.circular(10.0),
+                  ),
+                )
+              : RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+          backgroundColor: !blueColor
+              ? (Theme.of(context).brightness == Brightness.dark
+                  ? Theme.of(context).cardColor
+                  : AppColors.pink)
+              : (Theme.of(context).brightness == Brightness.dark
+                  ? Theme.of(context).cardColor
+                  : AppColors.blue5),
           overlayColor: Theme.of(context).hoverColor,
           elevation: 2,
         ),

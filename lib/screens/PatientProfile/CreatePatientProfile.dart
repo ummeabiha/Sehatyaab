@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/theme/AppColors.dart';
-import 'package:sehatyaab/validations/PatientFormValidator.dart';
+import 'package:sehatyaab/validations/ProfileFormValidator.dart';
 import 'package:sehatyaab/widgets/CustomAppBar.dart';
 import 'package:sehatyaab/widgets/ElevatedButton.dart';
 import 'package:sehatyaab/widgets/FormContainer.dart';
@@ -69,7 +69,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                   ),
                   CustomTextFormField(
                     controller: _nameController,
-                    validator: PatientFormValidator.validateName,
+                    validator: ProfileFormValidator.validateName,
                     labelText: 'Patient Name',
                     hintText: 'Enter Patient Name',
                     suffixIcon: Icons.person,
@@ -79,7 +79,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                   ),
                   CustomTextFormField(
                     controller: _emailController,
-                    validator: PatientFormValidator.validateEmail,
+                    validator: ProfileFormValidator.validateEmail,
                     keyboardType: TextInputType.emailAddress,
                     labelText: 'Patient Email',
                     hintText: 'Enter Patient Email',
@@ -94,7 +94,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                       Expanded(
                         child: CustomTextFormField(
                           controller: _weightController,
-                          validator: PatientFormValidator.validateWeight,
+                          validator: ProfileFormValidator.validateWeight,
                           keyboardType: TextInputType.number,
                           labelText: 'Weight',
                           hintText: '2-300 (kgs)',
@@ -106,7 +106,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                       Expanded(
                         child: CustomTextFormField(
                           controller: _heightController,
-                          validator: PatientFormValidator.validateHeight,
+                          validator: ProfileFormValidator.validateHeight,
                           keyboardType: TextInputType.number,
                           labelText: 'Height',
                           hintText: '20-110 (inches)',
@@ -134,7 +134,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                         _gender = newValue;
                       });
                     },
-                    validator: PatientFormValidator.validateGender,
+                    validator: ProfileFormValidator.validateGender,
                   ),
                   const SizedBox(
                     height: 20.0,
@@ -143,7 +143,7 @@ class _PatientFormState extends State<CreatePatientProfile> {
                     controller: _dobController,
                     labelText: 'Date of Birth',
                     hintText: 'Select Date of Birth',
-                    validator: PatientFormValidator.validateDob,
+                    validator: ProfileFormValidator.validateDob,
                   ),
                   const SizedBox(
                     height: 25.0,

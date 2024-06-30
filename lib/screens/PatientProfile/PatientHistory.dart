@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/validations/PatientFormValidator.dart';
+import 'package:sehatyaab/validations/ProfileFormValidator.dart';
 import 'package:sehatyaab/widgets/ElevatedButton.dart';
 import 'package:sehatyaab/widgets/FormContainer.dart';
 import 'package:sehatyaab/widgets/TextFormField.dart';
@@ -198,7 +198,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                           CustomTextFormField(
                             controller: _medicalHistoryTypeController,
                             validator: (value) =>
-                                PatientFormValidator.validateMedicalHistoryType(
+                                ProfileFormValidator.validateMedicalHistoryType(
                                     value, _hasMedicalHistory),
                             labelText: "Type",
                             hintText: "Fracture",
@@ -208,7 +208,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                             controller: _medicalHistoryYearController,
                             keyboardType: TextInputType.number,
                             validator: (value) =>
-                                PatientFormValidator.validateMedicalHistoryYear(
+                                ProfileFormValidator.validateMedicalHistoryYear(
                                     value, _hasMedicalHistory),
                             labelText: "Year",
                             hintText: "2023",
@@ -217,7 +217,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                           CustomTextFormField(
                             controller: _medicalHistoryDescController,
                             validator: (value) =>
-                                PatientFormValidator.validateMedicalHistoryDesc(
+                                ProfileFormValidator.validateMedicalHistoryDesc(
                                     value, _hasMedicalHistory),
                             labelText: "Description",
                             hintText:
@@ -255,7 +255,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                           CustomTextFormField(
                             controller: _familyHistoryTypeController,
                             validator: (value) =>
-                                PatientFormValidator.validateFamilyHistoryType(
+                                ProfileFormValidator.validateFamilyHistoryType(
                                     value, _hasFamilyHistory),
                             labelText: "Type",
                             hintText: "Heart Disease",
@@ -264,7 +264,7 @@ class _PatientHistoryState extends State<PatientHistory> {
                           CustomTextFormField(
                             controller: _familyHistoryDescController,
                             validator: (value) =>
-                                PatientFormValidator.validateFamilyHistoryDesc(
+                                ProfileFormValidator.validateFamilyHistoryDesc(
                                     value, _hasFamilyHistory),
                             labelText: "Description",
                             hintText: "Details about family medical history",
@@ -301,10 +301,11 @@ class _PatientHistoryState extends State<PatientHistory> {
                           CustomTextFormField(
                             controller: _ongoingMedicationsController,
                             validator: (value) =>
-                                PatientFormValidator.validateOngoingMedications(
+                                ProfileFormValidator.validateOngoingMedications(
                                     value, _hasOngoingMedications),
-                            labelText: "Panadol, Zeegap",
-                            hintText: "List ongoing medications",
+                            labelText: "Ongoing Medications",
+                            hintText:
+                                "Enter Medicines in Comma Separated Format. (e.g. Panadol, Zeegap)",
                             maxLines: 3,
                           ),
                           const SizedBox(height: 10),

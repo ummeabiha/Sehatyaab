@@ -15,16 +15,16 @@ class BottomNavBar extends StatelessWidget {
   void _navigate(int index, BuildContext context) {
     switch (index) {
       case 0:
-        Navigator.pushNamed(context, AppRoutes.patienthp);
+        Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
         break;
       case 1:
-        Navigator.pushNamed(context, '/doctorList');
+        Navigator.pushReplacementNamed(context, '/doctorList');
         break;
       case 2:
-        Navigator.pushNamed(context, '/displayPatient');
+        Navigator.pushReplacementNamed(context, '/doctorList');
         break;
       case 3:
-        Navigator.pushNamed(context, '/doctorProfile');
+        Navigator.pushReplacementNamed(context, '/doctorList');
         break;
     }
   }
@@ -34,7 +34,7 @@ class BottomNavBar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             offset: Offset(0, -1),
@@ -42,15 +42,14 @@ class BottomNavBar extends StatelessWidget {
           ),
         ],
       ),
-      padding: const EdgeInsets.symmetric(
-          vertical: 12.0, horizontal: 12.0), // Add padding
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildNavItem(Icons.home, 'Home', 0, context),
           _buildNavItem(Icons.medical_services, 'Doctors', 1, context),
-          _buildNavItem(Icons.person, 'Patients', 2, context),
-          _buildNavItem(Icons.person_outline, 'Profile', 3, context),
+          _buildNavItem(Icons.event_note, 'Patients', 2, context),
+          _buildNavItem(Icons.menu_book_rounded, 'Profile', 3, context),
         ],
       ),
     );
