@@ -7,8 +7,7 @@ import 'package:sehatyaab/screens/Appointments/AppointmentForm.dart';
 class DoctorDescriptionScreen extends StatefulWidget {
   final FirestoreService<Doctor> firestoreService;
 
-  DoctorDescriptionScreen({Key? key, required this.firestoreService})
-      : super(key: key);
+  const DoctorDescriptionScreen({super.key, required this.firestoreService});
 
   @override
   _DoctorDescriptionScreenState createState() =>
@@ -20,7 +19,7 @@ class _DoctorDescriptionScreenState extends State<DoctorDescriptionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Doctor Description',
           style: TextStyle(color: Colors.white),
         ),
@@ -43,11 +42,11 @@ class _DoctorDescriptionScreenState extends State<DoctorDescriptionScreen> {
           )),
           builder: (context, AsyncSnapshot<List<Doctor>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(child: Text('Error fetching data'));
+              return const Center(child: Text('Error fetching data'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text('No doctors found'));
+              return const Center(child: Text('No doctors found'));
             } else {
               final doctors = snapshot.data!;
               return ListView.builder(

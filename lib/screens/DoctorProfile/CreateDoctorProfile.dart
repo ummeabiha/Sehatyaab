@@ -146,7 +146,7 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                     controller: _dobController,
                     labelText: 'Date of Birth',
                     hintText: 'Select Date of Birth',
-                    validator: PatientFormValidator.validateDob,
+                    validator: PatientFormValidator.validateDocDob,
                   ),
                   const SizedBox(height: 20.0),
                   CustomTextFormField(
@@ -167,7 +167,9 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
                   const SizedBox(height: 20.0),
                   CustomTextFormField(
                     controller: _yearsOfExperienceController,
-                    validator: PatientFormValidator.validateYearsOfExperience,
+                    validator: (value) =>
+                        PatientFormValidator.validateYearsOfExperience(
+                            value, _dobController.text),
                     labelText: 'Years of Experience',
                     hintText: 'Enter Years of Experience',
                     suffixIcon: Icons.calendar_today,

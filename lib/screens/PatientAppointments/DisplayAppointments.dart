@@ -79,11 +79,57 @@ class _DisplayAppointmentsState extends State<DisplayAppointments>
       this.appointments = appointments;
       this.appointments.sort((a, b) => a.time.compareTo(b.time));
 
-      // Filter patientIds based on appointment status
+      //Filter patientIds based on appointment status
       List<String> patientIds = appointments
           .where((appointment) => appointment.status == true)
           .map((appointment) => appointment.patientId)
           .toList();
+
+// // Function to check if time is after current time
+//       bool _isTimeAfterNow(String time) {
+//         try {
+//           String nowTimeString = DateTime.now()
+//               .toString()
+//               .substring(11, 16); // Get current time in 'HH:mm' format
+//           return time.compareTo(nowTimeString) > 0;
+//         } catch (e) {
+//           print('Error comparing time: $e');
+//           return false;
+//         }
+//       }
+
+// // Current date as string 'yyyy-MM-dd'
+//       String nowDateString = DateTime.now().toString().substring(0, 10);
+
+// // Filter patientIds based on appointment status and date/time conditions
+//       List<String> patientIds = appointments
+//           .where((appointment) {
+//             // Ensure both date and time are present
+//             if (appointment.date == null || appointment.time == null) {
+//               print('Skipping appointment due to missing date or time.');
+//               return false;
+//             }
+
+//             // Construct appointment date/time string
+//             String dateTimeString = '${appointment.date} ${appointment.time}';
+
+//             // Filter by status
+//             if (!appointment.status) return false; // Skip if status is false
+
+//             // Filter by date and time conditions
+//             if (dateTimeString.trim().isEmpty) {
+//               return false;
+//             } else if (appointment.date == nowDateString &&
+//                 _isTimeAfterNow(appointment.time)) {
+//               // Appointment is scheduled for today and time is in the future
+//               return true;
+//             } else {
+//               // All other cases (including past appointments)
+//               return false;
+//             }
+//           })
+//           .map((appointment) => appointment.patientId)
+//           .toList();
 
       allPatients = [];
       todayPatients = [];

@@ -38,7 +38,27 @@ class PatientFormValidator {
       age--;
     }
     if (age < 0 || age > 100) {
-      return 'Age must be between 0 and 100';
+      return 'Age Range Should Be 0 - 100';
+    }
+    return null;
+  }
+
+  static String? validateDocDob(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Date of Birth is Required';
+    }
+    DateTime? dob = DateTime.tryParse(value);
+    if (dob == null) {
+      return 'Invalid Date Format';
+    }
+    DateTime now = DateTime.now();
+    int age = now.year - dob.year;
+    if (now.month < dob.month ||
+        (now.month == dob.month && now.day < dob.day)) {
+      age--;
+    }
+    if (age < 18 || age > 100) {
+      return 'Age Range Should Be 18 - 100';
     }
     return null;
   }
@@ -48,8 +68,8 @@ class PatientFormValidator {
       return 'Required';
     }
     double? height = double.tryParse(value);
-    if (height == null || height <= 20 || height >= 110) {
-      return 'Invalid';
+    if (height == null || height < 20 || height > 110) {
+      return 'Invalid Height';
     }
     return null;
   }
@@ -59,8 +79,8 @@ class PatientFormValidator {
       return 'Required';
     }
     double? weight = double.tryParse(value);
-    if (weight == null || weight <= 2 || weight >= 300) {
-      return 'Invalid';
+    if (weight == null || weight < 2 || weight > 300) {
+      return 'Invalid Weight';
     }
     return null;
   }
@@ -86,8 +106,15 @@ class PatientFormValidator {
     if (hasMedicalHistory && (value == null || value.isEmpty)) {
       return 'Year is Required';
     }
-    if (hasMedicalHistory && int.tryParse(value!) == null) {
-      return 'Invalid Year';
+    if (hasMedicalHistory) {
+      int? year = int.tryParse(value!);
+      if (year == null) {
+        return 'Invalid Year';
+      }
+      DateTime now = DateTime.now();
+      if (year < 1920 || year > now.year) {
+        return 'Invalid Year';
+      }
     }
     return null;
   }
@@ -111,32 +138,50 @@ class PatientFormValidator {
   static String? validateOngoingMedications(
       String? value, bool hasOngoingMedications) {
     if (hasOngoingMedications && (value == null || value.isEmpty)) {
-      return 'Ongoing Medications is Required';
+      return 'Medications is Required';
     }
     return null;
   }
 
   static String? validateSpecialization(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter a specialization';
+      return 'Specialization is Required';
     }
     return null;
   }
 
   static String? validateQualification(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter a qualification';
+      return 'Qualification is Required';
     }
     return null;
   }
 
-  static String? validateYearsOfExperience(String? value) {
+  static String? validateYearsOfExperience(String? value, String? dobString) {
     if (value == null || value.isEmpty) {
-      return 'Please enter years of experience';
+      return 'Required';
     }
-    if (int.tryParse(value) == null) {
-      return 'Please enter a valid number';
+    int? experience = int.tryParse(value);
+    if (experience == null || experience < 0) {
+      return 'Invalid Experience';
     }
+
+    DateTime? dob = DateTime.tryParse(dobString ?? '');
+    if (dob == null) {
+      return 'Invalid Date of Birth';
+    }
+
+    DateTime now = DateTime.now();
+    int age = now.year - dob.year;
+    if (now.month < dob.month ||
+        (now.month == dob.month && now.day < dob.day)) {
+      age--;
+    }
+
+    if (experience > (age - 18)) {
+      return 'Invalid Experience';
+    }
+
     return null;
   }
 }

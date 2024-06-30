@@ -11,7 +11,7 @@ import '../screens/Signup/SignUpScreen.dart';
 import '../../screens/PatientProfile/PatientHistory.dart';
 import '../screens/Appointments/AppointmentForm.dart';
 import '../screens/Appointments/AppointmentList.dart';
-import '../screens/Doctors/Doctor_description.dart';
+import '../screens/Doctors/DoctorDescription.dart';
 import '../screens/Welcome/WelcomeScreen.dart';
 import '../services/FirestoreService.dart';
 import '../screens/DoctorList/DoctorList.dart';
@@ -43,12 +43,12 @@ class AppRoutes {
     welcome: (context) => const WelcomeScreen(),
     signup: (context) => const SignUpScreen(),
     login: (context) => const LoginScreen(),
-    splash: (context) => SplashScreen(),
+    splash: (context) => const SplashScreen(),
     appointmentForm: (context) => AppointmentForm(
           selectedDoctor: '',
           selectedDoctorId: '',
         ),
-    appointmentlist: (context) => AppointmentList(),
+    appointmentlist: (context) => const AppointmentList(),
     doctordesc: (context) {
       return DoctorDescriptionScreen(firestoreService: doctorFirestore);
     },
