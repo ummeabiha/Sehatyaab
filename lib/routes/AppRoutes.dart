@@ -30,6 +30,7 @@ class AppRoutes {
   static const String patientForm = '/patientForm';
   static const String patientHistory = '/patientHistory';
   static const String patientList = '/patientList';
+  static const String doctorList = '/doctorList';
   static const String displayPatient = '/displayPatient';
   static const String doctorProfile = '/doctorProfile';
   static const String signup = '/signup';
@@ -58,6 +59,9 @@ class AppRoutes {
     patientList: (context) {
       return PatientList(firestoreService: patientFirestore);
     },
+    doctorList: (context) {
+      return DoctorList(firestoreService: doctorFirestore);
+    },
     displayPatient: (context) {
       return DisplayAppointments(
           appointmentService: appointmentFirestore,
@@ -73,8 +77,5 @@ class AppRoutes {
     patienthp: (context) {
       return PatientHomeScreen(firestoreService: doctorFirestore);
     },
-    doctorlist: (context) {
-      return DoctorList(firestoreService: doctorFirestore);
-    }
   };
 }

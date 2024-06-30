@@ -6,6 +6,7 @@ import 'package:sehatyaab/widgets/BottomNavbar.dart';
 import '../../services/FirestoreService.dart';
 import '../../theme/AppColors.dart';
 import '../../widgets/CustomAppBar.dart';
+import '../../widgets/CustomContainer.dart';
 
 class PatientHomeScreen extends StatefulWidget {
   final FirestoreService<Doctor> firestoreService;
@@ -16,21 +17,12 @@ class PatientHomeScreen extends StatefulWidget {
 }
 
 class _PatientHomeScreenState extends State<PatientHomeScreen> {
+  int _currentIndex = 0;
+
   void _onBottomNavTap(int index) {
-    switch (index) {
-      case 0:
-        Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
-        break;
-      case 1:
-        Navigator.pushReplacementNamed(context, '/doctorList');
-        break;
-      case 2:
-        Navigator.pushReplacementNamed(context, '/displayPatient');
-        break;
-      case 3:
-        Navigator.pushReplacementNamed(context, '/doctorProfile');
-        break;
-    }
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
@@ -52,39 +44,50 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
         )),
         builder: (context, AsyncSnapshot<List<Doctor>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            print('Waiting for data...');
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            print('Error fetching data: ${snapshot.error}');
-            return const Center(child: Text('Error fetching data'));
+            return _buildBody([]);
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            print('No doctors found');
-            return const Center(child: Text('No doctors found'));
+            return _buildBody([]);
           } else {
-            final doctors = snapshot.data!;
-            print('Doctors fetched: ${doctors.length}');
+            return _buildBody(snapshot.data!);
+          }
+        },
+      ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: _onBottomNavTap,
+      ),
+    );
+  }
 
-            return SingleChildScrollView(
-                child: Column(
+  Widget _buildBody(List<Doctor> doctors) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          AppBar(
+            toolbarHeight: 70.0,
+            title: const Text('Hi 👋, how are you doing ?'),
+            backgroundColor: Theme.of(context).brightness != Brightness.dark
+                ? Theme.of(context).primaryColor
+                : Colors.transparent,
+          ),
+          const SizedBox(height: 6.0),
+          CustomContainer(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: AppBar(
-                      title: const Text('Hi 👋, how are you doing ?'),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(12.0),
-                        decoration: BoxDecoration(
-                          color: AppColors.blue4,
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: const ListTile(
-                          title: Text(
+                Container(
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: AppColors.blue4,
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: const ListTile(
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
                             "Your Health is Important to Us",
                             style: TextStyle(
                               color: Colors.white,
@@ -92,136 +95,140 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          subtitle: Text(
+                          SizedBox(
+                              height:
+                                  8), // Add space between title and subtitle
+                          Text(
                             "Choose the doctor you want !",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
                             ),
                           ),
-                          trailing: Image(
-                            image: AssetImage('assets/images/hearPulse.png'),
-                            width: 50,
+                        ],
+                      ),
+                      trailing: Image(
+                        image: AssetImage('assets/images/hearPulse.png'),
+                        width: 50,
+                      ),
+                    )),
+                const SizedBox(height: 18),
+                const Row(
+                  children: [
+                    SizedBox(width: 12.0),
+                    Text(
+                      'Categories',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 3),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: CategoryCard(
+                        icon: Icons.local_hospital_rounded,
+                        label: 'General Physician',
+                      ),
+                    ),
+                    Expanded(
+                      child: CategoryCard(
+                        icon: Icons.child_friendly_rounded,
+                        label: 'Child Specialist',
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Popular Doctors',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 22),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, AppRoutes.doctorList);
+                          },
+                          child: Text(
+                            'See all',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(fontSize: 16.0),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Categories',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                      const SizedBox(height: 10),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                            child: CategoryCard(
-                              icon: Icons.local_hospital_rounded,
-                              label: 'General Physician',
-                            ),
-                          ),
-                          Expanded(
-                            child: CategoryCard(
-                              icon: Icons.child_friendly_rounded,
-                              label: 'Child Specialist',
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Popular doctors',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              // Navigate to a screen to view all doctors
-                            },
-                            child: const Text(
-                              'See all',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: kPrimaryColor),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 5,
-                        itemBuilder: (BuildContext context, int index) {
-                          var doctor = doctors[index];
+                      ],
+                    )),
+                const SizedBox(height: 10),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: doctors.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var doctor = doctors[index];
 
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 10.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              border: Border.all(
-                                  width: 1.5, color: Colors.grey.shade300),
-                            ),
-                            child: ListTile(
-                              leading: const CircleAvatar(
-                                radius: 25,
-                                backgroundImage:
-                                    AssetImage('assets/images/female.png'),
-                              ),
-                              title: Text(
-                                doctor.name,
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w600),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    doctor.specialization,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const Row(
-                                    children: [
-                                      Icon(Icons.star,
-                                          size: 18, color: Colors.amberAccent),
-                                      Icon(Icons.star,
-                                          size: 18, color: Colors.amberAccent),
-                                      Icon(Icons.star,
-                                          size: 18, color: Colors.amberAccent),
-                                      Icon(Icons.star,
-                                          size: 18, color: Colors.amberAccent),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              trailing: TextButton(
-                                onPressed: () {
-                                  // Implement booking functionality
-                                },
-                                child: const Text("Book Now",
-                                    style: TextStyle(color: kPrimaryColor)),
-                              ),
-                            ),
-                          );
-                        },
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border:
+                            Border.all(width: 1.5, color: Colors.grey.shade300),
                       ),
-                    ],
-                  ),
+                      child: ListTile(
+                        leading: const CircleAvatar(
+                          radius: 25,
+                          backgroundImage:
+                              AssetImage('assets/images/female.png'),
+                        ),
+                        title: Text(
+                          doctor.name,
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              doctor.specialization,
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            const Row(
+                              children: [
+                                Icon(Icons.star,
+                                    size: 18, color: Colors.amberAccent),
+                                Icon(Icons.star,
+                                    size: 18, color: Colors.amberAccent),
+                                Icon(Icons.star,
+                                    size: 18, color: Colors.amberAccent),
+                                Icon(Icons.star,
+                                    size: 18, color: Colors.amberAccent),
+                              ],
+                            ),
+                          ],
+                        ),
+                        trailing: TextButton(
+                          onPressed: () {
+                            // Implement booking functionality
+                          },
+                          child: const Text("Book Now",
+                              style: TextStyle(color: kPrimaryColor)),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
-            ));
-          }
-        },
-      ),
-      bottomNavigationBar: CustomBottomNavBar(
-        currentIndex: 0,
-        onTap: _onBottomNavTap,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -244,31 +251,35 @@ class CategoryCard extends StatelessWidget {
       margin: const EdgeInsets.all(12.0),
       padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: Colors.transparent,
+        color: AppColors.blue4,
         borderRadius: BorderRadius.circular(15.0),
-        border: Border.all(width: 1.5, color: Colors.grey.shade300),
+        //border: Border.all(width: 1.5, color: Theme.of(context).cardColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            child: Icon(
-              icon,
-              color: pink,
-              size: 30,
-            ),
             width: 50,
             height: 50,
-            decoration: BoxDecoration(
-              color: lightPink,
-              borderRadius: BorderRadius.circular(15.0),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.blue1,
+            ),
+            child: Icon(
+              icon,
+              color: AppColors.pink,
+              size: 30,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 8.0),
           Text(
             label,
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(color: AppColors.blue1),
             textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
           ),
         ],
       ),
