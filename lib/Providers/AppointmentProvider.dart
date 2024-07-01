@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../models/appointments.dart';
+import '../models/Appointments.dart';
 import '../models/Doctor.dart';
 import '../services/FirestoreService.dart';
 
@@ -42,27 +42,33 @@ class AppointmentProvider with ChangeNotifier {
 
   Future<void> fetchAvailableTimes(String doctorId, DateTime date) async {
     try {
-      final String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+      //final String formattedDate = DateFormat('yyyy-MM-dd').format(date);
       Doctor? doctor = await _doctorService.getItemById(
-          doctorId,
-          Doctor(
-            id: '',
-            name: '',
-            email: '',
-            gender: '',
-            dob: '',
-            specialization: '',
-            qualification: '',
-            yearsOfExperience: 0,
-            availableSlots: {},
-            bookedSlots: {},
-          ));
+        doctorId,
+        Doctor(
+          id: '',
+          name: '',
+          email: '',
+          gender: '',
+          dob: '',
+          specialization: '',
+          qualification: '',
+          yearsOfExperience: 0,
+          availableSlots: [],
+          bookedSlots: [],
+        ),
+      );
 
-      if (doctor.availableSlots!.containsKey(formattedDate)) {
-        updateAvailableTimes(doctor.availableSlots![formattedDate]!);
+      // Use doctor's availableSlots if available
+      List<String> availableSlots = doctor.availableSlots ?? [];
+
+      // Only enable these slots for weekdays (Monday to Friday)
+      if (date.weekday >= 1 && date.weekday <= 5) {
+        _availableTimes = availableSlots; // Update available times for weekdays
       } else {
-        updateAvailableTimes([]);
+        _availableTimes = []; // Clear available times for weekends
       }
+      notifyListeners();
     } catch (e) {
       debugPrint('Error fetching available times: $e');
       rethrow;
@@ -73,39 +79,44 @@ class AppointmentProvider with ChangeNotifier {
       String doctorId, String patientId, String reasonForVisit) async {
     try {
       Doctor? doctor = await _doctorService.getItemById(
-          doctorId,
-          Doctor(
-            id: '',
-            name: '',
-            email: '',
-            gender: '',
-            dob: '',
-            specialization: '',
-            qualification: '',
-            yearsOfExperience: 0,
-            availableSlots: {},
-            bookedSlots: {},
-          ));
-
-      final Map<String, List<String>> availableSlots = doctor.availableSlots!;
-      final Map<String, List<String>> bookedSlots = doctor.bookedSlots!;
+        doctorId,
+        Doctor(
+          id: '',
+          name: '',
+          email: '',
+          gender: '',
+          dob: '',
+          specialization: '',
+          qualification: '',
+          yearsOfExperience: 0,
+          availableSlots: [],
+          bookedSlots: [],
+        ),
+      );
 
       final String formattedDate = _selectedDate!;
       final String formattedTime = _selectedTime!;
 
-      if (availableSlots.containsKey(formattedDate) &&
-          availableSlots[formattedDate]!.contains(formattedTime)) {
-        availableSlots[formattedDate]!.remove(formattedTime);
-        bookedSlots.putIfAbsent(formattedDate, () => []).add(formattedTime);
+      // Check if the selected time slot is available
+      if (doctor.availableSlots!.contains(formattedTime)) {
+        // Update doctor's slots
+        List<String> availableSlots =
+            List<String>.from(doctor.availableSlots ?? []);
+        List<String> bookedSlots = List<String>.from(doctor.bookedSlots ?? []);
+
+        availableSlots.remove(formattedTime);
+        bookedSlots.add(formattedTime);
 
         // Update doctor object with modified slots
-        Doctor updatedDoctor = doctor.copyWith(
+        doctor = doctor.copyWith(
           availableSlots: availableSlots,
           bookedSlots: bookedSlots,
         );
 
-        await _doctorService.updateItem(doctorId, updatedDoctor.toMap());
+        // Update doctor's document in Firestore
+        await _doctorService.updateDoctor(doctor);
 
+        // Create appointment object
         final Appointment newAppointment = Appointment(
           id: '',
           date: formattedDate,
@@ -115,11 +126,12 @@ class AppointmentProvider with ChangeNotifier {
           reasonForVisit: reasonForVisit,
         );
 
+        // Add appointment to Firestore
         await _appointmentService.addItem(newAppointment);
       } else {
         throw 'Selected time slot is not available';
       }
-        } catch (e) {
+    } catch (e) {
       debugPrint('Error booking appointment: $e');
       rethrow;
     }

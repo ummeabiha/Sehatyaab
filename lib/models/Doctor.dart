@@ -8,8 +8,8 @@ class Doctor extends BaseModel {
   String specialization;
   String qualification;
   int yearsOfExperience;
-  Map<String, List<String>>? availableSlots;
-  Map<String, List<String>>? bookedSlots;
+  List<String>? availableSlots;
+  List<String>? bookedSlots;
 
   Doctor({
     required super.id,
@@ -43,7 +43,7 @@ class Doctor extends BaseModel {
   @override
   Doctor fromMap(Map<String, dynamic> map, String id) {
     return Doctor(
-      id: id ,
+      id: id,
       name: map['name'] as String,
       email: map['email'] as String,
       gender: map['gender'] as String,
@@ -51,8 +51,8 @@ class Doctor extends BaseModel {
       specialization: map['specialization'] as String,
       qualification: map['qualification'] as String,
       yearsOfExperience: map['yearsOfExperience'] as int,
-      availableSlots: map['availableSlots'] != null ? Map<String, List<String>>.from(map['availableSlots']) : null,
-      bookedSlots: map['bookedSlots'] != null ? Map<String, List<String>>.from(map['bookedSlots']) : null,
+      availableSlots: (map['availableSlots'] as List<dynamic>?)?.cast<String>(),
+      bookedSlots: (map['bookedSlots'] as List<dynamic>?)?.cast<String>(),
     );
   }
 
@@ -64,8 +64,8 @@ class Doctor extends BaseModel {
     String? specialization,
     String? qualification,
     int? yearsOfExperience,
-    Map<String, List<String>>? availableSlots,
-    Map<String, List<String>>? bookedSlots,
+    List<String>? availableSlots,
+    List<String>? bookedSlots,
   }) {
     return Doctor(
       id: id,
@@ -76,6 +76,24 @@ class Doctor extends BaseModel {
       specialization: specialization ?? this.specialization,
       qualification: qualification ?? this.qualification,
       yearsOfExperience: yearsOfExperience ?? this.yearsOfExperience,
+      availableSlots: availableSlots ?? this.availableSlots,
+      bookedSlots: bookedSlots ?? this.bookedSlots,
+    );
+  }
+
+  Doctor updateSlots({
+    List<String>? availableSlots,
+    List<String>? bookedSlots,
+  }) {
+    return Doctor(
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      gender: this.gender,
+      dob: this.dob,
+      specialization: this.specialization,
+      qualification: this.qualification,
+      yearsOfExperience: this.yearsOfExperience,
       availableSlots: availableSlots ?? this.availableSlots,
       bookedSlots: bookedSlots ?? this.bookedSlots,
     );

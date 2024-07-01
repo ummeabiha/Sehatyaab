@@ -106,4 +106,25 @@ class FirestoreService<T extends BaseModel> {
       return (T as dynamic).fromMap(doc.data());
     }).toList();
   }
+
+  Future<void> updateAvailableSlots(
+      String doctorId, List<String> availableSlots) async {
+    try {
+      await _collection
+          .doc(doctorId)
+          .update({'availableSlots': availableSlots});
+      debugPrint('Available slots updated for doctor with ID: $doctorId');
+    } catch (e) {
+      debugPrint('Error updating available slots: $e');
+    }
+  }
+
+  Future<void> updateDoctor(Doctor doctor) async {
+    try {
+      await _collection.doc(doctor.id).update(doctor.toMap());
+      debugPrint('Doctor updated with ID: ${doctor.id}');
+    } catch (e) {
+      debugPrint('Error updating doctor: $e');
+    }
+  }
 }

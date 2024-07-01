@@ -20,8 +20,8 @@ class PatientList extends StatelessWidget {
         specialization: '',
         qualification: '',
         yearsOfExperience: 0,
-        availableSlots: {},
-        bookedSlots: {},
+        availableSlots: [],
+        bookedSlots: [],
       )),
       builder: (context, AsyncSnapshot<List<Doctor>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
