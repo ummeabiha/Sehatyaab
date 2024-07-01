@@ -21,7 +21,7 @@ class BottomNavBar extends StatelessWidget {
         Navigator.pushReplacementNamed(context, '/doctorList');
         break;
       case 2:
-        Navigator.pushReplacementNamed(context, '/appointmentlist');
+        Navigator.pushReplacementNamed(context, '/bookedAppointment');
         break;
       case 3:
         Navigator.pushReplacementNamed(context, '/doctordesc');
@@ -35,7 +35,7 @@ class BottomNavBar extends StatelessWidget {
         return 0;
       case '/doctorList':
         return 1;
-      case '/appointmentlist':
+      case '/bookedAppointment':
         return 2;
       case '/doctordesc':
         return 3;

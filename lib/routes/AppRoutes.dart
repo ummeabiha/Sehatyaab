@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sehatyaab/screens/BookedDoctorAppointment/BookedAppointment.dart';
 import '../globals.dart';
 import '../models/Appointments.dart';
 import '../models/Doctor.dart';
@@ -39,6 +40,7 @@ class AppRoutes {
   static const String appointmentForm = '/appointmentform';
   static const String appointmentlist = '/appointmentlist';
   static const String splash = '/splash';
+  static const String bookedAppointment = '/bookedAppointment';
 
   static final Map<String, WidgetBuilder> routes = {
     welcome: (context) => const WelcomeScreen(),
@@ -51,7 +53,6 @@ class AppRoutes {
         ),
     appointmentlist: (context) => const AppointmentList(),
     doctordesc: (context) {
-   
       return DoctorDescriptionScreen(firestoreService: doctorFirestore);
     },
     patientHistory: (context) => const PatientHistory(
@@ -78,5 +79,8 @@ class AppRoutes {
     patienthp: (context) {
       return PatientHomeScreen(firestoreService: doctorFirestore);
     },
+    bookedAppointment: (context) {
+      return const BookedAppointment();
+    }
   };
 }

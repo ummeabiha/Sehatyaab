@@ -30,7 +30,7 @@ class _DoctorDescriptionScreenState extends State<DoctorDescriptionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Doctor Description',
           style: TextStyle(color: Colors.white),
         ),

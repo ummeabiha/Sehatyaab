@@ -43,9 +43,11 @@ class _LoginFormState extends State<LoginForm> {
         if (user != null) {
           if (user.option == 'Doctor') {
             globalDoctorId = userId;
+            globalDoctorEmail = user.email;
             Navigator.pushReplacementNamed(context, AppRoutes.displayPatient);
           } else {
             globalPatientId = userId;
+            globalPatientEmail = user.email;
             Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
           }
         } else {

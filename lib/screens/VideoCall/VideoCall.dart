@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:sehatyaab/routes/AppRoutes.dart';
 import 'package:sehatyaab/screens/PatientRecords/PatientRecords.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+
+import '../../globals.dart';
 
 class VideoCall extends StatefulWidget {
   final String userID;
@@ -36,17 +39,21 @@ class _VideoCallState extends State<VideoCall> {
           userName: widget.userName,
           events: ZegoUIKitPrebuiltCallEvents(
             onCallEnd: (ZegoCallEndEvent event, VoidCallback defaultAction) {
-              debugPrint('onCallEnd, do whatever you want');
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PatientRecords(
-                    userID: widget.userID,
-                    userName: widget.userName,
-                    appointmentID: widget.appointmentID!,
+              debugPrint('onCallEnd');
+              if (globalDoctorId != null) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PatientRecords(
+                      userID: widget.userID,
+                      userName: widget.userName,
+                      appointmentID: widget.appointmentID!,
+                    ),
                   ),
-                ),
-              );
+                );
+              } else {
+                Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
+              }
             },
           ),
         ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:sehatyaab/globals.dart';
 import '../../models/Patient.dart';
 import '../../screens/PatientDetails/PatientDetails.dart';
 import '../../screens/VideoCall/VideoCall.dart';
@@ -337,8 +338,8 @@ class _DisplayAppointmentsState extends State<DisplayAppointments>
                             context,
                             MaterialPageRoute(
                               builder: (context) => VideoCall(
-                                  userID: widget.doctorId,
-                                  userName: patient.name,
+                                  userID: globalDoctorId!,
+                                  userName: globalDoctorEmail!,
                                   appointmentID: filteredAppointments[0].id),
                             ),
                           );

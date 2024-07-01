@@ -93,6 +93,24 @@ class FirestoreService<T extends BaseModel> {
     }
   }
 
+  Stream<List<Appointment>> getItemsByPatientIdStream(
+      String patientId, T model) {
+    try {
+      return _collection
+          .where('patientId', isEqualTo: patientId)
+          .snapshots()
+          .map((snapshot) {
+        return snapshot.docs.map((doc) {
+          return model.fromMap(doc.data() as Map<String, dynamic>, doc.id)
+              as Appointment;
+        }).toList();
+      });
+    } catch (e) {
+      debugPrint('Error getting items by patient ID stream: $e');
+      rethrow;
+    }
+  }
+
   Future<List> getItemsByQuery(
       {required String field,
       required String value,
