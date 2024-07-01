@@ -15,22 +15,40 @@ class BottomNavBar extends StatelessWidget {
   void _navigate(int index, BuildContext context) {
     switch (index) {
       case 0:
-        Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
+        Navigator.pushNamed(context, AppRoutes.patienthp);
         break;
       case 1:
         Navigator.pushReplacementNamed(context, '/doctorList');
         break;
       case 2:
-        Navigator.pushReplacementNamed(context, '/doctorList');
+        Navigator.pushReplacementNamed(context, '/appointmentlist');
         break;
       case 3:
-        Navigator.pushReplacementNamed(context, '/doctorList');
+        Navigator.pushReplacementNamed(context, '/doctordesc');
         break;
+    }
+  }
+
+  int _getCurrentIndex(String? routeName) {
+    switch (routeName) {
+      case AppRoutes.patienthp:
+        return 0;
+      case '/doctorList':
+        return 1;
+      case '/appointmentlist':
+        return 2;
+      case '/doctordesc':
+        return 3;
+      default:
+        return 0;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final currentRoute = ModalRoute.of(context)?.settings.name;
+    final int selectedIndex = _getCurrentIndex(currentRoute);
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
@@ -46,18 +64,21 @@ class BottomNavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavItem(Icons.home, 'Home', 0, context),
-          _buildNavItem(Icons.medical_services, 'Doctors', 1, context),
-          _buildNavItem(Icons.event_note, 'Patients', 2, context),
-          _buildNavItem(Icons.menu_book_rounded, 'Profile', 3, context),
+          _buildNavItem(Icons.home, 'Home', 0, context, selectedIndex),
+          _buildNavItem(
+              Icons.medical_services, 'Doctors', 1, context, selectedIndex),
+          _buildNavItem(
+              Icons.event_note, 'Scheduled', 2, context, selectedIndex),
+          _buildNavItem(
+              Icons.menu_book_rounded, 'Book', 3, context, selectedIndex),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(
-      IconData icon, String label, int index, BuildContext context) {
-    final isSelected = currentIndex == index;
+  Widget _buildNavItem(IconData icon, String label, int index,
+      BuildContext context, int selectedIndex) {
+    final isSelected = selectedIndex == index;
     return GestureDetector(
       onTap: () {
         onTap(index);
@@ -74,7 +95,10 @@ class BottomNavBar extends StatelessWidget {
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).primaryColor, fontSize: 14.0),
+                color: isSelected
+                    ? AppColors.pink
+                    : Theme.of(context).primaryColor,
+                fontSize: 14.0),
           ),
         ],
       ),

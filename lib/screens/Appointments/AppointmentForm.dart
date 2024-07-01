@@ -3,13 +3,29 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../providers/AppointmentProvider.dart';
 import '../../theme/AppColors.dart';
+import '../../widgets/BottomNavbar.dart';
 
-class AppointmentForm extends StatelessWidget {
+class AppointmentForm extends StatefulWidget {
   final String selectedDoctor;
   final String selectedDoctorId;
 
   const AppointmentForm(
-      {super.key, required this.selectedDoctor, required this.selectedDoctorId});
+      {super.key,
+      required this.selectedDoctor,
+      required this.selectedDoctorId});
+
+  @override
+  _AppointmentFormState createState() => _AppointmentFormState();
+}
+
+class _AppointmentFormState extends State<AppointmentForm> {
+  int _currentIndex = 3;
+
+  void _onBottomNavTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +42,8 @@ class AppointmentForm extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(8.0),
                 color: AppColors.blue4,
-                child: Center(
-                  child: Text(
+                child: const Center(
+                  child: const Text(
                     'Book An Appointment For:',
                     style: TextStyle(
                         fontSize: 18,
@@ -40,16 +56,16 @@ class AppointmentForm extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Center(
                   child: Text(
-                    selectedDoctor,
-                    style: TextStyle(
+                    widget.selectedDoctor,
+                    style: const TextStyle(
                         fontSize: 26,
-                        color: AppColors.blue1,
+                        color: AppColors.blue4,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Select Date:',
                 style: TextStyle(
                     fontSize: 18,
@@ -64,7 +80,8 @@ class AppointmentForm extends StatelessWidget {
                       : DateFormat.yMMMd()
                           .format(DateTime.parse(provider.selectedDate!)),
                 ),
-                trailing: Icon(Icons.calendar_today, color: AppColors.blue4),
+                trailing:
+                    const Icon(Icons.calendar_today, color: AppColors.blue4),
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
                     context: context,
@@ -75,7 +92,8 @@ class AppointmentForm extends StatelessWidget {
                   if (pickedDate != null) {
                     provider.selectDate(pickedDate);
                     // Fetch available times for the selected doctor and date
-                    provider.fetchAvailableTimes(selectedDoctorId, pickedDate);
+                    provider.fetchAvailableTimes(
+                        widget.selectedDoctorId, pickedDate);
                   }
                 },
               ),
@@ -92,7 +110,8 @@ class AppointmentForm extends StatelessWidget {
                   onTap: () async {
                     // Ensure available times are fetched before showing modal bottom sheet
                     if (provider.selectedDate != null) {
-                      await provider.fetchAvailableTimes(selectedDoctorId,
+                      await provider.fetchAvailableTimes(
+                          widget.selectedDoctorId,
                           DateTime.parse(provider.selectedDate!));
                       showModalBottomSheet(
                         context: context,
@@ -107,7 +126,7 @@ class AppointmentForm extends StatelessWidget {
                                       provider.availableTimes[index]);
 
                                   provider.bookAppointment(
-                                    selectedDoctorId,
+                                    widget.selectedDoctorId,
                                     'patient123', // Replace with actual patient ID
                                     'General Checkup', // Replace with actual reason
                                   );
@@ -164,7 +183,7 @@ class AppointmentForm extends StatelessWidget {
                       );
                     } else {
                       provider.bookAppointment(
-                        selectedDoctorId,
+                        widget.selectedDoctorId,
                         'patient123',
                         'General Checkup',
                       );
@@ -188,6 +207,10 @@ class AppointmentForm extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: _onBottomNavTap,
       ),
     );
   }

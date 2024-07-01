@@ -4,10 +4,13 @@ import 'package:sehatyaab/theme/AppColors.dart';
 import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/screens/Appointments/AppointmentForm.dart';
 
+import '../../widgets/BottomNavbar.dart';
+
 class DoctorDescriptionScreen extends StatefulWidget {
   final FirestoreService<Doctor> firestoreService;
 
-  const DoctorDescriptionScreen({super.key, required this.firestoreService, required});
+  const DoctorDescriptionScreen(
+      {super.key, required this.firestoreService, required});
 
   @override
   _DoctorDescriptionScreenState createState() =>
@@ -15,6 +18,14 @@ class DoctorDescriptionScreen extends StatefulWidget {
 }
 
 class _DoctorDescriptionScreenState extends State<DoctorDescriptionScreen> {
+  int _currentIndex = 3;
+
+  void _onBottomNavTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +75,10 @@ class _DoctorDescriptionScreenState extends State<DoctorDescriptionScreen> {
           },
         ),
       ),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: _onBottomNavTap,
+      ),
     );
   }
 }
@@ -111,13 +126,13 @@ class DoctorListItem extends StatelessWidget {
                     backgroundColor: Colors.grey[800],
                     child: Text(
                       doctor.name.isNotEmpty ? doctor.name.substring(0, 1) : '',
-                      style: TextStyle(fontSize: 30, color: Colors.blueAccent),
+                      style: const TextStyle(fontSize: 30, color: Colors.blueAccent),
                     ),
                   ),
                   title: Center(
                     child: Text(
                       doctor.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: AppColors.blue4,
@@ -127,11 +142,11 @@ class DoctorListItem extends StatelessWidget {
                   subtitle: Center(
                     child: Text(
                       doctor.specialization,
-                      style: TextStyle(fontSize: 16, color: AppColors.blue2),
+                      style: const TextStyle(fontSize: 16, color: AppColors.blue2),
                     ),
                   ),
                 ),
-                Divider(
+                const Divider(
                   color: Colors.grey,
                   height: 20,
                   thickness: 1,
@@ -140,7 +155,7 @@ class DoctorListItem extends StatelessWidget {
                 ),
                 ListTile(
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   title: Text(
                     'Description & Services',
                     style: TextStyle(
@@ -158,7 +173,7 @@ class DoctorListItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
@@ -173,12 +188,11 @@ class DoctorListItem extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Text('Book Now'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.blue4,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                      textStyle: TextStyle(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 15),
+                      textStyle: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -187,6 +201,7 @@ class DoctorListItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
+                    child: const Text('Book Now'),
                   ),
                 ),
               ],

@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
             theme: theme,
             debugShowCheckedModeBanner: false,
             routes: AppRoutes.routes,
-            // initialRoute: AppRoutes.welcome,
             initialRoute: AppRoutes.splash,
             builder: (context, child) {
               return Scaffold(
