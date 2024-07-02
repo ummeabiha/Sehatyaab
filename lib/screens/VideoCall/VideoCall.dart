@@ -52,7 +52,8 @@ class _VideoCallState extends State<VideoCall> {
                   ),
                 );
               } else {
-                Navigator.pushReplacementNamed(context, AppRoutes.patienthp);
+                Navigator.pushReplacementNamed(
+                    context, AppRoutes.bookedAppointment);
               }
             },
           ),

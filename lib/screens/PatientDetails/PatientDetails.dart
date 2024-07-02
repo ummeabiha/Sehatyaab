@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sehatyaab/models/Appointments.dart';
 import 'package:sehatyaab/models/Patient.dart';
+import '../../globals.dart';
 import '../../widgets/CustomAppBar.dart';
 import '../../widgets/CustomContainer.dart';
 import 'ExpandableDetailTile.dart';
@@ -95,14 +96,3 @@ class PatientDetailsPage extends StatelessWidget {
   }
 }
 
-int calculateAge(DateTime? birthDate) {
-  if (birthDate == null) return 0;
-
-  DateTime today = DateTime.now();
-  int age = today.year - birthDate.year;
-  if (today.month < birthDate.month ||
-      (today.month == birthDate.month && today.day < birthDate.day)) {
-    age--;
-  }
-  return age;
-}

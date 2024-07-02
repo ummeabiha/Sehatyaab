@@ -11,6 +11,7 @@ import '../../theme/AppColors.dart';
 import '../../widgets/BottomNavbar.dart';
 import '../../widgets/ElevatedButton.dart';
 import '../DisplayAppointments/DoctorPanelHeader.dart';
+import '../DoctorDetails/DoctorDetails.dart';
 import '../VideoCall/VideoCall.dart';
 
 class BookedAppointment extends StatefulWidget {
@@ -22,21 +23,27 @@ class BookedAppointment extends StatefulWidget {
 
 class _BookedAppointmentState extends State<BookedAppointment> {
   int _currentIndex = 2;
-
-  void _onBottomNavTap(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
+  late String appointmentId;
 
   final FirestoreService<Appointment> _appointmentService =
       FirestoreService<Appointment>('appointments');
   final FirestoreService<Doctor> _doctorService =
       FirestoreService<Doctor>('doctors');
 
-  String appointmentId = '';
   final _appointmentsSubject = BehaviorSubject<List<Appointment>>();
   final Map<String, Doctor> _doctorCache = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _listenToAppointments();
+  }
+
+  @override
+  void dispose() {
+    _appointmentsSubject.close();
+    super.dispose();
+  }
 
   void _listenToAppointments() async {
     debugPrint(globalPatientId!);
@@ -88,19 +95,6 @@ class _BookedAppointmentState extends State<BookedAppointment> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    debugPrint(isAppBooked.toString());
-    _listenToAppointments();
-  }
-
-  @override
-  void dispose() {
-    _appointmentsSubject.close();
-    super.dispose();
-  }
-
   void _cancelAppointment(String id) {
     debugPrint('Cancel appointment ${id}');
     final updateData = {
@@ -110,12 +104,17 @@ class _BookedAppointmentState extends State<BookedAppointment> {
   }
 
   void _viewDoctorInfo(Doctor doctor) {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (context) => DoctorProfile(
-    //         doctor: doctor), // Pass the doctor info to the profile page
-    //   ),
-    // );
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => DoctorDetails(doctor: doctor),
+      ),
+    );
+  }
+
+  void _onBottomNavTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
@@ -159,14 +158,11 @@ class _BookedAppointmentState extends State<BookedAppointment> {
 
                   final appointments = snapshot.data;
                   if (appointments == null || appointments.isEmpty) {
-                    isAppBooked = false;
                     return const SizedBox(
-                        height: 200.0,
-                        child:
-                            Center(child: Text('No Appointment Scheduled.')));
+                      height: 200.0,
+                      child: Center(child: Text('No Appointment Scheduled.')),
+                    );
                   } else {
-                    isAppBooked = true;
-
                     return CustomContainer(
                       child: Column(
                         children: [
@@ -237,15 +233,8 @@ class _BookedAppointmentState extends State<BookedAppointment> {
                               Expanded(
                                 child: CustomElevatedButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => VideoCall(
-                                          userID: globalPatientId!,
-                                          userName: globalPatientEmail!,
-                                          appointmentID: appointmentId,
-                                        ),
-                                      ),
-                                    );
+                                    _viewDoctorInfo(_doctorCache[
+                                        appointments[0].doctorId]!);
                                   },
                                   label: 'See Doctor',
                                   blueColor: true,

@@ -25,26 +25,28 @@ class BottomNavBar extends StatelessWidget {
         Navigator.pushReplacementNamed(context, '/bookedAppointment');
         break;
       case 3:
-        if (!isAppBooked!) {
+        if (isAppBooked ?? false) {
           Navigator.pushReplacementNamed(context, '/doctordesc');
         } else {
           showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Appointment Conflict'),
-                content: Text('You Already Have an appointment Scheduled.'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Close the dialog
-                    },
-                    child: Text('OK'),
-                  ),
-                ],
-              );
-            },
-          );
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  title: Text('Appointment Conflict',
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  content: Text('You Already Have a Scheduled Appointment.',
+                      style: Theme.of(context).textTheme.bodySmall),
+                  actions: <Widget>[
+                    OutlinedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                );
+              });
         }
         break;
     }

@@ -16,6 +16,9 @@ class ExpandableDetailTile extends StatelessWidget {
   final bool? vitals;
   final bool? hasBP;
   final bool? hasSugar;
+  final String? qualification;
+  final String? specialization;
+  final int? years;
 
   const ExpandableDetailTile({
     super.key,
@@ -34,6 +37,9 @@ class ExpandableDetailTile extends StatelessWidget {
     this.vitals,
     this.hasBP,
     this.hasSugar,
+    this.years,
+    this.qualification,
+    this.specialization,
   });
 
   @override
@@ -145,6 +151,15 @@ class ExpandableDetailTile extends StatelessWidget {
                         ],
                       )))
             ],
+            if (years != null && specialization != null)
+              _buildExpandableDetail(
+                context,
+                [
+                  _buildDetailRow(context, 'Experience: ', '${years!} year'),
+                  _buildDetailColumn(
+                      context, 'Specialization: ', specialization!),
+                ],
+              ),
           ],
         ),
       ),
@@ -183,14 +198,13 @@ class ExpandableDetailTile extends StatelessWidget {
     );
   }
 
-
   Widget _buildDetailRow(BuildContext context, String label, String value) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(width: 60.0),
         Flexible(
-          flex: 2,
+          flex: 4,
           child: Text(
             label,
             style: Theme.of(context).textTheme.bodyMedium,

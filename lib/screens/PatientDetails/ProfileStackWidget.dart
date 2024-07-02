@@ -5,19 +5,29 @@ class ProfileStackWidget extends StatelessWidget {
   final String name;
   final String email;
   final String gender;
+  final bool? isDoctor;
 
   const ProfileStackWidget({
     super.key,
     required this.name,
     required this.email,
     required this.gender,
+    this.isDoctor,
   });
 
   @override
   Widget build(BuildContext context) {
-    String avatarImagePath = gender == 'male' || gender == 'Male'
-        ? 'assets/images/DoctorPanel/boy.png'
-        : 'assets/images/DoctorPanel/girl.png';
+    String avatarImagePath;
+
+    if (isDoctor ?? false) {
+      avatarImagePath = gender.toLowerCase() == 'male'
+          ? 'assets/images/male.png'
+          : 'assets/images/female.png';
+    } else {
+      avatarImagePath = gender.toLowerCase() == 'male'
+          ? 'assets/images/DoctorPanel/boy.png'
+          : 'assets/images/DoctorPanel/girl.png';
+    }
 
     return Stack(
       alignment: Alignment.center,

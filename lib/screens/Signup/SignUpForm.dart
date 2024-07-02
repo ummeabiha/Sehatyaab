@@ -6,12 +6,12 @@ import '../../validations/AuthFormValidator.dart';
 import '../../widgets/DropDown.dart';
 import '../../widgets/ElevatedButton.dart';
 import '../../widgets/TextFormField.dart';
-import '../DoctorProfile/CreateDoctorProfile.dart';
+import '../CreateDoctorProfile/CreateDoctorProfile.dart';
 import '../Login/AlreadyHaveAnAccountCheck.dart';
 import '../../services/FirestoreService.dart';
 import '../../models/UserAccounts.dart';
 import '../../models/Doctor.dart';
-import '../PatientProfile/CreatePatientProfile.dart';
+import '../CreatePatientProfile/CreatePatientProfile.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
