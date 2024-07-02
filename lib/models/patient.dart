@@ -32,12 +32,12 @@ class Patient extends BaseModel {
     this.familyHistoryType,
     this.familyHistoryDesc,
     this.ongoingMedications,
-  }); 
+  });
 
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id, 
+      'id': id,
       'name': name,
       'email': email,
       'gender': gender,

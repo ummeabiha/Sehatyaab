@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'providers/AppState.dart';
 import 'providers/AppointmentProvider.dart';
 import 'routes/AppRoutes.dart';
 import 'services/FirebaseConnection.dart';
@@ -22,6 +23,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppointmentProvider()),
+        ChangeNotifierProvider(
+      create: (context) => AppState()),
       ],
       child: ValueListenableBuilder<ThemeData>(
         valueListenable: AppTheme.currentTheme,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/globals.dart';
+import 'package:provider/provider.dart';
+import 'package:sehatyaab/widgets/AlertDialogBox.dart';
+import '../providers/AppState.dart';
 import '../routes/AppRoutes.dart';
 import '../theme/AppColors.dart';
 
@@ -7,13 +9,17 @@ class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
+  // ignore: use_super_parameters
   const BottomNavBar({
     required this.currentIndex,
     required this.onTap,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
-  void _navigate(int index, BuildContext context) {
+ void _navigate(int index, BuildContext context) {
+    final appState = Provider.of<AppState>(context, listen: false);
+    final isAppBooked = appState.isAppBooked;
+
     switch (index) {
       case 0:
         Navigator.pushNamed(context, AppRoutes.patienthp);
@@ -25,32 +31,22 @@ class BottomNavBar extends StatelessWidget {
         Navigator.pushReplacementNamed(context, '/bookedAppointment');
         break;
       case 3:
-        if (isAppBooked ?? false) {
+        if (!isAppBooked) {
           Navigator.pushReplacementNamed(context, '/doctordesc');
         } else {
-          showDialog(
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            showDialog(
               context: context,
               builder: (BuildContext context) {
-                return AlertDialog(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  title: Text('Appointment Conflict',
-                      style: Theme.of(context).textTheme.bodyMedium),
-                  content: Text('You Already Have a Scheduled Appointment.',
-                      style: Theme.of(context).textTheme.bodySmall),
-                  actions: <Widget>[
-                    OutlinedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('OK'),
-                    ),
-                  ],
-                );
-              });
+                return const AlertDialogBox();
+              },
+            );
+          });
         }
         break;
     }
   }
+
 
   int _getCurrentIndex(String? routeName) {
     switch (routeName) {

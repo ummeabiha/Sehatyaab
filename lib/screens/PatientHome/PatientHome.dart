@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/constants.dart';
 import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
 import 'package:sehatyaab/widgets/BottomNavbar.dart';
@@ -80,36 +79,36 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                 Container(
                     padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
-                      color: AppColors.blue4,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(15.0),
                     ),
-                    child: const ListTile(
+                    child: ListTile(
                       title: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             "Your Health is Important to Us",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w700,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(
+                                    fontSize: 24,
+                                    color: Theme.of(context).primaryColor),
                           ),
-                          SizedBox(
-                              height:
-                                  8), // Add space between title and subtitle
+                          const SizedBox(height: 8),
                           Text(
-                            "Choose the doctor you want !",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
+                            "Choose the doctor !",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                    color: Theme.of(context).primaryColor),
                           ),
                         ],
                       ),
-                      trailing: Image(
-                        image: AssetImage('assets/images/hearPulse.png'),
-                        width: 50,
+                      trailing: const Image(
+                        image: AssetImage('assets/images/female.png'),
+                        width: 80,
                       ),
                     )),
                 const SizedBox(height: 18),
@@ -141,6 +140,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 10),
                 Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Row(
@@ -160,7 +160,7 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
-                                ?.copyWith(fontSize: 16.0),
+                                ?.copyWith(fontSize: 18.0),
                           ),
                         ),
                       ],
@@ -169,62 +169,60 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: doctors.length,
+                  itemCount: 5,
                   itemBuilder: (BuildContext context, int index) {
                     var doctor = doctors[index];
 
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 10.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        border:
-                            Border.all(width: 1.5, color: Colors.grey.shade300),
-                      ),
-                      child: ListTile(
-                        leading: const CircleAvatar(
-                          radius: 25,
-                          backgroundImage:
-                              AssetImage('assets/images/female.png'),
-                        ),
-                        title: Text(
-                          doctor.name,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w600),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              doctor.specialization,
-                              style: const TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            const Row(
-                              children: [
-                                Icon(Icons.star,
-                                    size: 18, color: Colors.amberAccent),
-                                Icon(Icons.star,
-                                    size: 18, color: Colors.amberAccent),
-                                Icon(Icons.star,
-                                    size: 18, color: Colors.amberAccent),
-                                Icon(Icons.star,
-                                    size: 18, color: Colors.amberAccent),
-                              ],
-                            ),
-                          ],
-                        ),
-                        trailing: TextButton(
-                          onPressed: () {
-                            // Implement booking functionality
-                          },
-                          child: const Text("Book Now",
-                              style: TextStyle(color: kPrimaryColor)),
+                    String avatarImagePath =
+                        (doctor.gender).toLowerCase() == 'male'
+                            ? 'assets/images/male.png'
+                            : 'assets/images/female.png';
+
+                    Color tileColor;
+                    if (Theme.of(context).brightness == Brightness.dark) {
+                      tileColor =
+                          index % 2 == 0 ? AppColors.gray1 : Colors.transparent;
+                    } else {
+                      tileColor = index % 2 == 0
+                          ? Theme.of(context).primaryColor
+                          : Colors.white;
+                    }
+
+                    return Material(
+                      elevation: 4.0,
+                      color: tileColor,
+                      shadowColor: Colors.black45,
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 16.0),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 25,
+                            backgroundColor: AppColors.blue2,
+                            backgroundImage: AssetImage(avatarImagePath),
+                          ),
+                          title: Text(
+                            doctor.name.isNotEmpty ? doctor.name : 'Unknown',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 19.0),
+                          ),
+                          subtitle: Text(
+                            doctor.specialization,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(fontSize: 16.0),
+                          ),
                         ),
                       ),
                     );
                   },
-                ),
+                )
               ],
             ),
           ),
@@ -238,7 +236,7 @@ class CategoryCard extends StatelessWidget {
   final IconData icon;
   final String label;
 
-  const CategoryCard({
+  const CategoryCard({super.key, 
     required this.icon,
     required this.label,
   });
@@ -251,9 +249,8 @@ class CategoryCard extends StatelessWidget {
       margin: const EdgeInsets.all(12.0),
       padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: AppColors.blue4,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(15.0),
-        //border: Border.all(width: 1.5, color: Theme.of(context).cardColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -278,7 +275,7 @@ class CategoryCard extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
-                ?.copyWith(color: AppColors.blue1),
+                ?.copyWith(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w500),
             textAlign: TextAlign.center,
           ),
         ],

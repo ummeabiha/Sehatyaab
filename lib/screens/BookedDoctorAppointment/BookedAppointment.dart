@@ -1,18 +1,20 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:sehatyaab/globals.dart';
+import 'package:provider/provider.dart';
+import 'package:rxdart/subjects.dart';
+import 'package:sehatyaab/models/Appointments.dart';
+import 'package:sehatyaab/services/FirestoreService.dart';
+import 'package:sehatyaab/theme/AppColors.dart';
+import 'package:sehatyaab/widgets/BottomNavbar.dart';
 import 'package:sehatyaab/widgets/CustomAppBar.dart';
 import 'package:sehatyaab/widgets/CustomContainer.dart';
+import 'package:sehatyaab/widgets/ElevatedButton.dart';
+
 import '../../models/Doctor.dart';
-import '../../models/Appointments.dart';
-import '../../services/FirestoreService.dart';
-import '../../theme/AppColors.dart';
-import '../../widgets/BottomNavbar.dart';
-import '../../widgets/ElevatedButton.dart';
+import '../../providers/AppState.dart';
 import '../DisplayAppointments/DoctorPanelHeader.dart';
 import '../DoctorDetails/DoctorDetails.dart';
 import '../VideoCall/VideoCall.dart';
+import '../../globals.dart';
 
 class BookedAppointment extends StatefulWidget {
   const BookedAppointment({super.key});
@@ -36,6 +38,10 @@ class _BookedAppointmentState extends State<BookedAppointment> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AppState>(context, listen: false)
+          .fetchAppointments(globalPatientId!);
+    });
     _listenToAppointments();
   }
 
@@ -46,8 +52,6 @@ class _BookedAppointmentState extends State<BookedAppointment> {
   }
 
   void _listenToAppointments() async {
-    debugPrint(globalPatientId!);
-
     List<Future<void>> doctorFetchTasks = [];
 
     _appointmentService
@@ -92,6 +96,8 @@ class _BookedAppointmentState extends State<BookedAppointment> {
       }
       await Future.wait(doctorFetchTasks);
       _appointmentsSubject.add(appointments);
+      Provider.of<AppState>(context, listen: false).isAppBooked =
+          appointments.isNotEmpty;
     });
   }
 
@@ -153,16 +159,22 @@ class _BookedAppointmentState extends State<BookedAppointment> {
                   }
 
                   if (snapshot.hasError) {
+                    Provider.of<AppState>(context, listen: false).isAppBooked =
+                        false;
                     return Center(child: Text('Error: ${snapshot.error}'));
                   }
 
                   final appointments = snapshot.data;
                   if (appointments == null || appointments.isEmpty) {
+                    Provider.of<AppState>(context, listen: false).isAppBooked =
+                        false;
                     return const SizedBox(
                       height: 200.0,
                       child: Center(child: Text('No Appointment Scheduled.')),
                     );
                   } else {
+                    Provider.of<AppState>(context, listen: false).isAppBooked =
+                        true;
                     return CustomContainer(
                       child: Column(
                         children: [

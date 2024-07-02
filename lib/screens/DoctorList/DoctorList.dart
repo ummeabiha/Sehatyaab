@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/constants.dart';
+import 'package:provider/provider.dart';
 import 'package:sehatyaab/models/Doctor.dart';
+import '../../providers/AppState.dart';
 import '../../services/FirestoreService.dart';
+import '../../theme/AppColors.dart';
+import '../../widgets/AlertDialogBox.dart';
 import '../../widgets/BottomNavbar.dart';
 import '../../widgets/CustomAppBar.dart';
+import '../DisplayAppointments/DoctorPanelHeader.dart';
 
 class DoctorList extends StatefulWidget {
   final FirestoreService<Doctor> firestoreService;
+
   const DoctorList({super.key, required this.firestoreService});
 
   @override
@@ -24,6 +29,9 @@ class _DoctorListState extends State<DoctorList> {
 
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<AppState>(context, listen: false);
+    final isAppBooked = appState.isAppBooked;
+
     return Scaffold(
       appBar: const CustomAppBar(),
       body: StreamBuilder<List<Doctor>>(
@@ -51,75 +59,96 @@ class _DoctorListState extends State<DoctorList> {
             final doctors = snapshot.data!;
             print('Doctors fetched: ${doctors.length}');
 
-            return Scaffold(
-                appBar: AppBar(
-                  title: const Center(child: Text("Doctors")),
-                  backgroundColor: kPrimaryLightColor,
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(children: [
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: doctors.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          var doctor = doctors[index];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const DoctorPanelHeader(
+                    imagePath: 'assets/images/doctors.png', text: 'Doctors'),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: doctors.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var doctor = doctors[index];
 
-                          return Container(
-                            margin: const EdgeInsets.all(4.0),
-                            padding: const EdgeInsets.all(4.0),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                border: Border.all(
-                                    width: 1.5, color: Colors.grey.shade300)),
-                            child: ListTile(
-                              leading: const CircleAvatar(
-                                radius: 25,
-                                backgroundImage:
-                                    AssetImage('assets/images/female.png'),
-                              ),
-                              title: Text(
-                                doctor.name,
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w600),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    doctor.specialization,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const Row(
-                                    children: [
-                                      Icon(Icons.star,
-                                          size: 18, color: Colors.amberAccent),
-                                      Icon(Icons.star,
-                                          size: 18, color: Colors.amberAccent),
-                                      Icon(Icons.star,
-                                          size: 18, color: Colors.amberAccent),
-                                      Icon(Icons.star,
-                                          size: 18, color: Colors.amberAccent)
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              trailing: TextButton(
-                                onPressed: () {
-                                  // Implement booking functionality
-                                },
-                                child: const Text("Book Now",
-                                    style: TextStyle(color: kPrimaryColor)),
+                      String avatarImagePath =
+                          (doctor.gender).toLowerCase() == 'male'
+                              ? 'assets/images/male.png'
+                              : 'assets/images/female.png';
+
+                      Color tileColor;
+                      if (Theme.of(context).brightness == Brightness.dark) {
+                        tileColor = index % 2 == 0
+                            ? AppColors.gray1
+                            : Colors.transparent;
+                      } else {
+                        tileColor = index % 2 == 0
+                            ? Theme.of(context).primaryColor
+                            : Colors.white;
+                      }
+
+                      return Material(
+                        elevation: 4.0,
+                        color: tileColor,
+                        shadowColor: Colors.black45,
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 16.0),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              radius: 25,
+                              backgroundColor: AppColors.blue2,
+                              backgroundImage: AssetImage(avatarImagePath),
+                            ),
+                            title: Text(
+                              doctor.name.isNotEmpty ? doctor.name : 'Unknown',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 19.0),
+                            ),
+                            subtitle: Text(
+                              doctor.specialization,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(fontSize: 16.0),
+                            ),
+                            trailing: OutlinedButton(
+                              onPressed: () {
+                                if (!isAppBooked) {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/doctordesc');
+                                } else {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const AlertDialogBox();
+                                      },
+                                    );
+                                  });
+                                }
+                              },
+                              child: Text(
+                                'Book',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(fontSize: 14.0),
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    ),
-                  ]),
-                ));
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
           }
         },
       ),
