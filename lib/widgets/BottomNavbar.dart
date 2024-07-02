@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sehatyaab/globals.dart';
 import '../routes/AppRoutes.dart';
 import '../theme/AppColors.dart';
 
@@ -24,7 +25,27 @@ class BottomNavBar extends StatelessWidget {
         Navigator.pushReplacementNamed(context, '/bookedAppointment');
         break;
       case 3:
-        Navigator.pushReplacementNamed(context, '/doctordesc');
+        if (!isAppBooked!) {
+          Navigator.pushReplacementNamed(context, '/doctordesc');
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Appointment Conflict'),
+                content: Text('You Already Have an appointment Scheduled.'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
         break;
     }
   }

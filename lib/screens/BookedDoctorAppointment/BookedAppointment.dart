@@ -91,6 +91,7 @@ class _BookedAppointmentState extends State<BookedAppointment> {
   @override
   void initState() {
     super.initState();
+    debugPrint(isAppBooked.toString());
     _listenToAppointments();
   }
 
@@ -146,115 +147,118 @@ class _BookedAppointmentState extends State<BookedAppointment> {
               blueColor: true,
             ),
             StreamBuilder<List<Appointment>>(
-              stream: _appointmentsSubject.stream,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+                stream: _appointmentsSubject.stream,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                }
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  }
 
-                final appointments = snapshot.data;
-                if (appointments == null || appointments.isEmpty) {
-                  return const SizedBox(
-                      height: 200.0,
-                      child: Center(child: Text('No Appointment Scheduled.')));
-                }
+                  final appointments = snapshot.data;
+                  if (appointments == null || appointments.isEmpty) {
+                    isAppBooked = false;
+                    return const SizedBox(
+                        height: 200.0,
+                        child:
+                            Center(child: Text('No Appointment Scheduled.')));
+                  } else {
+                    isAppBooked = true;
 
-                return CustomContainer(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      ListTile(
-                        tileColor:
-                            Theme.of(context).brightness == Brightness.dark
-                                ? AppColors.gray1
-                                : AppColors.blue1,
-                        leading: Icon(
-                          Icons.calendar_month_outlined,
-                          size: 32.0,
-                          color: Theme.of(context).cardColor,
-                        ),
-                        title: Text(appointments[0].date,
-                            style: Theme.of(context).textTheme.bodyMedium),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ListTile(
-                        tileColor:
-                            Theme.of(context).brightness == Brightness.dark
-                                ? AppColors.gray1
-                                : AppColors.blue1,
-                        leading: Icon(
-                          Icons.timer,
-                          size: 32.0,
-                          color: Theme.of(context).cardColor,
-                        ),
-                        title: Text(appointments[0].time,
-                            style: Theme.of(context).textTheme.bodyMedium),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ListTile(
-                        tileColor:
-                            Theme.of(context).brightness == Brightness.dark
-                                ? AppColors.gray1
-                                : AppColors.blue1,
-                        leading: Icon(
-                          Icons.healing,
-                          size: 32.0,
-                          color: Theme.of(context).cardColor,
-                        ),
-                        title: Text(
-                          appointments[0].reasonForVisit,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          maxLines: 1,
-                          overflow: TextOverflow.fade,
-                        ),
-                      ),
-                      const SizedBox(height: 25),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    return CustomContainer(
+                      child: Column(
                         children: [
-                          Expanded(
-                            child: CustomElevatedButton(
-                              onPressed: () {
-                                _cancelAppointment(appointments[0].id);
-                              },
-                              label: 'Cancel',
-                              blueColor: true,
+                          const SizedBox(height: 10),
+                          ListTile(
+                            tileColor:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? AppColors.gray1
+                                    : AppColors.blue1,
+                            leading: Icon(
+                              Icons.calendar_month_outlined,
+                              size: 32.0,
+                              color: Theme.of(context).cardColor,
+                            ),
+                            title: Text(appointments[0].date,
+                                style: Theme.of(context).textTheme.bodyMedium),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ListTile(
+                            tileColor:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? AppColors.gray1
+                                    : AppColors.blue1,
+                            leading: Icon(
+                              Icons.timer,
+                              size: 32.0,
+                              color: Theme.of(context).cardColor,
+                            ),
+                            title: Text(appointments[0].time,
+                                style: Theme.of(context).textTheme.bodyMedium),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ListTile(
+                            tileColor:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? AppColors.gray1
+                                    : AppColors.blue1,
+                            leading: Icon(
+                              Icons.healing,
+                              size: 32.0,
+                              color: Theme.of(context).cardColor,
+                            ),
+                            title: Text(
+                              appointments[0].reasonForVisit,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              maxLines: 1,
+                              overflow: TextOverflow.fade,
                             ),
                           ),
-                          const SizedBox(width: 20),
-                          Expanded(
-                            child: CustomElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => VideoCall(
-                                      userID: globalPatientId!,
-                                      userName: globalPatientEmail!,
-                                      appointmentID: appointmentId,
-                                    ),
-                                  ),
-                                );
-                              },
-                              label: 'See Doctor',
-                              blueColor: true,
-                            ),
+                          const SizedBox(height: 25),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Expanded(
+                                child: CustomElevatedButton(
+                                  onPressed: () {
+                                    _cancelAppointment(appointments[0].id);
+                                  },
+                                  label: 'Cancel',
+                                  blueColor: true,
+                                ),
+                              ),
+                              const SizedBox(width: 20),
+                              Expanded(
+                                child: CustomElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => VideoCall(
+                                          userID: globalPatientId!,
+                                          userName: globalPatientEmail!,
+                                          appointmentID: appointmentId,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  label: 'See Doctor',
+                                  blueColor: true,
+                                ),
+                              ),
+                            ],
                           ),
+                          const SizedBox(height: 10),
                         ],
                       ),
-                      const SizedBox(height: 10),
-                    ],
-                  ),
-                );
-              },
-            ),
+                    );
+                  }
+                }),
           ],
         ),
       ),
