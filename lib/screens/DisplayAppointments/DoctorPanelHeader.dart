@@ -14,7 +14,7 @@ class DoctorPanelHeader extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            width: 250.0, 
+            width: 250.0,
             child: Image.asset(imagePath),
           ),
           const SizedBox(height: 10.0),

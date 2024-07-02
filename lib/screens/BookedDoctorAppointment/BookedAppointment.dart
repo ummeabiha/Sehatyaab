@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sehatyaab/globals.dart';
-import 'package:sehatyaab/screens/PatientAppointments/DoctorPanelHeader.dart';
 import 'package:sehatyaab/widgets/CustomAppBar.dart';
 import 'package:sehatyaab/widgets/CustomContainer.dart';
 import '../../models/Doctor.dart';
@@ -11,6 +10,7 @@ import '../../services/FirestoreService.dart';
 import '../../theme/AppColors.dart';
 import '../../widgets/BottomNavbar.dart';
 import '../../widgets/ElevatedButton.dart';
+import '../DisplayAppointments/DoctorPanelHeader.dart';
 import '../VideoCall/VideoCall.dart';
 
 class BookedAppointment extends StatefulWidget {

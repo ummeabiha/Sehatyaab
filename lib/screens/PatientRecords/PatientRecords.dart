@@ -5,9 +5,9 @@ import '../../widgets/CustomAppBar.dart';
 import '../../widgets/CustomStyledTextField.dart';
 import '../../widgets/ElevatedButton.dart';
 import '../../widgets/FormContainer.dart';
-import '../PatientAppointments/DoctorPanelHeader.dart';
+import '../DisplayAppointments/DoctorPanelHeader.dart';
 import '../VideoCall/VideoCall.dart';
-import '../../services/FirestoreService.dart'; // Ensure you import your Firestore service
+import '../../services/FirestoreService.dart'; 
 
 class PatientRecords extends StatelessWidget {
   final String userID;
