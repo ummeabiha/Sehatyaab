@@ -12,8 +12,8 @@ class SignUpScreen extends StatelessWidget {
             ? AppColors.black2
             : Theme.of(context).cardColor,
         body: SingleChildScrollView(
-            child: Container(
-          padding: const EdgeInsets.only(top: 34.0),
+          child: Container(
+            padding: const EdgeInsets.only(top: 28.0),
             child: FormContainer(
               child: Form(
                 child: Column(

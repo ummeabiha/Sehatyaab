@@ -33,7 +33,7 @@ class _VideoCallState extends State<VideoCall> {
         child: ZegoUIKitPrebuiltCall(
           appID: appId,
           appSign: appSign,
-          callID: widget.userID,
+          callID: widget.appointmentID!,
           config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall(),
           userID: widget.userID,
           userName: widget.userName,
