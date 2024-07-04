@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../../providers/AppointmentProvider.dart';
+import 'package:sehatyaab/globals.dart';
+import 'package:sehatyaab/widgets/CustomAppBar.dart';
+import '../../Providers/AppointmentProvider.dart';
 import '../../theme/AppColors.dart';
 import '../../widgets/BottomNavbar.dart';
 
@@ -11,8 +13,8 @@ class AppointmentForm extends StatefulWidget {
 
   const AppointmentForm(
       {super.key,
-      required this.selectedDoctor,
-      required this.selectedDoctorId});
+        required this.selectedDoctor,
+        required this.selectedDoctorId});
 
   @override
   _AppointmentFormState createState() => _AppointmentFormState();
@@ -32,7 +34,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
     final provider = Provider.of<AppointmentProvider>(context);
 
     return Scaffold(
-      // Scaffold setup remains the same
+      appBar: CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -78,10 +80,10 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   provider.selectedDate == null
                       ? 'Choose a date'
                       : DateFormat.yMMMd()
-                          .format(DateTime.parse(provider.selectedDate!)),
+                      .format(DateTime.parse(provider.selectedDate!)),
                 ),
                 trailing:
-                    const Icon(Icons.calendar_today, color: AppColors.blue4),
+                const Icon(Icons.calendar_today, color: AppColors.blue4),
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
                     context: context,
@@ -91,13 +93,12 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   );
                   if (pickedDate != null) {
                     provider.selectDate(pickedDate);
-                    // Fetch available times for the selected doctor and date
                     provider.fetchAvailableTimes(
                         widget.selectedDoctorId, pickedDate);
                   }
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Card(
                 color: Colors.grey[200],
                 child: ListTile(
@@ -106,9 +107,8 @@ class _AppointmentFormState extends State<AppointmentForm> {
                         ? 'Choose a time'
                         : provider.selectedTime!,
                   ),
-                  trailing: Icon(Icons.access_time, color: AppColors.blue4),
+                  trailing: const Icon(Icons.access_time, color: AppColors.blue4),
                   onTap: () async {
-                    // Ensure available times are fetched before showing modal bottom sheet
                     if (provider.selectedDate != null) {
                       await provider.fetchAvailableTimes(
                           widget.selectedDoctorId,
@@ -116,7 +116,8 @@ class _AppointmentFormState extends State<AppointmentForm> {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return ListView.builder(
+                          return provider.availableTimes.isNotEmpty
+                              ? ListView.builder(
                             itemCount: provider.availableTimes.length,
                             itemBuilder: (context, index) {
                               return ListTile(
@@ -125,28 +126,33 @@ class _AppointmentFormState extends State<AppointmentForm> {
                                   provider.selectTime(
                                       provider.availableTimes[index]);
 
-                                  provider.bookAppointment(
-                                    widget.selectedDoctorId,
-                                    'patient123', // Replace with actual patient ID
-                                    'General Checkup', // Replace with actual reason
-                                  );
                                   Navigator.pop(context);
                                 },
                               );
                             },
+                          )
+                              : Center(
+                            child: Text(
+                              provider.availabilityMessage ?? '',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                              ),
+                            ),
                           );
                         },
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Please select a date first')),
+                        const SnackBar(content: Text('Please select a date first')),
                       );
                     }
                   },
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Your Symptoms:',
                 style: TextStyle(
                     fontSize: 18,
@@ -160,7 +166,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                     hintText: 'Any symptoms or condition that you feel?',
                     border: OutlineInputBorder(
                       borderSide:
-                          BorderSide(color: AppColors.blue2, width: 2.0),
+                      BorderSide(color: AppColors.blue2, width: 2.0),
                     ),
                     filled: true,
                     fillColor: Colors.grey[200],
@@ -170,7 +176,7 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   },
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
@@ -179,28 +185,29 @@ class _AppointmentFormState extends State<AppointmentForm> {
                         provider.queryOrComment == null ||
                         provider.queryOrComment!.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Please fill in all fields')),
+                        const SnackBar(content: Text('Please fill in all fields')),
                       );
                     } else {
                       provider.bookAppointment(
                         widget.selectedDoctorId,
-                        'patient123',
-                        'General Checkup',
+                        globalPatientId!,
+                        'checkup',// Replace with actual patient ID
+                         // Replace with actual reason
                       );
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('Appointment booked successfully'),
                           backgroundColor: Colors.blue,
                         ),
                       );
                     }
                   },
-                  child: Text('Book Appointment'),
+                  child: const Text('Book Appointment'),
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(AppColors.blue4),
+                    MaterialStateProperty.all<Color>(AppColors.blue4),
                     foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
+                    MaterialStateProperty.all<Color>(Colors.white),
                   ),
                 ),
               ),

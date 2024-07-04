@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../models/Appointments.dart';
+import 'package:provider/provider.dart';
+import '../models/appointments.dart';
 import '../models/Doctor.dart';
+import 'package:sehatyaab/models/BaseModel.dart';
 import '../services/FirestoreService.dart';
 
 class AppointmentProvider with ChangeNotifier {
   final FirestoreService<Appointment> _appointmentService =
-      FirestoreService<Appointment>('/appointments');
+  FirestoreService<Appointment>('/appointments');
   final FirestoreService<Doctor> _doctorService =
-      FirestoreService<Doctor>('/doctors');
+  FirestoreService<Doctor>('/doctors');
 
   String? _selectedDate;
   String? _selectedTime;
   String? _queryOrComment;
   List<String> _availableTimes = [];
+  String? _availabilityMessage;
 
   String? get selectedDate => _selectedDate;
   String? get selectedTime => _selectedTime;
   String? get queryOrComment => _queryOrComment;
   List<String> get availableTimes => _availableTimes;
+  String? get availabilityMessage => _availabilityMessage;
 
   void selectDate(DateTime date) {
     _selectedDate = DateFormat('yyyy-MM-dd').format(date);
@@ -37,12 +41,13 @@ class AppointmentProvider with ChangeNotifier {
 
   void updateAvailableTimes(List<String> times) {
     _availableTimes = times;
+    _availabilityMessage = times.isEmpty ? 'Sorry, no slots available' : null;
     notifyListeners();
   }
 
   Future<void> fetchAvailableTimes(String doctorId, DateTime date) async {
     try {
-      //final String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+      final String formattedDate = DateFormat('yyyy-MM-dd').format(date);
       Doctor? doctor = await _doctorService.getItemById(
         doctorId,
         Doctor(
@@ -59,16 +64,19 @@ class AppointmentProvider with ChangeNotifier {
         ),
       );
 
-      // Use doctor's availableSlots if available
-      List<String> availableSlots = doctor.availableSlots ?? [];
+      if (doctor != null) {
+        List<String> availableSlots = doctor.availableSlots ?? [];
 
-      // Only enable these slots for weekdays (Monday to Friday)
-      if (date.weekday >= 1 && date.weekday <= 5) {
-        _availableTimes = availableSlots; // Update available times for weekdays
+        if (date.weekday >= 1 && date.weekday <= 5) {
+          updateAvailableTimes(availableSlots);
+        } else {
+          updateAvailableTimes([]);
+          _availabilityMessage = "It's a Weekend!";
+        }
       } else {
-        _availableTimes = []; // Clear available times for weekends
+        updateAvailableTimes([]);
+
       }
-      notifyListeners();
     } catch (e) {
       debugPrint('Error fetching available times: $e');
       rethrow;
@@ -94,42 +102,41 @@ class AppointmentProvider with ChangeNotifier {
         ),
       );
 
-      final String formattedDate = _selectedDate!;
-      final String formattedTime = _selectedTime!;
+      if (doctor != null) {
+        final String formattedDate = _selectedDate!;
+        final String formattedTime = _selectedTime!;
 
-      // Check if the selected time slot is available
-      if (doctor.availableSlots!.contains(formattedTime)) {
-        // Update doctor's slots
-        List<String> availableSlots =
-            List<String>.from(doctor.availableSlots ?? []);
-        List<String> bookedSlots = List<String>.from(doctor.bookedSlots ?? []);
+        if (doctor.availableSlots!.contains(formattedTime)) {
+          List<String> availableSlots =
+          List<String>.from(doctor.availableSlots ?? []);
+          List<String> bookedSlots =
+          List<String>.from(doctor.bookedSlots ?? []);
 
-        availableSlots.remove(formattedTime);
-        bookedSlots.add(formattedTime);
+          availableSlots.remove(formattedTime);
+          bookedSlots.add(formattedTime);
 
-        // Update doctor object with modified slots
-        doctor = doctor.copyWith(
-          availableSlots: availableSlots,
-          bookedSlots: bookedSlots,
-        );
+          doctor = doctor.copyWith(
+            availableSlots: availableSlots,
+            bookedSlots: bookedSlots,
+          );
 
-        // Update doctor's document in Firestore
-        await _doctorService.updateDoctor(doctor);
+          await _doctorService.updateDoctor(doctor);
 
-        // Create appointment object
-        final Appointment newAppointment = Appointment(
-          id: '',
-          date: formattedDate,
-          time: formattedTime,
-          patientId: patientId,
-          doctorId: doctorId,
-          reasonForVisit: reasonForVisit,
-        );
+          final Appointment newAppointment = Appointment(
+            id: '',
+            date: formattedDate,
+            time: formattedTime,
+            patientId: patientId,
+            doctorId: doctorId,
+            reasonForVisit: reasonForVisit,
+          );
 
-        // Add appointment to Firestore
-        await _appointmentService.addItem(newAppointment);
+          await _appointmentService.addItem(newAppointment);
+        } else {
+          throw 'Selected time slot is not available';
+        }
       } else {
-        throw 'Selected time slot is not available';
+        throw 'Doctor not found';
       }
     } catch (e) {
       debugPrint('Error booking appointment: $e');

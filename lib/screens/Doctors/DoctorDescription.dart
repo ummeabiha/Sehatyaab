@@ -3,6 +3,7 @@ import 'package:sehatyaab/services/FirestoreService.dart';
 import 'package:sehatyaab/theme/AppColors.dart';
 import 'package:sehatyaab/models/Doctor.dart';
 import 'package:sehatyaab/screens/Appointments/AppointmentForm.dart';
+import 'package:sehatyaab/widgets/CustomAppBar.dart';
 
 import '../../widgets/BottomNavbar.dart';
 
@@ -29,13 +30,9 @@ class _DoctorDescriptionScreenState extends State<DoctorDescriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Doctor Description',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: AppColors.blue4,
-      ),
+      appBar:
+        const CustomAppBar(),
+
       body: Container(
         color: AppColors.blue4,
         child: StreamBuilder<List<Doctor>>(

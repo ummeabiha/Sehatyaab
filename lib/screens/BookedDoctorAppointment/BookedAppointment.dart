@@ -135,22 +135,7 @@ class _BookedAppointmentState extends State<BookedAppointment> {
               imagePath: 'assets/images/scheduledApp.png',
               text: 'Scheduled Appointment',
             ),
-            CustomElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => VideoCall(
-                      userID: globalPatientId!,
-                      userName: globalPatientEmail!,
-                      appointmentID: appointmentId,
-                    ),
-                  ),
-                );
-              },
-              label: 'Join Call',
-              removeUpperBorders: true,
-              blueColor: true,
-            ),
+
             StreamBuilder<List<Appointment>>(
                 stream: _appointmentsSubject.stream,
                 builder: (context, snapshot) {
@@ -173,6 +158,22 @@ class _BookedAppointmentState extends State<BookedAppointment> {
                       child: Center(child: Text('No Appointment Scheduled.')),
                     );
                   } else {
+                    CustomElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => VideoCall(
+                              userID: globalPatientId!,
+                              userName: globalPatientEmail!,
+                              appointmentID: appointmentId,
+                            ),
+                          ),
+                        );
+                      },
+                      label: 'Join Call',
+                      removeUpperBorders: true,
+                      blueColor: true,
+                    );
                     Provider.of<AppState>(context, listen: false).isAppBooked =
                         true;
                     return CustomContainer(
