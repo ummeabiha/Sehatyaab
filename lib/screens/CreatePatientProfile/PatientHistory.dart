@@ -107,7 +107,9 @@ class _PatientHistoryState extends State<PatientHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(
+        profile: true,
+      ),
       body: SingleChildScrollView(
         child: Container(
           color: Theme.of(context).brightness == Brightness.dark

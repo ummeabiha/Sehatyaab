@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sehatyaab/globals.dart';
 import '../../theme/AppColors.dart';
 import 'LoginSignupBtn.dart';
 

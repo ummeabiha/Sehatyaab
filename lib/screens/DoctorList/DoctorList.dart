@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sehatyaab/models/Doctor.dart';
-import '../../providers/AppState.dart';
+import '../../globals.dart';
 import '../../services/FirestoreService.dart';
 import '../../theme/AppColors.dart';
 import '../../widgets/AlertDialogBox.dart';
@@ -29,9 +28,6 @@ class _DoctorListState extends State<DoctorList> {
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<AppState>(context, listen: false);
-    final isAppBooked = appState.isAppBooked;
-
     return Scaffold(
       appBar: const CustomAppBar(),
       body: StreamBuilder<List<Doctor>>(
@@ -118,19 +114,21 @@ class _DoctorListState extends State<DoctorList> {
                             ),
                             trailing: OutlinedButton(
                               onPressed: () {
-                                if (!isAppBooked) {
+                                if (isAppBooked == false) {
                                   Navigator.pushReplacementNamed(
                                       context, '/doctordesc');
                                 } else {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((_) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return const AlertDialogBox();
-                                      },
-                                    );
-                                  });
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const AlertDialogBox(
+                                        title: 'Appointment Conflict',
+                                        content:
+                                            'You Already Have a Scheduled Appointment.',
+                                      );
+                                    },
+                                  );
+                                  //});
                                 }
                               },
                               child: Text(

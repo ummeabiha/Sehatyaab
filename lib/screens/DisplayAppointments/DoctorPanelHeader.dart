@@ -24,6 +24,7 @@ class DoctorPanelHeader extends StatelessWidget {
                 .textTheme
                 .bodyLarge
                 ?.copyWith(color: Theme.of(context).primaryColor),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

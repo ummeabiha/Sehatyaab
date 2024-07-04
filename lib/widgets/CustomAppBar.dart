@@ -3,6 +3,8 @@ import 'package:sehatyaab/globals.dart';
 import 'package:sehatyaab/routes/AppRoutes.dart';
 import 'package:sehatyaab/theme/AppTheme.dart';
 
+import 'AlertDialogBox.dart';
+
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool profile;
 
@@ -46,6 +48,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              if (profile)
+                IconButton(
+                  icon: const Icon(
+                    Icons.account_circle,
+                    size: 32.0,
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const AlertDialogBox(
+                            title: 'Login Required',
+                            content: 'Please Login to View Profiles.');
+                      },
+                    );
+                  },
+                ),
               if (!profile)
                 IconButton(
                   icon: const Icon(
@@ -55,31 +74,31 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   onPressed: () {
                     if (globalPatientId != null) {
                       Navigator.pushNamed(context, AppRoutes.patientProfile);
-                    } else if (globalDoctorId != null &&
-                        globalDoctorEmail != null) {
+                    } else if (globalDoctorId != null) {
                       Navigator.pushNamed(
                           context, AppRoutes.displayDoctorProfile);
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Login Required',
-                                style: Theme.of(context).textTheme.bodyMedium),
-                            content: Text('Please Login to View Profiles.',
-                                style: Theme.of(context).textTheme.bodySmall),
-                            actions: <Widget>[
-                              OutlinedButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
                     }
+                    // } else {
+                    //   showDialog(
+                    //     context: context,
+                    //     builder: (BuildContext context) {
+                    //       return AlertDialog(
+                    //         title: Text('Login Required',
+                    //             style: Theme.of(context).textTheme.bodyMedium),
+                    //         content: Text('Please Login to View Profiles.',
+                    //             style: Theme.of(context).textTheme.bodySmall),
+                    //         actions: <Widget>[
+                    //           OutlinedButton(
+                    //             onPressed: () {
+                    //               Navigator.of(context).pop();
+                    //             },
+                    //             child: const Text('OK'),
+                    //           ),
+                    //         ],
+                    //       );
+                    //     },
+                    //   );
+                    // }
                   },
                 ),
             ],

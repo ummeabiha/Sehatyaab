@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sehatyaab/widgets/AlertDialogBox.dart';
-import '../providers/AppState.dart';
+import '../globals.dart';
 import '../routes/AppRoutes.dart';
 import '../theme/AppColors.dart';
 
@@ -16,9 +15,9 @@ class BottomNavBar extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
- void _navigate(int index, BuildContext context) {
-    final appState = Provider.of<AppState>(context, listen: false);
-    final isAppBooked = appState.isAppBooked;
+  void _navigate(int index, BuildContext context) {
+    //final appState = Provider.of<AppState>(context, listen: false);
+    //nal isAppBooked = appState.isAppBooked;
 
     switch (index) {
       case 0:
@@ -34,19 +33,21 @@ class BottomNavBar extends StatelessWidget {
         if (!isAppBooked) {
           Navigator.pushReplacementNamed(context, '/doctordesc');
         } else {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return const AlertDialogBox();
-              },
-            );
-          });
+          //WidgetsBinding.instance.addPostFrameCallback((_) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertDialogBox(
+                  title: 'Appointment Conflict',
+                  content: 'You Already Have a Scheduled Appointment.');
+            },
+          );
         }
+        //);
+        //}
         break;
     }
   }
-
 
   int _getCurrentIndex(String? routeName) {
     switch (routeName) {

@@ -2,7 +2,7 @@ String? globalDoctorId;
 String? globalDoctorEmail;
 String? globalPatientId;
 String? globalPatientEmail;
-//bool isAppBooked=false;
+bool isAppBooked=false;
 
 int calculateAge(DateTime? birthDate) {
   if (birthDate == null) return 0;

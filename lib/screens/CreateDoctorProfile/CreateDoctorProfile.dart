@@ -53,7 +53,15 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
           specialization: _specializationController.text,
           qualification: _qualificationController.text,
           yearsOfExperience: int.parse(_yearsOfExperienceController.text),
-          availableSlots: ['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM'],
+          availableSlots: [
+            '9:00 AM',
+            '9:30 AM',
+            '10:00 AM',
+            '10:30 AM',
+            '11:00 AM',
+            '11:30 AM',
+            '12:00 PM'
+          ],
           bookedSlots: []);
 
       widget.firestoreService.addItemWithId(doctor, doctor.id).then((_) {
@@ -78,7 +86,9 @@ class _CreateDoctorProfileState extends State<CreateDoctorProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(),
+        appBar: const CustomAppBar(
+          profile: true,
+        ),
         body: SingleChildScrollView(
             child: Container(
           color: Theme.of(context).brightness == Brightness.dark

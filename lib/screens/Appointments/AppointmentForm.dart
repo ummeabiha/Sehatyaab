@@ -4,17 +4,20 @@ import 'package:provider/provider.dart';
 import 'package:sehatyaab/globals.dart';
 import 'package:sehatyaab/widgets/CustomAppBar.dart';
 import '../../Providers/AppointmentProvider.dart';
+import '../../routes/AppRoutes.dart';
 import '../../theme/AppColors.dart';
 import '../../widgets/BottomNavbar.dart';
+import '../../widgets/CustomStyledTextField.dart';
 
 class AppointmentForm extends StatefulWidget {
   final String selectedDoctor;
   final String selectedDoctorId;
 
-  const AppointmentForm(
-      {super.key,
-        required this.selectedDoctor,
-        required this.selectedDoctorId});
+  const AppointmentForm({
+    super.key,
+    required this.selectedDoctor,
+    required this.selectedDoctorId,
+  });
 
   @override
   _AppointmentFormState createState() => _AppointmentFormState();
@@ -22,6 +25,7 @@ class AppointmentForm extends StatefulWidget {
 
 class _AppointmentFormState extends State<AppointmentForm> {
   int _currentIndex = 3;
+  final _reasonForVisit = TextEditingController();
 
   void _onBottomNavTap(int index) {
     setState(() {
@@ -42,15 +46,16 @@ class _AppointmentFormState extends State<AppointmentForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 color: AppColors.blue4,
                 child: const Center(
-                  child: const Text(
+                  child: Text(
                     'Book An Appointment For:',
                     style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
@@ -60,9 +65,10 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   child: Text(
                     widget.selectedDoctor,
                     style: const TextStyle(
-                        fontSize: 26,
-                        color: AppColors.blue4,
-                        fontWeight: FontWeight.bold),
+                      fontSize: 26,
+                      color: AppColors.blue4,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -70,9 +76,10 @@ class _AppointmentFormState extends State<AppointmentForm> {
               const Text(
                 'Select Date:',
                 style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               ListTile(
                 tileColor: Colors.grey[200],
@@ -80,10 +87,10 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   provider.selectedDate == null
                       ? 'Choose a date'
                       : DateFormat.yMMMd()
-                      .format(DateTime.parse(provider.selectedDate!)),
+                          .format(DateTime.parse(provider.selectedDate!)),
                 ),
                 trailing:
-                const Icon(Icons.calendar_today, color: AppColors.blue4),
+                    const Icon(Icons.calendar_today, color: AppColors.blue4),
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
                     context: context,
@@ -107,45 +114,50 @@ class _AppointmentFormState extends State<AppointmentForm> {
                         ? 'Choose a time'
                         : provider.selectedTime!,
                   ),
-                  trailing: const Icon(Icons.access_time, color: AppColors.blue4),
+                  trailing:
+                      const Icon(Icons.access_time, color: AppColors.blue4),
                   onTap: () async {
                     if (provider.selectedDate != null) {
                       await provider.fetchAvailableTimes(
-                          widget.selectedDoctorId,
-                          DateTime.parse(provider.selectedDate!));
+                        widget.selectedDoctorId,
+                        DateTime.parse(provider.selectedDate!),
+                      );
                       showModalBottomSheet(
                         context: context,
                         builder: (context) {
                           return provider.availableTimes.isNotEmpty
                               ? ListView.builder(
-                            itemCount: provider.availableTimes.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(provider.availableTimes[index]),
-                                onTap: () {
-                                  provider.selectTime(
-                                      provider.availableTimes[index]);
-
-                                  Navigator.pop(context);
-                                },
-                              );
-                            },
-                          )
+                                  itemCount: provider.availableTimes.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title:
+                                          Text(provider.availableTimes[index]),
+                                      onTap: () {
+                                        provider.selectTime(
+                                            provider.availableTimes[index]);
+                                        Navigator.pop(context);
+                                      },
+                                    );
+                                  },
+                                )
                               : Center(
-                            child: Text(
-                              provider.availabilityMessage ?? '',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red,
-                              ),
-                            ),
-                          );
+                                  child: Text(
+                                    provider.availabilityMessage ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                );
                         },
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please select a date first')),
+                        SnackBar(
+                            content: Text('Please select a date first',
+                                style: Theme.of(context).textTheme.bodySmall),
+                            backgroundColor: AppColors.blue2),
                       );
                     }
                   },
@@ -155,26 +167,16 @@ class _AppointmentFormState extends State<AppointmentForm> {
               const Text(
                 'Your Symptoms:',
                 style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-              Card(
-                color: Colors.grey[200],
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Any symptoms or condition that you feel?',
-                    border: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: AppColors.blue2, width: 2.0),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                  ),
-                  onChanged: (value) {
-                    provider.setQueryOrComment(value);
-                  },
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
+              ),
+              CustomStyledTextField(
+                controller: _reasonForVisit,
+                labelText: 'Reason For Visit',
+                hintText: 'Reason For Visit',
+                suffixIcon: Icons.health_and_safety,
               ),
               const SizedBox(height: 30),
               Center(
@@ -182,32 +184,36 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   onPressed: () {
                     if (provider.selectedDate == null ||
                         provider.selectedTime == null ||
-                        provider.queryOrComment == null ||
-                        provider.queryOrComment!.isEmpty) {
+                        _reasonForVisit.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please fill in all fields')),
+                        SnackBar(
+                            content: Text('Please fill in all fields',
+                            style: Theme.of(context).textTheme.bodySmall),
+                            backgroundColor: AppColors.blue2),
                       );
                     } else {
                       provider.bookAppointment(
                         widget.selectedDoctorId,
                         globalPatientId!,
-                        'checkup',// Replace with actual patient ID
-                         // Replace with actual reason
+                        _reasonForVisit.text,
                       );
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Appointment booked successfully'),
-                          backgroundColor: Colors.blue,
-                        ),
+                        SnackBar(
+                            content: Text('Appointment booked successfully',
+                                style: Theme.of(context).textTheme.bodySmall),
+                            backgroundColor: AppColors.blue2),
                       );
+
+                      Navigator.pushReplacementNamed(context, AppRoutes.bookedAppointment);
                     }
                   },
+
                   child: const Text('Book Appointment'),
                   style: ButtonStyle(
                     backgroundColor:
-                    MaterialStateProperty.all<Color>(AppColors.blue4),
+                        MaterialStateProperty.all<Color>(AppColors.blue4),
                     foregroundColor:
-                    MaterialStateProperty.all<Color>(Colors.white),
+                        MaterialStateProperty.all<Color>(Colors.white),
                   ),
                 ),
               ),
