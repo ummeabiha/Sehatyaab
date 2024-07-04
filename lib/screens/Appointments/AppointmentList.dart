@@ -15,7 +15,8 @@ class AppointmentList extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Appointments List'),
       ),
-      body: StreamBuilder<List<Appointment>>(
+      body: 
+      StreamBuilder<List<Appointment>>(
         stream: appointmentService.getItemsStream(Appointment(
           id: '',
           date: '',
@@ -30,7 +31,7 @@ class AppointmentList extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No appointments found'));
+            return const Center(child: Text('No Appointments found'));
           } else {
             final appointments = snapshot.data!;
             return ListView.builder(

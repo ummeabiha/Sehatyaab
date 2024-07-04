@@ -596,10 +596,10 @@ class CategoryCard extends StatelessWidget {
           const SizedBox(height: 8.0),
           Text(
             label,
-            style: Theme.of(context)
-                .textTheme
-                .bodySmall
-                ?.copyWith(fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
