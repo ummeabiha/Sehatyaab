@@ -43,7 +43,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         foregroundColor: AppColors.white,
         backgroundColor: AppColors.blue5,
-        overlayColor: AppColors.blue3,
+       // overlayColor: AppColors.blue3,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
