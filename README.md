@@ -18,7 +18,7 @@ Sehatyaab is an app that connects people in remote or underserved areas with hea
   
 - **Chat Between Doctors and Patients**: Seamless communication between doctors and patients for consultations and follow-ups.
   
-- **Login and Sign up for Patients and Doctors**: Secure authentication for both patients and doctors to access the app's features.
+- **Login and Sign Up for Patients and Doctors**: Secure authentication for both patients and doctors to access the app's features.
   
 - **Payment Feature**: Enable secure transactions for doctor fees to ensure seamless payment processing.
 
